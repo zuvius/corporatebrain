@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db/client";
-import { users, tenants } from "@/lib/db/schema";
+import { users, tenants, verificationTokens } from "@/lib/db/schema";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { eq } from "drizzle-orm";
+import { randomBytes } from "crypto";
+import { signIn } from "@/lib/auth/auth";
+
 // Simple slugify function
 function slugify(str: string): string {
   return str
@@ -11,7 +14,6 @@ function slugify(str: string): string {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 }
-import { signIn } from "@/lib/auth/auth";
 
 const signupSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -66,7 +68,11 @@ export async function POST(request: Request) {
       })
       .returning();
 
-    // Create user with tenantId
+    // Generate verification token
+    const verificationToken = randomBytes(32).toString("hex");
+    const tokenExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+    // Create user with tenantId - email NOT verified
     const [user] = await db
       .insert(users)
       .values({
@@ -75,9 +81,23 @@ export async function POST(request: Request) {
         name,
         password: hashedPassword,
         role: "admin", // First user is admin
-        emailVerified: null, // Will be set after verification
+        emailVerified: null, // Unverified until they click email link
       })
       .returning();
+
+    // Save verification token
+    await db.insert(verificationTokens).values({
+      identifier: email,
+      token: verificationToken,
+      type: "email_verification",
+      expires: tokenExpires,
+      attempts: 0,
+    });
+
+    // TODO: Send verification email
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+    const verifyUrl = `${baseUrl}/api/auth/verify?token=${verificationToken}`;
+    console.log("[Signup] Verification URL:", verifyUrl);
 
     // Auto-sign in the user
     try {

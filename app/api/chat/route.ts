@@ -6,7 +6,7 @@ import { eq, and, desc, sql } from "drizzle-orm";
 import { routeAndGenerate, getModelForQuery } from "@/lib/ai/router";
 import { generateEmbeddings } from "@/lib/ai/client";
 import { buildSystemPrompt } from "@/lib/ai/client";
-
+import { requireVerification, TEASER_LIMITS } from "@/lib/auth/verification";
 
 export async function POST(req: NextRequest) {
   try {
@@ -15,11 +15,47 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const user = session.user as { 
+      id: string; 
+      tenantId: string; 
+      emailVerified: string | null;
+      email: string;
+    };
+    const isVerified = !!user.emailVerified;
+
     const body = await req.json();
     const { conversationId, message, tenantId } = body;
 
-    const effectiveTenantId = tenantId || (session.user as any).tenantId;
-    const userId = session.user.id;
+    const effectiveTenantId = tenantId || user.tenantId;
+    const userId = user.id;
+
+    // Check teaser mode limits for unverified users
+    let teaserModeUsed = false;
+    if (!isVerified) {
+      // Count user's existing conversations
+      const userConversations = await db
+        .select({ count: sql<number>`count(*)` })
+        .from(conversations)
+        .where(eq(conversations.userId, userId));
+      
+      const conversationCount = userConversations[0]?.count || 0;
+      
+      // If they already have conversations, they've used their free question
+      if (conversationCount >= TEASER_LIMITS.maxAIQuestions) {
+        return NextResponse.json(
+          {
+            error: "Teaser limit reached. You've used your free AI question.",
+            code: "TEASER_LIMIT_REACHED",
+            teaser: true,
+            previewMessage: "Verify your email to ask unlimited questions.",
+            verifyUrl: "/auth/resend-verification",
+          },
+          { status: 403 }
+        );
+      }
+      
+      teaserModeUsed = true;
+    }
 
     // Get or create conversation
     let convId = conversationId;
@@ -120,6 +156,12 @@ export async function POST(req: NextRequest) {
         id: s.id,
         title: s.title,
       })),
+      teaser: teaserModeUsed,
+      ...(teaserModeUsed && {
+        teaserMessage: "✨ You just experienced AI-powered search! Verify your email to ask unlimited questions and unlock all features.",
+        remainingQuestions: 0,
+        verifyUrl: "/auth/resend-verification",
+      }),
     });
   } catch (error) {
     console.error("Chat error:", error);

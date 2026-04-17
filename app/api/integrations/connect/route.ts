@@ -4,6 +4,7 @@ import { db } from "@/lib/db/client";
 import { integrations } from "@/lib/db/schema";
 import { eq, and } from "drizzle-orm";
 import { z } from "zod";
+import { requireVerification, canConnectIntegration } from "@/lib/auth/verification";
 
 const connectSchema = z.object({
   provider: z.enum(["slack", "gdrive", "notion", "teams", "github", "confluence"]),
@@ -27,7 +28,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const user = session.user as { id: string; tenantId: string };
+    const user = session.user as { id: string; tenantId: string; emailVerified: string | null };
+    const isVerified = !!user.emailVerified;
+    
     const body = await req.json();
     
     const result = connectSchema.safeParse(body);
@@ -39,6 +42,29 @@ export async function POST(req: NextRequest) {
     }
 
     const { provider } = result.data;
+    const tenantId = user.tenantId;
+
+    // Check current integration count for teaser mode
+    const existingIntegrations = await db.query.integrations.findMany({
+      where: eq(integrations.tenantId, tenantId),
+    });
+
+    const canConnect = canConnectIntegration(
+      isVerified,
+      existingIntegrations.length,
+      provider
+    );
+
+    if (!canConnect.allowed) {
+      return NextResponse.json(
+        { 
+          error: canConnect.reason,
+          code: isVerified ? "LIMIT_REACHED" : "TEASER_LIMIT",
+          teaser: !isVerified,
+        },
+        { status: 403 }
+      );
+    }
 
     // Check if already connected
     const existing = await db.query.integrations.findFirst({

@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth/auth";
 import { redirect } from "next/navigation";
 import { getKnowledgeSourcesByTenant, getConversationsByUser } from "@/lib/db/queries";
 import { AppClientWrapper } from "@/components/app/app-client-wrapper";
+import { VerificationBanner } from "@/components/verification-banner";
 
 export default async function AppLayout({
   children,
@@ -33,21 +34,28 @@ export default async function AppLayout({
     title: c.title || "Untitled Conversation",
   }));
 
+  const isVerified = !!user.emailVerified;
+
   return (
-    <AppClientWrapper
-      sources={sources}
-      conversations={conversations}
-      user={{
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        tenantId: user.tenantId,
-        role: user.role,
-        image: user.image,
-      }}
-      tenantId={user.tenantId}
-    >
-      {children}
-    </AppClientWrapper>
+    <>
+      {!isVerified && <VerificationBanner email={user.email} />}
+      <AppClientWrapper
+        sources={sources}
+        conversations={conversations}
+        user={{
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          tenantId: user.tenantId,
+          role: user.role,
+          image: user.image,
+          emailVerified: user.emailVerified,
+        }}
+        tenantId={user.tenantId}
+        isVerified={isVerified}
+      >
+        {children}
+      </AppClientWrapper>
+    </>
   );
 }

@@ -72,3 +72,4 @@ logs
 
 # uploads - ignore all contents but keep folder structure
 /uploads/*
+!/uploads/.gitkeep
