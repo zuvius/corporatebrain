@@ -55,18 +55,13 @@ export async function requireVerification(requireFullAccess = true): Promise<Ver
     };
   }
 
-  const user = session.user as {
-    email: string;
-    emailVerified: string | null;
-  };
-
-  const isVerified = !!user.emailVerified;
+  const isVerified = !!session.user.emailVerified;
 
   if (!isVerified) {
     return {
       isVerified: false,
       isTeaserMode: true,
-      email: user.email,
+      email: session.user.email,
       error: requireFullAccess ? "Email verification required. Please verify your email to access this feature." : undefined,
       limits: TEASER_LIMITS,
     };
@@ -75,13 +70,13 @@ export async function requireVerification(requireFullAccess = true): Promise<Ver
   return {
     isVerified: true,
     isTeaserMode: false,
-    email: user.email,
+    email: session.user.email,
     limits: FULL_ACCESS_LIMITS,
   };
 }
 
 export function getVerificationStatus(
-  session: { user?: { email?: string; emailVerified?: string | null } } | null,
+  session: { user?: { email?: string; emailVerified?: Date | null } } | null,
   requireFullAccess = true
 ): VerificationResult {
   if (!session?.user) {

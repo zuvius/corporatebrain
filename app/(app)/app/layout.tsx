@@ -49,7 +49,6 @@ export default async function AppLayout({
           tenantId: user.tenantId,
           role: user.role,
           image: user.image,
-          emailVerified: user.emailVerified,
         }}
         tenantId={user.tenantId}
         isVerified={isVerified}

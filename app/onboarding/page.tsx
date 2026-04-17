@@ -401,15 +401,10 @@ function ConnectStep({ onNext }: { onNext: () => void }) {
     canConnect: boolean;
     isTeaserRestricted: boolean;
     unavailableReason?: string;
+    popular?: boolean;
   }>>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [connecting, setConnecting] = useState<string | null>(null);
-  const [teaserInfo, setTeaserInfo] = useState<{
-    isTeaserMode: boolean;
-    connectedCount: number;
-    maxIntegrations: number;
-    remainingSlots: number;
-  } | null>(null);
 
   useEffect(() => {
     fetchIntegrations();
@@ -421,12 +416,6 @@ function ConnectStep({ onNext }: { onNext: () => void }) {
       if (response.ok) {
         const data = await response.json();
         setIntegrations(data.providers);
-        setTeaserInfo({
-          isTeaserMode: data.teaserMode,
-          connectedCount: data.connectedCount,
-          maxIntegrations: data.maxIntegrations,
-          remainingSlots: data.remainingSlots,
-        });
       }
     } catch (error) {
       console.error("Failed to fetch integrations:", error);

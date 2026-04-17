@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Mail, AlertCircle, CheckCircle } from "lucide-react";
+import { X, AlertCircle, CheckCircle } from "lucide-react";
 
 interface VerificationBannerProps {
   email: string;

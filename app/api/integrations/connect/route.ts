@@ -4,7 +4,7 @@ import { db } from "@/lib/db/client";
 import { integrations } from "@/lib/db/schema";
 import { eq, and } from "drizzle-orm";
 import { z } from "zod";
-import { requireVerification, canConnectIntegration } from "@/lib/auth/verification";
+import { canConnectIntegration } from "@/lib/auth/verification";
 
 const connectSchema = z.object({
   provider: z.enum(["slack", "gdrive", "notion", "teams", "github", "confluence"]),

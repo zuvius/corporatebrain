@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth/auth";
 import { db } from "@/lib/db/client";
-import { verificationTokens, users } from "@/lib/db/schema";
+import { verificationTokens } from "@/lib/db/schema";
 import { eq, and, gt } from "drizzle-orm";
 import { randomBytes } from "crypto";
 

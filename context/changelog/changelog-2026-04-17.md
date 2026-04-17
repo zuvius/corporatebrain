@@ -1,5 +1,32 @@
 # Changelog - April 17, 2026
 
+## Fixed Type Errors (14 → 0)
+
+### Summary
+Fixed all TypeScript errors that were preventing type-check from passing.
+
+### Changes Made
+
+1. **types/index.ts:5-13** - Added `email` and `emailVerified: Date | null` to NextAuth Session user type
+2. **lib/auth/verification.ts:58-73** - Removed unnecessary type cast, now uses session.user directly
+3. **lib/auth/verification.ts:79** - Updated `getVerificationStatus` parameter type to `Date | null`
+4. **components/verification-banner.tsx:4** - Removed unused `Mail` import
+5. **app/onboarding/page.tsx:404** - Added `popular?: boolean` to integration type
+6. **app/onboarding/page.tsx:407-429** - Removed unused `teaserInfo` state
+7. **app/(app)/app/layout.tsx:45-52** - Removed `emailVerified` from user object (not in component's User type)
+8. **app/api/auth/resend-verification/route.ts:4** - Removed unused `users` import
+9. **app/api/chat/route.ts:9** - Removed unused `requireVerification` import
+10. **app/api/integrations/connect/route.ts:7** - Removed unused `requireVerification` import
+11. **app/api/integrations/list/route.ts:74** - Changed `connectedAt` to `createdAt` to match schema
+
+### Result
+```
+npm run lint      # ✓ 0 errors, 76 warnings
+npm run type-check # ✓ 0 errors
+```
+
+---
+
 ## Fixed GitHub Actions CI Failures
 
 ### Problem

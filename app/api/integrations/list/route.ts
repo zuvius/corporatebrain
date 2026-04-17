@@ -71,7 +71,7 @@ export async function GET() {
         canConnect,
         unavailableReason,
         isTeaserRestricted: !isVerified && !isAllowedInTeaser,
-        connectedAt: existing?.connectedAt,
+        createdAt: existing?.createdAt,
       };
     });
 

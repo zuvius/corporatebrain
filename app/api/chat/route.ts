@@ -6,7 +6,7 @@ import { eq, and, desc, sql } from "drizzle-orm";
 import { routeAndGenerate, getModelForQuery } from "@/lib/ai/router";
 import { generateEmbeddings } from "@/lib/ai/client";
 import { buildSystemPrompt } from "@/lib/ai/client";
-import { requireVerification, TEASER_LIMITS } from "@/lib/auth/verification";
+import { TEASER_LIMITS } from "@/lib/auth/verification";
 
 export async function POST(req: NextRequest) {
   try {
