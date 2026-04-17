@@ -36,10 +36,14 @@ interface AppClientWrapperProps {
   conversations: Conversation[];
   user: User;
   tenantId: string;
+  isVerified: boolean;
   children: React.ReactNode;
 }
 
-export function AppClientWrapper({ sources, conversations, user, tenantId, children }: AppClientWrapperProps) {
+export function AppClientWrapper({ sources, conversations, user, tenantId, isVerified, children }: AppClientWrapperProps) {
+  // isVerified available for future verification-based UI restrictions
+  void isVerified;
+  
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isUrlModalOpen, setIsUrlModalOpen] = useState(false);
   const [showAddMenu, setShowAddMenu] = useState(false);

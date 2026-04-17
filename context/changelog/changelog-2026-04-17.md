@@ -18,6 +18,7 @@ Fixed all TypeScript errors that were preventing type-check from passing.
 9. **app/api/chat/route.ts:9** - Removed unused `requireVerification` import
 10. **app/api/integrations/connect/route.ts:7** - Removed unused `requireVerification` import
 11. **app/api/integrations/list/route.ts:74** - Changed `connectedAt` to `createdAt` to match schema
+12. **components/app/app-client-wrapper.tsx:34-44** - Added `isVerified` to `AppClientWrapperProps` interface and function signature
 
 ### Result
 ```

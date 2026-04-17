@@ -28,6 +28,7 @@
   - **Fixed**: `app/onboarding/page.tsx` - Added `popular` to type, removed unused state
   - **Fixed**: 4 API routes - Removed unused imports (`users`, `requireVerification`)
   - **Fixed**: `app/api/integrations/list/route.ts` - Changed `connectedAt` to `createdAt`
+  - **Fixed**: `components/app/app-client-wrapper.tsx` - Added missing `isVerified` prop
   - **Result**: Both `npm run lint` and `npm run type-check` now pass
 
 - ✅ **COMPLETED**: Dependency Upgrades & Type Fixes (Evening Session)
