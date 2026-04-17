@@ -53,14 +53,16 @@ function getApiKey(): string {
 /**
  * Scrape a single URL and return markdown content
  */
-export async function scrapeUrl(options: ScrapeOptions): Promise<FirecrawlResponse> {
+export async function scrapeUrl(
+  options: ScrapeOptions,
+): Promise<FirecrawlResponse> {
   const apiKey = getApiKey();
-  
+
   const response = await fetch(`${FIRECRAWL_API_URL}/scrape`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${apiKey}`,
+      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       url: options.url,
@@ -85,14 +87,16 @@ export async function scrapeUrl(options: ScrapeOptions): Promise<FirecrawlRespon
 /**
  * Crawl a website and return multiple pages
  */
-export async function crawlWebsite(options: CrawlOptions): Promise<FirecrawlResponse> {
+export async function crawlWebsite(
+  options: CrawlOptions,
+): Promise<FirecrawlResponse> {
   const apiKey = getApiKey();
-  
+
   const response = await fetch(`${FIRECRAWL_API_URL}/crawl`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${apiKey}`,
+      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       url: options.url,
@@ -118,15 +122,15 @@ export async function crawlWebsite(options: CrawlOptions): Promise<FirecrawlResp
 export async function extractData(
   url: string,
   prompt: string,
-  schema?: Record<string, any>
+  schema?: Record<string, any>,
 ): Promise<FirecrawlResponse> {
   const apiKey = getApiKey();
-  
+
   const response = await fetch(`${FIRECRAWL_API_URL}/extract`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${apiKey}`,
+      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       url,
@@ -148,15 +152,15 @@ export async function extractData(
  */
 export async function searchAndScrape(
   query: string,
-  limit: number = 5
+  limit: number = 5,
 ): Promise<FirecrawlResponse> {
   const apiKey = getApiKey();
-  
+
   const response = await fetch(`${FIRECRAWL_API_URL}/search`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${apiKey}`,
+      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       query,
@@ -181,7 +185,7 @@ export async function searchAndScrape(
  */
 export async function processUrlForIngestion(
   url: string,
-  options?: Partial<ScrapeOptions>
+  options?: Partial<ScrapeOptions>,
 ): Promise<{
   title: string;
   content: string;

@@ -1,4 +1,5 @@
 # Corporate Brain - Sovereign Context Fabric
+
 ## Scope of Work Document
 
 **Version:** 1.1  
@@ -33,22 +34,25 @@
 ## Executive Summary
 
 ### Project Vision
+
 The **Corporate Brain** is a **Sovereign Context Fabric**—a headless, multi-tenant SaaS platform that transforms company data into a "Live Vector Memory." Unlike traditional AI tools that lease intelligence from external providers, the Corporate Brain creates a persistent, private, and executable knowledge layer that remains the company's permanent intellectual property.
 
 ### Core Value Proposition
+
 - **Sovereignty**: Complete data ownership with zero-training guarantees
 - **Permanence**: Every interaction, document, and conversation becomes institutional memory
 - **Actionability**: Not just storage—an executable brain that agents can plug into
 - **Viral Growth**: "Drop your company's URL + 100 PDFs, get instant private AI"
 
 ### Key Differentiators
-| Feature | Traditional AI Tools | Corporate Brain |
-|---------|---------------------|-----------------|
-| Data Ownership | Leased/Processed | Sovereign/Retained |
-| Context Persistence | Ephemeral | Permanent Memory |
-| Multi-Model Strategy | Single Provider | Orchestrated Ensemble |
-| Integration Depth | Surface-level | Native MCP Connectivity |
-| Cost Optimization | Fixed Pricing | Model-Routed Efficiency |
+
+| Feature              | Traditional AI Tools | Corporate Brain         |
+| -------------------- | -------------------- | ----------------------- |
+| Data Ownership       | Leased/Processed     | Sovereign/Retained      |
+| Context Persistence  | Ephemeral            | Permanent Memory        |
+| Multi-Model Strategy | Single Provider      | Orchestrated Ensemble   |
+| Integration Depth    | Surface-level        | Native MCP Connectivity |
+| Cost Optimization    | Fixed Pricing        | Model-Routed Efficiency |
 
 ---
 
@@ -57,33 +61,38 @@ The **Corporate Brain** is a **Sovereign Context Fabric**—a headless, multi-te
 ### The Current State: Fragmented Intelligence
 
 #### 1. The Leased Intelligence Problem
+
 Modern companies operate on a "leasing" model for AI:
+
 - **Per-query amnesia**: Each ChatGPT conversation starts from zero
 - **Data silos**: Slack conversations, meeting transcripts, and documents exist in disconnected systems
 - **Knowledge leakage**: When employees leave, institutional knowledge evaporates
 - **No central nervous system**: No unified repository of company intelligence
 
 #### 2. The Context Gap
-| Data Source | Current State | Lost Value |
-|-------------|---------------|------------|
-| Slack Messages | Ephemeral, 90-day retention | Tribal knowledge, decision rationale |
-| Meeting Transcripts | Scattered, unsearchable | Action items, strategic decisions |
-| Documents (PDFs, Sheets) | Static storage, manual retrieval | Cross-referenced insights |
-| External Market Data | Manual research | Competitive intelligence |
-| Code Repositories | Isolated from business context | Technical debt reasoning |
+
+| Data Source              | Current State                    | Lost Value                           |
+| ------------------------ | -------------------------------- | ------------------------------------ |
+| Slack Messages           | Ephemeral, 90-day retention      | Tribal knowledge, decision rationale |
+| Meeting Transcripts      | Scattered, unsearchable          | Action items, strategic decisions    |
+| Documents (PDFs, Sheets) | Static storage, manual retrieval | Cross-referenced insights            |
+| External Market Data     | Manual research                  | Competitive intelligence             |
+| Code Repositories        | Isolated from business context   | Technical debt reasoning             |
 
 #### 3. The Cost Inefficiency
+
 - Companies burn $0.50-$2.00 per complex query using premium models for simple tasks
 - No intelligent routing between fast/cheap vs. deep/reasoning models
 - Redundant data processing across multiple AI tools
 
 ### Target Impact
-| Metric | Current State | Target State |
-|--------|---------------|--------------|
+
+| Metric                   | Current State         | Target State          |
+| ------------------------ | --------------------- | --------------------- |
 | Knowledge Retrieval Time | Hours (manual search) | Seconds (AI-assisted) |
-| Employee Onboarding | 3-6 months | 1-2 weeks |
-| Decision Documentation | 30% captured | 95% captured |
-| Cross-functional Context | Siloed | Unified |
+| Employee Onboarding      | 3-6 months            | 1-2 weeks             |
+| Decision Documentation   | 30% captured          | 95% captured          |
+| Cross-functional Context | Siloed                | Unified               |
 
 ---
 
@@ -169,26 +178,27 @@ The Corporate Brain operates as a **headless, multi-tenant context layer** that 
 
 ### Core Stack Specification
 
-| Layer | Technology | Version | Purpose |
-|-------|-----------|---------|---------|
-| **Framework** | Next.js App Router | Latest Stable | Full-stack React framework with server components |
-| **Language** | TypeScript | Latest Stable, Strict Mode | Type-safe development |
-| **Styling** | Tailwind CSS | Latest Stable | Utility-first CSS |
-| **Database** | PostgreSQL | 15+ | Relational data + vector storage |
-| **Vector Engine** | pgvector | Latest | Embedding storage & similarity search |
-| **ORM** | Drizzle ORM | Latest | Type-safe database operations |
-| **Authentication** | Auth.js (NextAuth) | Latest Stable | Multi-tenant auth with OAuth |
-| **AI Integration** | Direct API Clients | Native | Direct OpenAI, Anthropic, Google API integration |
-| **AI SDK (Optional)** | Vercel AI SDK | Latest | Optional unified interface (alternative to direct APIs) |
-| **Orchestration** | LangChain.js | Latest | Agent workflows & chains |
-| **Task Queue** | Upstash Redis | Latest | Background job processing |
-| **File Parsing** | Unstructured.io | API | Complex document extraction |
-| **Web Scraping** | Firecrawl | API | Clean markdown extraction |
-| **Deployment** | Vercel + VPS + Local | Multi-target | Edge + self-hosted options |
+| Layer                 | Technology           | Version                    | Purpose                                                 |
+| --------------------- | -------------------- | -------------------------- | ------------------------------------------------------- |
+| **Framework**         | Next.js App Router   | Latest Stable              | Full-stack React framework with server components       |
+| **Language**          | TypeScript           | Latest Stable, Strict Mode | Type-safe development                                   |
+| **Styling**           | Tailwind CSS         | Latest Stable              | Utility-first CSS                                       |
+| **Database**          | PostgreSQL           | 15+                        | Relational data + vector storage                        |
+| **Vector Engine**     | pgvector             | Latest                     | Embedding storage & similarity search                   |
+| **ORM**               | Drizzle ORM          | Latest                     | Type-safe database operations                           |
+| **Authentication**    | Auth.js (NextAuth)   | Latest Stable              | Multi-tenant auth with OAuth                            |
+| **AI Integration**    | Direct API Clients   | Native                     | Direct OpenAI, Anthropic, Google API integration        |
+| **AI SDK (Optional)** | Vercel AI SDK        | Latest                     | Optional unified interface (alternative to direct APIs) |
+| **Orchestration**     | LangChain.js         | Latest                     | Agent workflows & chains                                |
+| **Task Queue**        | Upstash Redis        | Latest                     | Background job processing                               |
+| **File Parsing**      | Unstructured.io      | API                        | Complex document extraction                             |
+| **Web Scraping**      | Firecrawl            | API                        | Clean markdown extraction                               |
+| **Deployment**        | Vercel + VPS + Local | Multi-target               | Edge + self-hosted options                              |
 
 ### Infrastructure Requirements
 
 #### Production Environment
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                    VERCEL EDGE NETWORK                    │
@@ -212,6 +222,7 @@ The Corporate Brain operates as a **headless, multi-tenant context layer** that 
 ```
 
 #### Local Development Environment
+
 ```bash
 # Docker Compose Stack
 docker-compose up -d
@@ -226,22 +237,24 @@ The Corporate Brain implements a **hybrid rendering approach** optimized for bot
 
 #### Route-Based Rendering Matrix
 
-| Route Group | Rendering Mode | Rationale | SEO Priority |
-|-------------|----------------|-----------|--------------|
-| **/(marketing)/** | **SSR (Server-Side Rendering)** | Public content must be visible to search engines and in view-source | Critical |
-| **/(app)/app/** | **CSR (Client-Side Rendering)** | Authenticated subscriber dashboard with real-time features | None (protected) |
-| **/(app)/dashboard/** | **CSR (Client-Side Rendering)** | Admin owner dashboard with data visualization & management | None (protected) |
-| **/api/** | **Server Functions** | API routes always server-side | N/A |
+| Route Group           | Rendering Mode                  | Rationale                                                           | SEO Priority     |
+| --------------------- | ------------------------------- | ------------------------------------------------------------------- | ---------------- |
+| **/(marketing)/**     | **SSR (Server-Side Rendering)** | Public content must be visible to search engines and in view-source | Critical         |
+| **/(app)/app/**       | **CSR (Client-Side Rendering)** | Authenticated subscriber dashboard with real-time features          | None (protected) |
+| **/(app)/dashboard/** | **CSR (Client-Side Rendering)** | Admin owner dashboard with data visualization & management          | None (protected) |
+| **/api/**             | **Server Functions**            | API routes always server-side                                       | N/A              |
 
 #### Public Frontend (Marketing Site) - SSR Requirements
 
 **SEO-First Architecture:**
+
 - All marketing pages render complete HTML on the server
 - Content visible in `view-source:` without JavaScript execution
 - Meta tags, Open Graph, structured data (JSON-LD) populated at request time
 - Dynamic sitemap.xml and robots.txt generation
 
 **Implementation via Next.js App Router:**
+
 ```typescript
 // app/(marketing)/page.tsx - Server Component by default
 export default async function HomePage() {
@@ -281,6 +294,7 @@ export async function generateMetadata() {
 #### Protected Application Routes - CSR Architecture
 
 **`/app` - Subscriber Management Dashboard:**
+
 ```typescript
 // app/(app)/app/page.tsx
 'use client'; // CSR boundary
@@ -292,10 +306,10 @@ import { ContextSidebar } from '@/components/app/context-sidebar';
 export default function AppDashboard() {
   // Client-side authentication check
   const { data: session, status } = useSession();
-  
+
   if (status === 'loading') return <AppSkeleton />;
   if (!session) return redirect('/login');
-  
+
   return (
     <DashboardLayout>
       <ContextSidebar />      {/* Client-side data fetching */}
@@ -307,6 +321,7 @@ export default function AppDashboard() {
 ```
 
 **CSR Features:**
+
 - Real-time chat streaming via WebSocket/SSE
 - Interactive D3.js knowledge graph
 - Drag-and-drop file upload with progress
@@ -314,13 +329,14 @@ export default function AppDashboard() {
 - Command-K omnibox (client-side fuzzy search)
 
 **`/dashboard` - Admin Owner Dashboard:**
+
 ```typescript
 // app/(app)/dashboard/page.tsx
-'use client';
+"use client";
 
-import { useTenantStats } from '@/hooks/use-tenant-stats';
-import { CostCommandCenter } from '@/components/admin/cost-center';
-import { TenantOverview } from '@/components/admin/tenant-overview';
+import { useTenantStats } from "@/hooks/use-tenant-stats";
+import { CostCommandCenter } from "@/components/admin/cost-center";
+import { TenantOverview } from "@/components/admin/tenant-overview";
 
 export default function AdminDashboard() {
   // Admin role verification (client-side)
@@ -333,6 +349,7 @@ export default function AdminDashboard() {
 #### Technical Implementation Guidelines
 
 **Server Component Default (App Router):**
+
 - All pages default to Server Components (SSR)
 - Use `'use client'` directive only when needed for:
   - Browser APIs (localStorage, clipboard)
@@ -341,6 +358,7 @@ export default function AdminDashboard() {
   - Third-party libraries requiring DOM
 
 **Streaming Architecture:**
+
 ```typescript
 // app/(marketing)/page.tsx with Suspense boundaries
 import { Suspense } from 'react';
@@ -350,12 +368,12 @@ export default function HomePage() {
     <main>
       {/* Critical above-fold content - SSR immediate */}
       <HeroSection />
-      
+
       {/* Below-fold can stream */}
       <Suspense fallback={<FeaturesSkeleton />}>
         <FeatureGrid />
       </Suspense>
-      
+
       <Suspense fallback={<PricingSkeleton />}>
         <PricingCalculator />
       </Suspense>
@@ -365,6 +383,7 @@ export default function HomePage() {
 ```
 
 **Route Group Structure:**
+
 ```
 app/
 ├── (marketing)/           # SSR Group
@@ -395,42 +414,42 @@ The following pages are planned for future releases to enhance marketing reach a
 
 #### Marketing Pages (SSR - Future)
 
-| Page | URL | Purpose | SEO Target |
-|------|-----|---------|------------|
-| **Features Deep-Dive** | `/features` | Detailed feature explanations | "enterprise AI features" |
-| **Integration Directory** | `/integrations` | All supported integrations | "Slack AI integration" |
-| **About / Company** | `/about` | Team, mission, story | Brand + careers |
-| **Blog / Content Hub** | `/blog/*` | Content marketing | Long-tail keywords |
-| **Changelog** | `/changelog` | Product updates | Feature announcements |
-| **Status Page** | `/status` | System health | "corporate brain status" |
-| **Security Center** | `/security` | Detailed security info | "secure AI knowledge base" |
-| **Help Center** | `/help` | FAQs, guides | Support content |
+| Page                      | URL             | Purpose                       | SEO Target                 |
+| ------------------------- | --------------- | ----------------------------- | -------------------------- |
+| **Features Deep-Dive**    | `/features`     | Detailed feature explanations | "enterprise AI features"   |
+| **Integration Directory** | `/integrations` | All supported integrations    | "Slack AI integration"     |
+| **About / Company**       | `/about`        | Team, mission, story          | Brand + careers            |
+| **Blog / Content Hub**    | `/blog/*`       | Content marketing             | Long-tail keywords         |
+| **Changelog**             | `/changelog`    | Product updates               | Feature announcements      |
+| **Status Page**           | `/status`       | System health                 | "corporate brain status"   |
+| **Security Center**       | `/security`     | Detailed security info        | "secure AI knowledge base" |
+| **Help Center**           | `/help`         | FAQs, guides                  | Support content            |
 
 #### Programmatic SEO Pages (Future)
 
-| Template | Example URL | Target Keywords |
-|----------|-------------|---------------|
-| **Integration Guides** | `/integrations/slack/setup` | "Slack AI assistant setup" |
-| **Use Case Pages** | `/use-cases/legal-compliance` | "AI for legal teams" |
-| **Industry Solutions** | `/solutions/healthcare` | "HIPAA compliant AI" |
-| **Comparison Pages** | `/vs/guru-alternative` | "corporate brain vs guru" |
-| **ROI Calculator** | `/tools/roi-calculator` | "knowledge management ROI" |
-| **Customer Stories** | `/customers/acme-corp` | Brand + social proof |
-| **API Documentation** | `/developers/api` | "REST API documentation" |
-| **Templates** | `/templates/employee-handbook` | Document templates |
-| **Glossary** | `/glossary/vector-search` | "what is vector search" |
+| Template               | Example URL                    | Target Keywords            |
+| ---------------------- | ------------------------------ | -------------------------- |
+| **Integration Guides** | `/integrations/slack/setup`    | "Slack AI assistant setup" |
+| **Use Case Pages**     | `/use-cases/legal-compliance`  | "AI for legal teams"       |
+| **Industry Solutions** | `/solutions/healthcare`        | "HIPAA compliant AI"       |
+| **Comparison Pages**   | `/vs/guru-alternative`         | "corporate brain vs guru"  |
+| **ROI Calculator**     | `/tools/roi-calculator`        | "knowledge management ROI" |
+| **Customer Stories**   | `/customers/acme-corp`         | Brand + social proof       |
+| **API Documentation**  | `/developers/api`              | "REST API documentation"   |
+| **Templates**          | `/templates/employee-handbook` | Document templates         |
+| **Glossary**           | `/glossary/vector-search`      | "what is vector search"    |
 
 #### Free Tools (Future)
 
-| Tool | URL | Purpose |
-|------|-----|---------|
-| **URL Scraper Preview** | `/tools/scraper-preview` | Test Firecrawl extraction |
-| **Document Analyzer** | `/tools/document-analyzer` | Preview PDF extraction |
-| **ROI Calculator** | `/tools/roi-calculator` | Interactive savings calc |
-| **Security Scanner** | `/tools/security-check` | Public security assessment |
-| **API Playground** | `/developers/playground` | Try endpoints without auth |
-| **Prompt Optimizer** | `/tools/prompt-optimizer` | AI prompt improvement |
-| **Text Summarizer** | `/tools/summarizer` | Free text summarization |
+| Tool                    | URL                        | Purpose                    |
+| ----------------------- | -------------------------- | -------------------------- |
+| **URL Scraper Preview** | `/tools/scraper-preview`   | Test Firecrawl extraction  |
+| **Document Analyzer**   | `/tools/document-analyzer` | Preview PDF extraction     |
+| **ROI Calculator**      | `/tools/roi-calculator`    | Interactive savings calc   |
+| **Security Scanner**    | `/tools/security-check`    | Public security assessment |
+| **API Playground**      | `/developers/playground`   | Try endpoints without auth |
+| **Prompt Optimizer**    | `/tools/prompt-optimizer`  | AI prompt improvement      |
+| **Text Summarizer**     | `/tools/summarizer`        | Free text summarization    |
 
 ---
 
@@ -440,20 +459,21 @@ The Corporate Brain is engineered for **100/100 Lighthouse scores** on both Desk
 
 ### Performance Targets
 
-| Metric | Target | Lighthouse Weight | Implementation |
-|--------|--------|-------------------|----------------|
-| **Performance Score** | 100/100 | Overall | All optimizations below |
-| **LCP (Largest Contentful Paint)** | < 1.2s | 25% | `next/image`, priority loading, font optimization |
-| **INP (Interaction to Next Paint)** | < 100ms | 30% | Event handler optimization, main thread liberation |
-| **CLS (Cumulative Layout Shift)** | 0 | 25% | Fixed dimensions, reserved spaces, no injected content |
-| **TTFB (Time to First Byte)** | < 200ms | - | Edge rendering, streaming, caching |
-| **FCP (First Contentful Paint)** | < 800ms | 10% | `next/font`, critical CSS inline |
-| **TBT (Total Blocking Time)** | < 100ms | - | Code splitting, lazy evaluation |
-| **SI (Speed Index)** | < 2s | 10% | Progressive rendering, above-fold priority |
+| Metric                              | Target  | Lighthouse Weight | Implementation                                         |
+| ----------------------------------- | ------- | ----------------- | ------------------------------------------------------ |
+| **Performance Score**               | 100/100 | Overall           | All optimizations below                                |
+| **LCP (Largest Contentful Paint)**  | < 1.2s  | 25%               | `next/image`, priority loading, font optimization      |
+| **INP (Interaction to Next Paint)** | < 100ms | 30%               | Event handler optimization, main thread liberation     |
+| **CLS (Cumulative Layout Shift)**   | 0       | 25%               | Fixed dimensions, reserved spaces, no injected content |
+| **TTFB (Time to First Byte)**       | < 200ms | -                 | Edge rendering, streaming, caching                     |
+| **FCP (First Contentful Paint)**    | < 800ms | 10%               | `next/font`, critical CSS inline                       |
+| **TBT (Total Blocking Time)**       | < 100ms | -                 | Code splitting, lazy evaluation                        |
+| **SI (Speed Index)**                | < 2s    | 10%               | Progressive rendering, above-fold priority             |
 
 ### Zero-CLS Guarantee
 
 **Strict Layout Stability Requirements:**
+
 - All images must have explicit `width` and `height` attributes (or `fill` with defined container)
 - No content injection above existing content (no banners, modals, or notifications that push content down)
 - Font display strategy: `font-display: swap` with fallback font metrics matching final font
@@ -461,6 +481,7 @@ The Corporate Brain is engineered for **100/100 Lighthouse scores** on both Desk
 - Reserved space for all dynamic content (ads, charts, lazy-loaded sections)
 
 **Implementation via Next.js:**
+
 ```typescript
 // app/layout.tsx - Font optimization (zero layout shift)
 import { Inter } from 'next/font/google';
@@ -490,12 +511,14 @@ import Image from 'next/image';
 ### No-Flash Loading Strategy
 
 **Prohibited Patterns:**
+
 - ❌ Skeleton screens that visibly flash on every refresh
 - ❌ "Loading..." spinners for content that should be SSR'd
 - ❌ Layout "pops" or content jumps during hydration
 - ❌ White screens during route transitions
 
 **Required Patterns:**
+
 - ✅ Instant rendering of SSR shell (no perceived load time for static content)
 - ✅ Skeletons only for truly dynamic data (with exact-size placeholders)
 - ✅ CSS-based loading states (no JavaScript-driven flashing)
@@ -513,7 +536,7 @@ function Dashboard() {
 function Dashboard() {
   // Server provides initial data
   // Hydration adds interactivity, not content
-  const { data } = useQuery(..., { 
+  const { data } = useQuery(..., {
     initialData: serverData,  // No loading state!
   });
   return <Content data={data} />;
@@ -534,6 +557,7 @@ function AnalyticsWidget() {
 ### Deferred & Lazy Loading
 
 **Heavy Component Loading Strategy:**
+
 ```typescript
 // Defer charts until viewport intersection
 import { lazy, Suspense } from 'react';
@@ -562,6 +586,7 @@ function DeferredChart() {
 ```
 
 **Deferred Libraries:**
+
 - D3.js charts (load only when scrolled into view)
 - Heavy data tables (virtualized + windowed loading)
 - PDF viewers (dynamic import on document selection)
@@ -570,6 +595,7 @@ function DeferredChart() {
 ### Animation & Micro-Interactions
 
 **Smooth Page Transitions:**
+
 ```typescript
 // app/layout.tsx - View transitions for SPA feel
 export const viewport = {
@@ -607,6 +633,7 @@ export const viewport = {
 | Modal | Open | Backdrop fade, content scale from 0.95, 200ms |
 
 **Data Counter Animations:**
+
 ```typescript
 // Animated counter that "ticks" up to final value
 import { useEffect, useState } from 'react';
@@ -618,19 +645,19 @@ function AnimatedCounter({ target, duration = 2000 }: { target: number; duration
 
   useEffect(() => {
     if (!inView) return;
-    
+
     const startTime = Date.now();
     const animate = () => {
       const elapsed = Date.now() - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      
+
       // Easing: easeOutExpo for satisfying "tick" effect
       const easeOut = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       setCount(Math.floor(easeOut * target));
-      
+
       if (progress < 1) requestAnimationFrame(animate);
     };
-    
+
     requestAnimationFrame(animate);
   }, [inView, target, duration]);
 
@@ -646,6 +673,7 @@ function AnimatedCounter({ target, duration = 2000 }: { target: number; duration
 ### Performance Monitoring
 
 **Lighthouse CI Integration:**
+
 ```yaml
 # .github/workflows/lighthouse.yml
 - name: Lighthouse CI
@@ -659,11 +687,12 @@ function AnimatedCounter({ target, duration = 2000 }: { target: number; duration
 ```
 
 **lighthouse-budget.json:**
+
 ```json
 {
   "performance": {
     "warning": 0.95,
-    "error": 0.90
+    "error": 0.9
   },
   "resourceCounts": {
     "total": { "warning": 50, "error": 80 }
@@ -678,6 +707,7 @@ function AnimatedCounter({ target, duration = 2000 }: { target: number; duration
 ### Resource Loading Priorities
 
 **Critical Path (Load First):**
+
 1. HTML document (streaming)
 2. Critical CSS (inlined)
 3. Fonts (`next/font` preloaded)
@@ -685,6 +715,7 @@ function AnimatedCounter({ target, duration = 2000 }: { target: number; duration
 5. Core JavaScript (hydration)
 
 **Deferred (Load Later):**
+
 - Analytics scripts (after `requestIdleCallback`)
 - Chat widgets (after user interaction)
 - Heavy charts (intersection observer)
@@ -700,13 +731,13 @@ The Corporate Brain implements a **Model Router** that intelligently selects the
 
 #### Model Assignment Matrix
 
-| Engine | Model | Context Window | Use Case | Cost Tier |
-|--------|-------|----------------|----------|-----------|
-| **Ingestion** | Gemini 3 Pro | 2M tokens | Bulk document processing, initial index | Medium |
-| **Reasoning** | GPT-5.4 | 128K tokens | Complex cross-referencing, policy analysis | High |
-| **Action** | Claude 4.6 Opus | 200K tokens | Code generation, task execution, agentic workflows | High |
-| **Speed** | Gemini 2.5 Flash | 1M tokens | Simple Q&A, Slack log queries | Low |
-| **Micro** | GPT-5 Nano | 128K tokens | Classification, routing, simple extraction | Very Low |
+| Engine        | Model            | Context Window | Use Case                                           | Cost Tier |
+| ------------- | ---------------- | -------------- | -------------------------------------------------- | --------- |
+| **Ingestion** | Gemini 3 Pro     | 2M tokens      | Bulk document processing, initial index            | Medium    |
+| **Reasoning** | GPT-5.4          | 128K tokens    | Complex cross-referencing, policy analysis         | High      |
+| **Action**    | Claude 4.6 Opus  | 200K tokens    | Code generation, task execution, agentic workflows | High      |
+| **Speed**     | Gemini 2.5 Flash | 1M tokens      | Simple Q&A, Slack log queries                      | Low       |
+| **Micro**     | GPT-5 Nano       | 128K tokens    | Classification, routing, simple extraction         | Very Low  |
 
 ### Routing Logic Implementation
 
@@ -714,15 +745,15 @@ The Corporate Brain implements a **Model Router** that intelligently selects the
 // Model Router Configuration
 interface ModelRouter {
   // Task-based routing
-  ingestion: "gemini-3-pro";           // Bulk processing
-  reasoning: "gpt-5.4";                // Complex analysis
-  action: "claude-4.6-opus";           // Task execution
-  speed: "gemini-2.5-flash";           // Quick queries
-  
+  ingestion: "gemini-3-pro"; // Bulk processing
+  reasoning: "gpt-5.4"; // Complex analysis
+  action: "claude-4.6-opus"; // Task execution
+  speed: "gemini-2.5-flash"; // Quick queries
+
   // Context-window routing
-  hotContext: "gemini-3-pro";          // Recent data (last 3 months)
-  coldContext: "pgvector-rag";          // Historical search
-  
+  hotContext: "gemini-3-pro"; // Recent data (last 3 months)
+  coldContext: "pgvector-rag"; // Historical search
+
   // User override
   userPreference: "auto" | "fast" | "deep" | "creative";
 }
@@ -768,15 +799,17 @@ User Query/Request
 ### Context Strategy: Hybrid RAG
 
 #### Hot Context (Long Context Window)
+
 - **Engine**: Gemini 3 Pro (2M tokens)
 - **Use Case**: Recent data, ongoing conversations, this week's Slack
 - **Advantage**: No retrieval latency, perfect recall of recent context
 - **Implementation**: Feed last 3 months of relevant data directly into prompt
 
 #### Cold Context (Vector Search)
+
 - **Engine**: PostgreSQL + pgvector
 - **Use Case**: Historical documents, archived conversations
-- **Implementation**: 
+- **Implementation**:
   - 1536-dimensional embeddings (OpenAI text-embedding-3-large)
   - HNSW indexing for approximate nearest neighbor search
   - Hybrid search (vector + full-text via PostgreSQL tsvector)
@@ -835,7 +868,7 @@ CREATE TABLE knowledge_sources (
 );
 
 -- Create HNSW index for fast similarity search
-CREATE INDEX idx_knowledge_embedding ON knowledge_sources 
+CREATE INDEX idx_knowledge_embedding ON knowledge_sources
 USING hnsw (embedding vector_cosine_ops);
 
 -- Conversations (Chat history)
@@ -908,13 +941,14 @@ CREATE TABLE usage_stats (
 ### Vector Search Implementation
 
 #### Similarity Search Query
+
 ```typescript
 // Cosine similarity search with metadata filtering
 const similarDocuments = await db.query.knowledgeSources.findMany({
   where: and(
     eq(knowledgeSources.tenantId, tenantId),
     sql`embedding <-> ${queryEmbedding} < 0.3`,
-    eq(knowledgeSources.status, 'indexed')
+    eq(knowledgeSources.status, "indexed"),
   ),
   orderBy: sql`embedding <-> ${queryEmbedding}`,
   limit: 10,
@@ -922,15 +956,16 @@ const similarDocuments = await db.query.knowledgeSources.findMany({
 ```
 
 #### Hybrid Search (Vector + Full-Text)
+
 ```sql
 -- Combined vector and text search with ranking
-SELECT 
+SELECT
     ks.*,
-    (0.7 * (1 - (ks.embedding <=> query_embedding))) + 
+    (0.7 * (1 - (ks.embedding <=> query_embedding))) +
     (0.3 * ts_rank(ks.search_vector, query_tsquery)) as score
 FROM knowledge_sources ks
 WHERE ks.tenant_id = $1
-    AND (ks.embedding <=> query_embedding < 0.3 
+    AND (ks.embedding <=> query_embedding < 0.3
          OR ks.search_vector @@ query_tsquery)
 ORDER BY score DESC
 LIMIT 20;
@@ -1052,42 +1087,44 @@ CREATE TABLE workflows (
 **Visual Identity**: Fortune 500 enterprise-grade with Silicon Valley innovation
 
 #### Color Palette
+
 ```css
 /* Primary Colors */
---color-sovereign-white: #FAFAFA;     /* Clean, premium background */
---color-deep-void: #0A0A0A;           /* Dark mode foundation */
---color-graphite: #1A1A2E;            /* Secondary dark */
+--color-sovereign-white: #fafafa; /* Clean, premium background */
+--color-deep-void: #0a0a0a; /* Dark mode foundation */
+--color-graphite: #1a1a2e; /* Secondary dark */
 
 /* Accent Colors */
---color-neural-purple: #6366F1;       /* Primary action - intelligence */
---color-electric-cyan: #06B6D4;       /* Secondary - tech forward */
---color-sovereign-gold: #F59E0B;      /* Premium highlights */
+--color-neural-purple: #6366f1; /* Primary action - intelligence */
+--color-electric-cyan: #06b6d4; /* Secondary - tech forward */
+--color-sovereign-gold: #f59e0b; /* Premium highlights */
 
 /* Semantic Colors */
---color-success: #10B981;
---color-warning: #F59E0B;
---color-error: #EF4444;
---color-info: #3B82F6;
+--color-success: #10b981;
+--color-warning: #f59e0b;
+--color-error: #ef4444;
+--color-info: #3b82f6;
 
 /* Gradients */
---gradient-intelligence: linear-gradient(135deg, #6366F1 0%, #06B6D4 100%);
---gradient-sovereign: linear-gradient(135deg, #0A0A0A 0%, #1A1A2E 100%);
+--gradient-intelligence: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+--gradient-sovereign: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
 ```
 
 ### Typography
+
 ```css
 /* Font Stack */
---font-display: 'Inter', system-ui, sans-serif;
---font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+--font-display: "Inter", system-ui, sans-serif;
+--font-mono: "JetBrains Mono", "Fira Code", monospace;
 
 /* Scale */
---text-hero: 4rem;        /* 64px - Homepage headlines */
---text-h1: 2.5rem;        /* 40px - Page titles */
---text-h2: 1.875rem;      /* 30px - Section headers */
---text-h3: 1.5rem;        /* 24px - Card titles */
---text-body: 1rem;        /* 16px - Primary content */
---text-small: 0.875rem;   /* 14px - Secondary text */
---text-xs: 0.75rem;       /* 12px - Captions */
+--text-hero: 4rem; /* 64px - Homepage headlines */
+--text-h1: 2.5rem; /* 40px - Page titles */
+--text-h2: 1.875rem; /* 30px - Section headers */
+--text-h3: 1.5rem; /* 24px - Card titles */
+--text-body: 1rem; /* 16px - Primary content */
+--text-small: 0.875rem; /* 14px - Secondary text */
+--text-xs: 0.75rem; /* 12px - Captions */
 ```
 
 ### Component Library
@@ -1096,43 +1133,45 @@ CREATE TABLE workflows (
 
 **Homepage Sections:**
 
-| Section | Purpose | Key Elements |
-|---------|---------|--------------|
-| Hero | Viral trigger | Terminal-like URL input, animated neural network background |
-| Trust | Sovereignty messaging | Zero-training badge, security certifications, PII shield |
-| Features | Value proposition | 3-column grid: Ingest, Reason, Action |
-| Integration | Ecosystem | Animated connector lines to Slack, Notion, Drive |
-| Pricing | ROI calculator | Interactive slider: PDFs → Hours saved |
-| Social Proof | Credibility | Logo carousel, testimonial cards |
+| Section      | Purpose               | Key Elements                                                |
+| ------------ | --------------------- | ----------------------------------------------------------- |
+| Hero         | Viral trigger         | Terminal-like URL input, animated neural network background |
+| Trust        | Sovereignty messaging | Zero-training badge, security certifications, PII shield    |
+| Features     | Value proposition     | 3-column grid: Ingest, Reason, Action                       |
+| Integration  | Ecosystem             | Animated connector lines to Slack, Notion, Drive            |
+| Pricing      | ROI calculator        | Interactive slider: PDFs → Hours saved                      |
+| Social Proof | Credibility           | Logo carousel, testimonial cards                            |
 
 **Hero Component Spec:**
+
 ```typescript
 interface HeroSection {
   // "Drop your URL or point to a Google Drive folder"
   primaryInput: {
     placeholder: string;
-    type: 'url' | 'gdrive-picker';
+    type: "url" | "gdrive-picker";
     validation: (input: string) => boolean;
     onSubmit: (input: string) => Promise<IngestionResult>;
   };
-  
+
   // Live Vector visual
   backgroundAnimation: {
-    type: 'neural-network';
+    type: "neural-network";
     nodeCount: 50;
     connectionDistance: 150;
-    color: 'neural-purple';
-    pulseSpeed: 'slow';
+    color: "neural-purple";
+    pulseSpeed: "slow";
   };
-  
+
   // Trust indicators
-  badges: ['SOC-2', 'GDPR', 'Zero-Training', 'Enterprise-Grade'];
+  badges: ["SOC-2", "GDPR", "Zero-Training", "Enterprise-Grade"];
 }
 ```
 
 #### 2. End-User Dashboard (/app)
 
 **Layout Architecture:**
+
 ```
 ┌────────────────────────────────────────────────────────────────┐
 │  Logo    Search Omnibox (Cmd+K)    Model Switcher   Profile  │ ← Header
@@ -1170,13 +1209,13 @@ interface HeroSection {
 
 **Key UI Components:**
 
-| Component | Function | Spec |
-|-----------|----------|------|
-| **Omnibox** | Command-K search | `⌘+K` trigger, natural language input, suggestion dropdown |
-| **Model Switcher** | User model preference | Toggle: "Fast & Cheap (Flash)" / "Maximum Intelligence (Opus)" |
-| **Citation Sidebar** | Source transparency | Collapsible panel, PDF thumbnails, direct links |
-| **Context Map** | Visual knowledge | D3.js force-directed graph, zoomable, clickable clusters |
-| **Action Buttons** | Task execution | Contextual actions: "Draft Email", "Create Doc", "Schedule" |
+| Component            | Function              | Spec                                                           |
+| -------------------- | --------------------- | -------------------------------------------------------------- |
+| **Omnibox**          | Command-K search      | `⌘+K` trigger, natural language input, suggestion dropdown     |
+| **Model Switcher**   | User model preference | Toggle: "Fast & Cheap (Flash)" / "Maximum Intelligence (Opus)" |
+| **Citation Sidebar** | Source transparency   | Collapsible panel, PDF thumbnails, direct links                |
+| **Context Map**      | Visual knowledge      | D3.js force-directed graph, zoomable, clickable clusters       |
+| **Action Buttons**   | Task execution        | Contextual actions: "Draft Email", "Create Doc", "Schedule"    |
 
 #### 3. Ingestion Hub (Onboarding)
 
@@ -1253,14 +1292,15 @@ Stage 4: Brain Visualization
 
 **Owner Panel Sections:**
 
-| Section | Metrics | Function |
-|---------|---------|----------|
-| **Tenant Overview** | Active tenants, health status, API limits | "City view" grid of all company brains |
+| Section                 | Metrics                                              | Function                                     |
+| ----------------------- | ---------------------------------------------------- | -------------------------------------------- |
+| **Tenant Overview**     | Active tenants, health status, API limits            | "City view" grid of all company brains       |
 | **Cost Command Center** | Token burn rate, revenue per tenant, margin analysis | Model performance toggles, cost optimization |
-| **Security Logs** | PII masking hits, audit trails, export events | Compliance dashboard |
-| **Usage Analytics** | Hottest contexts, query patterns, knowledge gaps | Insights for pre-built brain templates |
+| **Security Logs**       | PII masking hits, audit trails, export events        | Compliance dashboard                         |
+| **Usage Analytics**     | Hottest contexts, query patterns, knowledge gaps     | Insights for pre-built brain templates       |
 
 **ROI Dashboard (Tenant Admin View):**
+
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │  📊 YOUR BRAIN'S IMPACT                                         │
@@ -1294,35 +1334,35 @@ The following components are planned for future releases to enhance user experie
 
 #### App Dashboard Components (Future)
 
-| Component | Purpose | Status |
-|-----------|---------|--------|
-| **Activity Feed** | Real-time stream of team actions, mentions, new documents | Future |
-| **Notification Bell** | Badge count, dropdown panel for alerts and mentions | Future |
-| **Quick Actions Menu** | Floating action button for common tasks | Future |
-| **Advanced Search Filters** | Date range, source type, author, tag filtering | Future |
-| **Bulk Operations Bar** | Multi-select documents, batch actions | Future |
-| **Bookmark/Star System** | Save frequent queries or documents | Future |
-| **Keyboard Shortcuts Modal** | `?` key help overlay with all shortcuts | Future |
-| **Onboarding Tour Tooltips** | New feature walkthroughs | Future |
-| **Real-time Presence Indicators** | Show active users, who's viewing what | Future |
-| **Document Preview Drawer** | Slide-out panel for quick document preview | Future |
-| **Compare Documents** | Side-by-side diff viewer for versions | Future |
-| **Collaborative Cursors** | See other users' cursor positions | Future |
+| Component                         | Purpose                                                   | Status |
+| --------------------------------- | --------------------------------------------------------- | ------ |
+| **Activity Feed**                 | Real-time stream of team actions, mentions, new documents | Future |
+| **Notification Bell**             | Badge count, dropdown panel for alerts and mentions       | Future |
+| **Quick Actions Menu**            | Floating action button for common tasks                   | Future |
+| **Advanced Search Filters**       | Date range, source type, author, tag filtering            | Future |
+| **Bulk Operations Bar**           | Multi-select documents, batch actions                     | Future |
+| **Bookmark/Star System**          | Save frequent queries or documents                        | Future |
+| **Keyboard Shortcuts Modal**      | `?` key help overlay with all shortcuts                   | Future |
+| **Onboarding Tour Tooltips**      | New feature walkthroughs                                  | Future |
+| **Real-time Presence Indicators** | Show active users, who's viewing what                     | Future |
+| **Document Preview Drawer**       | Slide-out panel for quick document preview                | Future |
+| **Compare Documents**             | Side-by-side diff viewer for versions                     | Future |
+| **Collaborative Cursors**         | See other users' cursor positions                         | Future |
 
 #### Admin Dashboard Components (Future)
 
-| Component | Purpose | Status |
-|-----------|---------|--------|
-| **System Health Monitor** | Green/yellow/red status indicators for services | Future |
-| **Live Activity Stream** | Real-time user sessions, active queries | Future |
-| **Cost Burn Rate Gauge** | Speedometer-style cost meter with alerts | Future |
-| **Tenant Lifecycle Funnel** | Signup → Active → Paying → Churn visualization | Future |
-| **Alert Configuration Panel** | Set thresholds for notifications | Future |
-| **Usage Heatmap Calendar** | Daily activity patterns over time | Future |
-| **Model Performance Matrix** | Accuracy vs. cost trade-off analysis | Future |
-| **Geographic Usage Map** | Global tenant distribution | Future |
-| **Anomaly Detection Log** | Auto-detected unusual patterns | Future |
-| **Churn Risk Indicator** | ML-based tenant health scores | Future |
+| Component                     | Purpose                                         | Status |
+| ----------------------------- | ----------------------------------------------- | ------ |
+| **System Health Monitor**     | Green/yellow/red status indicators for services | Future |
+| **Live Activity Stream**      | Real-time user sessions, active queries         | Future |
+| **Cost Burn Rate Gauge**      | Speedometer-style cost meter with alerts        | Future |
+| **Tenant Lifecycle Funnel**   | Signup → Active → Paying → Churn visualization  | Future |
+| **Alert Configuration Panel** | Set thresholds for notifications                | Future |
+| **Usage Heatmap Calendar**    | Daily activity patterns over time               | Future |
+| **Model Performance Matrix**  | Accuracy vs. cost trade-off analysis            | Future |
+| **Geographic Usage Map**      | Global tenant distribution                      | Future |
+| **Anomaly Detection Log**     | Auto-detected unusual patterns                  | Future |
+| **Churn Risk Indicator**      | ML-based tenant health scores                   | Future |
 
 ### Data Visualizations, Charts & Insights (Future)
 
@@ -1330,41 +1370,41 @@ The following advanced visualizations and analytics are planned for future relea
 
 #### Admin Dashboard Charts (Future)
 
-| Visualization | Data | Chart Type | Status |
-|---------------|------|------------|--------|
-| **Cost Burn Trend** | Daily cost over 30 days | Line chart (area fill) | Future |
-| **Query Volume Heatmap** | Hourly usage patterns | Calendar heatmap | Future |
-| **Model Distribution** | GPT vs Gemini vs Claude usage | Pie/donut chart | Future |
-| **Tenant Growth Funnel** | Signup → Active → Paying → Churn | Sankey/funnel chart | Future |
-| **Response Time Distribution** | p50/p95/p99 latency | Box plot/histogram | Future |
-| **Token Efficiency** | Input vs output tokens | Stacked bar chart | Future |
-| **Revenue by Plan** | MRR breakdown | Stacked area chart | Future |
-| **Geographic Usage Map** | Global tenant distribution | Choropleth map | Future |
-| **System Health Status** | Real-time service health | Status grid/indicators | Future |
+| Visualization                  | Data                             | Chart Type             | Status |
+| ------------------------------ | -------------------------------- | ---------------------- | ------ |
+| **Cost Burn Trend**            | Daily cost over 30 days          | Line chart (area fill) | Future |
+| **Query Volume Heatmap**       | Hourly usage patterns            | Calendar heatmap       | Future |
+| **Model Distribution**         | GPT vs Gemini vs Claude usage    | Pie/donut chart        | Future |
+| **Tenant Growth Funnel**       | Signup → Active → Paying → Churn | Sankey/funnel chart    | Future |
+| **Response Time Distribution** | p50/p95/p99 latency              | Box plot/histogram     | Future |
+| **Token Efficiency**           | Input vs output tokens           | Stacked bar chart      | Future |
+| **Revenue by Plan**            | MRR breakdown                    | Stacked area chart     | Future |
+| **Geographic Usage Map**       | Global tenant distribution       | Choropleth map         | Future |
+| **System Health Status**       | Real-time service health         | Status grid/indicators | Future |
 
 #### Tenant Dashboard Charts (Future)
 
-| Visualization | Data | Chart Type | Status |
-|---------------|------|------------|--------|
-| **Brain Growth Timeline** | Documents indexed over time | Line chart with annotations | Future |
-| **Knowledge Coverage** | % of documents categorized | Gauge/progress ring | Future |
-| **Top Sources Chart** | Most referenced documents | Horizontal bar chart | Future |
-| **User Engagement** | Active users, queries per user | Dual-axis line chart | Future |
-| **Search Term Cloud** | Most common query terms | Word cloud | Future |
-| **Context Clusters** | Knowledge graph visualization | D3.js force-directed | Future |
+| Visualization             | Data                           | Chart Type                  | Status |
+| ------------------------- | ------------------------------ | --------------------------- | ------ |
+| **Brain Growth Timeline** | Documents indexed over time    | Line chart with annotations | Future |
+| **Knowledge Coverage**    | % of documents categorized     | Gauge/progress ring         | Future |
+| **Top Sources Chart**     | Most referenced documents      | Horizontal bar chart        | Future |
+| **User Engagement**       | Active users, queries per user | Dual-axis line chart        | Future |
+| **Search Term Cloud**     | Most common query terms        | Word cloud                  | Future |
+| **Context Clusters**      | Knowledge graph visualization  | D3.js force-directed        | Future |
 
 #### Advanced Insights & Anomalies (Future)
 
-| Insight Type | Detection Method | Alert Channel | Status |
-|--------------|-----------------|---------------|--------|
-| **Spike Detection** | 3σ deviation in query volume | Email/Slack | Future |
-| **Knowledge Gap Alert** | Frequent unanswered queries | Weekly digest | Future |
-| **Duplicate Content** | Similarity score > 0.95 | Cleanup suggestion | Future |
-| **Orphaned Documents** | Not queried in 90 days | Archive recommendation | Future |
-| **Hot Topics** | Sudden query cluster emergence | Trending notification | Future |
-| **Cost Anomaly** | Unusual token consumption | Budget alert | Future |
-| **Churn Risk Score** | ML-based engagement analysis | Admin dashboard | Future |
-| **Optimal Model Recommendation** | Query type + cost budget | In-app suggestion | Future |
+| Insight Type                     | Detection Method               | Alert Channel          | Status |
+| -------------------------------- | ------------------------------ | ---------------------- | ------ |
+| **Spike Detection**              | 3σ deviation in query volume   | Email/Slack            | Future |
+| **Knowledge Gap Alert**          | Frequent unanswered queries    | Weekly digest          | Future |
+| **Duplicate Content**            | Similarity score > 0.95        | Cleanup suggestion     | Future |
+| **Orphaned Documents**           | Not queried in 90 days         | Archive recommendation | Future |
+| **Hot Topics**                   | Sudden query cluster emergence | Trending notification  | Future |
+| **Cost Anomaly**                 | Unusual token consumption      | Budget alert           | Future |
+| **Churn Risk Score**             | ML-based engagement analysis   | Admin dashboard        | Future |
+| **Optimal Model Recommendation** | Query type + cost budget       | In-app suggestion      | Future |
 
 ---
 
@@ -1376,16 +1416,16 @@ The Corporate Brain acts as an **MCP Server** that any AI agent can connect to, 
 
 #### Supported Integrations
 
-| Category | Provider | Data Types | Sync Mode | Auth Method |
-|----------|----------|-----------|-----------|-------------|
-| **Chat** | Slack | Messages, Threads, Channels | Real-time + Historical | OAuth 2.0 |
-| **Chat** | Microsoft Teams | Chats, Meetings, Files | Real-time + Historical | OAuth 2.0 |
-| **Documents** | Google Drive | Docs, Sheets, PDFs, Slides | On-demand + Scheduled | OAuth 2.0 |
-| **Documents** | Notion | Pages, Databases, Wikis | Webhook + Scheduled | OAuth 2.0 |
-| **Meetings** | Zoom | Transcripts, Recordings | Webhook | OAuth 2.0 |
-| **Email** | Gmail | Threads, Attachments | Scheduled | OAuth 2.0 |
-| **CRM** | Salesforce | Accounts, Opportunities | Scheduled | OAuth 2.0 |
-| **Code** | GitHub | Issues, PRs, Wiki | Webhook | OAuth 2.0 |
+| Category      | Provider        | Data Types                  | Sync Mode              | Auth Method |
+| ------------- | --------------- | --------------------------- | ---------------------- | ----------- |
+| **Chat**      | Slack           | Messages, Threads, Channels | Real-time + Historical | OAuth 2.0   |
+| **Chat**      | Microsoft Teams | Chats, Meetings, Files      | Real-time + Historical | OAuth 2.0   |
+| **Documents** | Google Drive    | Docs, Sheets, PDFs, Slides  | On-demand + Scheduled  | OAuth 2.0   |
+| **Documents** | Notion          | Pages, Databases, Wikis     | Webhook + Scheduled    | OAuth 2.0   |
+| **Meetings**  | Zoom            | Transcripts, Recordings     | Webhook                | OAuth 2.0   |
+| **Email**     | Gmail           | Threads, Attachments        | Scheduled              | OAuth 2.0   |
+| **CRM**       | Salesforce      | Accounts, Opportunities     | Scheduled              | OAuth 2.0   |
+| **Code**      | GitHub          | Issues, PRs, Wiki           | Webhook                | OAuth 2.0   |
 
 ### MCP Server Capabilities
 
@@ -1394,36 +1434,36 @@ The Corporate Brain acts as an **MCP Server** that any AI agent can connect to, 
 interface MCPServerCapabilities {
   // Tools exposed to external agents
   tools: {
-    'brain.query': {
-      description: 'Query the company knowledge base';
+    "brain.query": {
+      description: "Query the company knowledge base";
       parameters: {
         query: string;
-        context_window?: 'hot' | 'cold' | 'hybrid';
+        context_window?: "hot" | "cold" | "hybrid";
         max_sources?: number;
       };
     };
-    'brain.ingest': {
-      description: 'Add new content to the brain';
+    "brain.ingest": {
+      description: "Add new content to the brain";
       parameters: {
         content: string;
-        source_type: 'url' | 'file' | 'text';
+        source_type: "url" | "file" | "text";
         metadata?: Record<string, any>;
       };
     };
-    'brain.execute': {
-      description: 'Execute an action using brain context';
+    "brain.execute": {
+      description: "Execute an action using brain context";
       parameters: {
         task: string;
-        model_preference?: 'fast' | 'deep';
+        model_preference?: "fast" | "deep";
       };
     };
   };
-  
+
   // Resources exposed to external agents
   resources: {
-    'brain.conversations': 'List of recent conversations';
-    'brain.sources': 'Available knowledge sources';
-    'brain.stats': 'Usage statistics and ROI metrics';
+    "brain.conversations": "List of recent conversations";
+    "brain.sources": "Available knowledge sources";
+    "brain.stats": "Usage statistics and ROI metrics";
   };
 }
 ```
@@ -1468,12 +1508,12 @@ interface MCPServerCapabilities {
 
 ### Zero-Training Guarantee
 
-| Aspect | Implementation | Evidence |
-|--------|---------------|----------|
-| **Data Isolation** | Tenant-scoped embeddings with row-level security | PostgreSQL RLS policies |
-| **API Calls** | Zero-retention flags on all LLM requests | Provider API headers |
-| **Processing** | In-memory processing, no training data logging | Architecture documentation |
-| **Audit** | Complete audit trail of data access | `audit_logs` table |
+| Aspect             | Implementation                                   | Evidence                   |
+| ------------------ | ------------------------------------------------ | -------------------------- |
+| **Data Isolation** | Tenant-scoped embeddings with row-level security | PostgreSQL RLS policies    |
+| **API Calls**      | Zero-retention flags on all LLM requests         | Provider API headers       |
+| **Processing**     | In-memory processing, no training data logging   | Architecture documentation |
+| **Audit**          | Complete audit trail of data access              | `audit_logs` table         |
 
 ### PII Detection & Masking
 
@@ -1483,16 +1523,16 @@ interface PIIShield {
   // Pre-processing (before LLM)
   detection: {
     patterns: {
-      ssn: '\b\d{3}-\d{2}-\d{4}\b';
-      email: '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}';
-      phone: '\b\d{3}[-.]?\d{3}[-.]?\d{4}\b';
-      credit_card: '\b\d{4}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}\b';
+      ssn: "\b\d{3}-\d{2}-\d{4}\b";
+      email: "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}";
+      phone: "\b\d{3}[-.]?\d{3}[-.]?\d{4}\b";
+      credit_card: "\b\d{4}[\s-]?\d{4}[\s-]?\d{4}[\s-]?\d{4}\b";
     };
-    nlp: 'presidio' | 'aws-comprehend' | 'azure-pii';
+    nlp: "presidio" | "aws-comprehend" | "azure-pii";
   };
-  
+
   masking: {
-    strategy: 'redact' | 'hash' | 'tokenize';
+    strategy: "redact" | "hash" | "tokenize";
     preserve_structure: true; // Keep format for LLM context
     audit_hits: true; // Log to security dashboard
   };
@@ -1501,13 +1541,13 @@ interface PIIShield {
 
 ### Compliance Standards
 
-| Standard | Status | Implementation |
-|----------|--------|----------------|
-| SOC 2 Type II | Target: Q3 2026 | Controls in audit_logs |
-| GDPR | Implemented | Data export, deletion APIs |
-| CCPA | Implemented | Privacy dashboard |
-| HIPAA | Future | BAA support for healthcare |
-| ISO 27001 | Future | Security management system |
+| Standard      | Status          | Implementation             |
+| ------------- | --------------- | -------------------------- |
+| SOC 2 Type II | Target: Q3 2026 | Controls in audit_logs     |
+| GDPR          | Implemented     | Data export, deletion APIs |
+| CCPA          | Implemented     | Privacy dashboard          |
+| HIPAA         | Future          | BAA support for healthcare |
+| ISO 27001     | Future          | Security management system |
 
 ### Token-Based Authentication & Verification
 
@@ -1515,27 +1555,31 @@ The Corporate Brain implements a **secure token/code verification system** for a
 
 #### Supported Token Flows
 
-| Flow | Token Type | Delivery | Expiry | Use Case |
-|------|------------|----------|--------|----------|
-| **Email Verification** | 6-digit numeric code | Email | 15 minutes | New account signup confirmation |
-| **Password Reset** | 6-digit numeric code | Email | 15 minutes | Forgot password recovery |
-| **Password Change** | 6-digit numeric code | Email | 15 minutes | Confirm password change for logged-in user |
-| **Email Change** | 6-digit numeric code | New email address | 15 minutes | Verify ownership of new email |
-| **2FA Setup** | TOTP QR code | In-app display | N/A | Authenticator app enrollment |
-| **2FA Verify** | 6-digit TOTP | Authenticator app | 30 seconds | Login/Action verification |
-| **API Key Rotation** | Secure random string | Dashboard display | Immediate | Developer API access |
+| Flow                   | Token Type           | Delivery          | Expiry     | Use Case                                   |
+| ---------------------- | -------------------- | ----------------- | ---------- | ------------------------------------------ |
+| **Email Verification** | 6-digit numeric code | Email             | 15 minutes | New account signup confirmation            |
+| **Password Reset**     | 6-digit numeric code | Email             | 15 minutes | Forgot password recovery                   |
+| **Password Change**    | 6-digit numeric code | Email             | 15 minutes | Confirm password change for logged-in user |
+| **Email Change**       | 6-digit numeric code | New email address | 15 minutes | Verify ownership of new email              |
+| **2FA Setup**          | TOTP QR code         | In-app display    | N/A        | Authenticator app enrollment               |
+| **2FA Verify**         | 6-digit TOTP         | Authenticator app | 30 seconds | Login/Action verification                  |
+| **API Key Rotation**   | Secure random string | Dashboard display | Immediate  | Developer API access                       |
 
 #### Token Architecture
 
 ```typescript
 // Database Schema for Token Storage
 interface VerificationToken {
-  id: string;           // UUID
-  identifier: string;   // Email address (hashed for lookup)
-  token: string;        // SHA-256 hash of the actual code
-  type: 'email_verification' | 'password_reset' | 'password_change' | 'email_change';
-  expires: Date;        // 15 minutes from creation
-  attempts: number;     // Rate limiting (max 3 attempts)
+  id: string; // UUID
+  identifier: string; // Email address (hashed for lookup)
+  token: string; // SHA-256 hash of the actual code
+  type:
+    | "email_verification"
+    | "password_reset"
+    | "password_change"
+    | "email_change";
+  expires: Date; // 15 minutes from creation
+  attempts: number; // Rate limiting (max 3 attempts)
   createdAt: Date;
 }
 
@@ -1543,74 +1587,75 @@ interface VerificationToken {
 function generateVerificationCode(): string {
   // 6-digit numeric code (000000 - 999999)
   // Uses crypto.randomInt for uniform distribution
-  return crypto.randomInt(0, 1000000).toString().padStart(6, '0');
+  return crypto.randomInt(0, 1000000).toString().padStart(6, "0");
 }
 
 // Token Verification Flow
 async function verifyToken(
-  identifier: string,  // Email
-  code: string,       // User input
-  type: TokenType
+  identifier: string, // Email
+  code: string, // User input
+  type: TokenType,
 ): Promise<VerificationResult> {
   // 1. Hash the identifier for lookup
   const hashedIdentifier = hashEmail(identifier);
-  
+
   // 2. Fetch token from database
   const tokenRecord = await db.tokens.findFirst({
     where: { identifier: hashedIdentifier, type },
-    orderBy: { createdAt: 'desc' }
+    orderBy: { createdAt: "desc" },
   });
-  
+
   // 3. Check existence and expiry
   if (!tokenRecord || tokenRecord.expires < new Date()) {
-    return { success: false, error: 'TOKEN_EXPIRED' };
+    return { success: false, error: "TOKEN_EXPIRED" };
   }
-  
+
   // 4. Check attempt limits
   if (tokenRecord.attempts >= 3) {
     await db.tokens.delete({ where: { id: tokenRecord.id } });
-    return { success: false, error: 'MAX_ATTEMPTS_EXCEEDED' };
+    return { success: false, error: "MAX_ATTEMPTS_EXCEEDED" };
   }
-  
+
   // 5. Constant-time comparison (prevent timing attacks)
   const hashedCode = hashCode(code);
   const isValid = timingSafeEqual(
     Buffer.from(tokenRecord.token),
-    Buffer.from(hashedCode)
+    Buffer.from(hashedCode),
   );
-  
+
   // 6. Increment attempts regardless of success
   await db.tokens.update({
     where: { id: tokenRecord.id },
-    data: { attempts: { increment: 1 } }
+    data: { attempts: { increment: 1 } },
   });
-  
+
   if (!isValid) {
-    return { success: false, error: 'INVALID_CODE' };
+    return { success: false, error: "INVALID_CODE" };
   }
-  
+
   // 7. Delete token (single-use)
   await db.tokens.delete({ where: { id: tokenRecord.id } });
-  
+
   return { success: true };
 }
 ```
 
 #### Security Measures
 
-| Measure | Implementation | Purpose |
-|---------|----------------|---------|
-| **Rate Limiting** | Max 3 attempts per token | Prevent brute-force attacks |
-| **Single-Use Tokens** | Deleted after successful verification | Prevent replay attacks |
-| **Time-Limited** | 15-minute expiry | Limit attack window |
-| **Constant-Time Compare** | `crypto.timingSafeEqual()` | Prevent timing side-channel |
-| **Hashed Storage** | SHA-256 of token | Protect database leak |
-| **Identifier Hashing** | HMAC of email for lookup | Protect user privacy |
-| **Attempt Tracking** | Per-token attempt counter | Progressive rate limiting |
+| Measure                   | Implementation                        | Purpose                     |
+| ------------------------- | ------------------------------------- | --------------------------- |
+| **Rate Limiting**         | Max 3 attempts per token              | Prevent brute-force attacks |
+| **Single-Use Tokens**     | Deleted after successful verification | Prevent replay attacks      |
+| **Time-Limited**          | 15-minute expiry                      | Limit attack window         |
+| **Constant-Time Compare** | `crypto.timingSafeEqual()`            | Prevent timing side-channel |
+| **Hashed Storage**        | SHA-256 of token                      | Protect database leak       |
+| **Identifier Hashing**    | HMAC of email for lookup              | Protect user privacy        |
+| **Attempt Tracking**      | Per-token attempt counter             | Progressive rate limiting   |
 
 #### Email Templates
 
 **Verification Email:**
+
 ```
 Subject: Your Corporate Brain verification code: 847291
 
@@ -1629,6 +1674,7 @@ If you didn't request this, please ignore this email.
 ```
 
 **Password Reset Email:**
+
 ```
 Subject: Password reset code: 392847
 
@@ -1651,6 +1697,7 @@ If you didn't request this, your account is safe—no action needed.
 #### UI/UX Flows
 
 **Email Verification Flow:**
+
 ```
 1. User signs up with email/password
 2. System sends 6-digit code to email
@@ -1661,6 +1708,7 @@ If you didn't request this, your account is safe—no action needed.
 ```
 
 **Password Change Flow (Authenticated):**
+
 ```
 1. User navigates to Settings → Security
 2. Enters current password + new password
@@ -1671,6 +1719,7 @@ If you didn't request this, your account is safe—no action needed.
 ```
 
 **Password Reset Flow:**
+
 ```
 1. User clicks "Forgot password" on login
 2. Enters email address
@@ -1684,27 +1733,33 @@ If you didn't request this, your account is safe—no action needed.
 
 ```typescript
 // db/schema.ts
-export const verificationTokens = pgTable('verification_tokens', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  identifier: varchar('identifier', { length: 255 }).notNull(), // Hashed email
-  token: varchar('token', { length: 64 }).notNull(),           // SHA-256 hash
-  type: varchar('type', { length: 50 }).notNull(),             // Token type enum
-  expires: timestamp('expires', { withTimezone: true }).notNull(),
-  attempts: integer('attempts').default(0).notNull(),
-  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
-}, (table) => ({
-  // Index for fast lookup by hashed identifier
-  identifierIdx: index('token_identifier_idx').on(table.identifier),
-  // Automatically delete expired tokens
-  // Handled by application logic or PostgreSQL cron job
-}));
+export const verificationTokens = pgTable(
+  "verification_tokens",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    identifier: varchar("identifier", { length: 255 }).notNull(), // Hashed email
+    token: varchar("token", { length: 64 }).notNull(), // SHA-256 hash
+    type: varchar("type", { length: 50 }).notNull(), // Token type enum
+    expires: timestamp("expires", { withTimezone: true }).notNull(),
+    attempts: integer("attempts").default(0).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+  },
+  (table) => ({
+    // Index for fast lookup by hashed identifier
+    identifierIdx: index("token_identifier_idx").on(table.identifier),
+    // Automatically delete expired tokens
+    // Handled by application logic or PostgreSQL cron job
+  }),
+);
 
 // Enum for token types
 export const TokenType = {
-  EMAIL_VERIFICATION: 'email_verification',
-  PASSWORD_RESET: 'password_reset',
-  PASSWORD_CHANGE: 'password_change',
-  EMAIL_CHANGE: 'email_change',
+  EMAIL_VERIFICATION: "email_verification",
+  PASSWORD_RESET: "password_reset",
+  PASSWORD_CHANGE: "password_change",
+  EMAIL_CHANGE: "email_change",
 } as const;
 ```
 
@@ -1714,61 +1769,61 @@ The following features are planned for future releases beyond the initial launch
 
 #### Real-time & Communication (Future)
 
-| Feature | Description | Priority |
-|---------|-------------|----------|
-| **Activity Feed** | Real-time stream of team actions: new documents, mentions, comments | High |
-| **Notification System** | In-app bell + email digests for mentions, updates, alerts | High |
-| **WebSocket Architecture** | Real-time chat sync, presence indicators, live collaboration | Medium |
-| **Webhook Management** | Incoming webhooks for integrations + outgoing webhooks for events | High |
-| **Comments & Annotations** | Threaded discussions on documents with @mentions | Medium |
+| Feature                    | Description                                                         | Priority |
+| -------------------------- | ------------------------------------------------------------------- | -------- |
+| **Activity Feed**          | Real-time stream of team actions: new documents, mentions, comments | High     |
+| **Notification System**    | In-app bell + email digests for mentions, updates, alerts           | High     |
+| **WebSocket Architecture** | Real-time chat sync, presence indicators, live collaboration        | Medium   |
+| **Webhook Management**     | Incoming webhooks for integrations + outgoing webhooks for events   | High     |
+| **Comments & Annotations** | Threaded discussions on documents with @mentions                    | Medium   |
 
 #### Enterprise Features (Future)
 
-| Feature | Description | Priority |
-|---------|-------------|----------|
-| **SSO/SAML** | Enterprise authentication with IdP integration (Okta, Azure AD) | High |
-| **SCIM User Provisioning** | Automated user management via SCIM 2.0 protocol | Medium |
-| **Custom Roles & Permissions** | Granular RBAC beyond admin/member (viewer, editor, manager) | Medium |
-| **Audit Log Retention Policies** | Auto-archive old logs, configurable retention periods | Medium |
-| **Data Retention Policies** | Auto-delete documents after X days per compliance rules | Medium |
-| **White-Label Options** | Custom branding: logo, colors, domain | Low |
-| **API Keys & Developer Portal** | External API access with rate-limited keys | Medium |
+| Feature                          | Description                                                     | Priority |
+| -------------------------------- | --------------------------------------------------------------- | -------- |
+| **SSO/SAML**                     | Enterprise authentication with IdP integration (Okta, Azure AD) | High     |
+| **SCIM User Provisioning**       | Automated user management via SCIM 2.0 protocol                 | Medium   |
+| **Custom Roles & Permissions**   | Granular RBAC beyond admin/member (viewer, editor, manager)     | Medium   |
+| **Audit Log Retention Policies** | Auto-archive old logs, configurable retention periods           | Medium   |
+| **Data Retention Policies**      | Auto-delete documents after X days per compliance rules         | Medium   |
+| **White-Label Options**          | Custom branding: logo, colors, domain                           | Low      |
+| **API Keys & Developer Portal**  | External API access with rate-limited keys                      | Medium   |
 
 #### Advanced Search & Discovery (Future)
 
-| Feature | Description | Priority |
-|---------|-------------|----------|
-| **Full-Text Search** | PostgreSQL tsvector-based fuzzy text search with filters | Medium |
-| **Semantic Search Boosting** | Combine vector + keyword scores for better relevance | Medium |
-| **Saved Searches** | Bookmark frequent queries with alerts for new matches | Low |
-| **Search Suggestions** | AI-powered query autocomplete based on indexed content | Medium |
+| Feature                      | Description                                              | Priority |
+| ---------------------------- | -------------------------------------------------------- | -------- |
+| **Full-Text Search**         | PostgreSQL tsvector-based fuzzy text search with filters | Medium   |
+| **Semantic Search Boosting** | Combine vector + keyword scores for better relevance     | Medium   |
+| **Saved Searches**           | Bookmark frequent queries with alerts for new matches    | Low      |
+| **Search Suggestions**       | AI-powered query autocomplete based on indexed content   | Medium   |
 
 #### Document Management (Future)
 
-| Feature | Description | Priority |
-|---------|-------------|----------|
-| **Document Versioning** | Track changes, restore previous versions, diff viewer | Medium |
-| **Document Relationships** | Link related docs: "See also", parent/child hierarchies | Medium |
-| **Bulk Operations** | Multi-select documents for batch delete, tag, export | Medium |
-| **Export Functionality** | Download as PDF, Markdown, CSV with custom formatting | Medium |
-| **Duplicate Detection** | Identify similar documents with similarity scoring | Low |
+| Feature                    | Description                                             | Priority |
+| -------------------------- | ------------------------------------------------------- | -------- |
+| **Document Versioning**    | Track changes, restore previous versions, diff viewer   | Medium   |
+| **Document Relationships** | Link related docs: "See also", parent/child hierarchies | Medium   |
+| **Bulk Operations**        | Multi-select documents for batch delete, tag, export    | Medium   |
+| **Export Functionality**   | Download as PDF, Markdown, CSV with custom formatting   | Medium   |
+| **Duplicate Detection**    | Identify similar documents with similarity scoring      | Low      |
 
 #### Workflow Automation (Future)
 
-| Feature | Description | Priority |
-|---------|-------------|----------|
-| **Scheduled Tasks / Cron** | Automated reports, periodic syncs, maintenance jobs | Medium |
-| **Workflow Builder** | IFTTT-style triggers: "If new Slack message → Add to brain" | Medium |
-| **Smart Alerts** | Notify when knowledge gaps detected, costs spike, etc. | Medium |
-| **Auto-Tagging** | AI-powered document categorization and tagging | Low |
+| Feature                    | Description                                                 | Priority |
+| -------------------------- | ----------------------------------------------------------- | -------- |
+| **Scheduled Tasks / Cron** | Automated reports, periodic syncs, maintenance jobs         | Medium   |
+| **Workflow Builder**       | IFTTT-style triggers: "If new Slack message → Add to brain" | Medium   |
+| **Smart Alerts**           | Notify when knowledge gaps detected, costs spike, etc.      | Medium   |
+| **Auto-Tagging**           | AI-powered document categorization and tagging              | Low      |
 
 #### Billing & Monetization (Future)
 
-| Feature | Description | Priority |
-|---------|-------------|----------|
-| **Stripe Integration** | Subscription management, usage-based billing, invoices | High |
-| **Usage Quotas** | Per-tenant limits with grace periods and overages | Medium |
-| **Reseller/Partner Portal** | Multi-tier billing for agencies and integrators | Low |
+| Feature                     | Description                                            | Priority |
+| --------------------------- | ------------------------------------------------------ | -------- |
+| **Stripe Integration**      | Subscription management, usage-based billing, invoices | High     |
+| **Usage Quotas**            | Per-tenant limits with grace periods and overages      | Medium   |
+| **Reseller/Partner Portal** | Multi-tier billing for agencies and integrators        | Low      |
 
 ---
 
@@ -1779,86 +1834,93 @@ The following features are planned for future releases beyond the initial launch
 > **Current Focus**: Production deployment preparation
 
 ### Phase 1: Foundation ✅ COMPLETED (2026-04-06)
+
 **Goal**: Core infrastructure and basic ingestion
 
-| Week | Deliverable | Key Tasks | Status |
-|------|-------------|-----------|--------|
-| 1 | Project scaffolding | Next.js setup, TypeScript config, Tailwind theme, Drizzle ORM | ✅ Complete |
-| 2 | Database & Auth | PostgreSQL + pgvector schema, Auth.js integration, multi-tenancy middleware | ✅ Complete |
-| 3 | Basic ingestion | File upload API, Unstructured.io integration, vector storage | ✅ Complete |
-| 4 | URL crawling | Firecrawl integration, crawl progress UI, basic indexing | ✅ Complete |
+| Week | Deliverable         | Key Tasks                                                                   | Status      |
+| ---- | ------------------- | --------------------------------------------------------------------------- | ----------- |
+| 1    | Project scaffolding | Next.js setup, TypeScript config, Tailwind theme, Drizzle ORM               | ✅ Complete |
+| 2    | Database & Auth     | PostgreSQL + pgvector schema, Auth.js integration, multi-tenancy middleware | ✅ Complete |
+| 3    | Basic ingestion     | File upload API, Unstructured.io integration, vector storage                | ✅ Complete |
+| 4    | URL crawling        | Firecrawl integration, crawl progress UI, basic indexing                    | ✅ Complete |
 
 **Delivered**: Magic link auth, file upload API, document processing pipeline, web crawler
 
 ### Phase 2: AI Core ✅ COMPLETED (2026-04-10)
+
 **Goal**: Multi-model orchestration and chat interface
 
-| Week | Deliverable | Key Tasks | Status |
-|------|-------------|-----------|--------|
-| 5 | Model router | Vercel AI SDK setup, routing logic, cost tracking | ✅ Complete |
-| 6 | Chat interface | Context-aware chatbot, message storage, conversation history | ✅ Complete |
-| 7 | Hybrid RAG | pgvector search, long-context integration, citation system | ✅ Complete |
-| 8 | UI polish | Premium styling, dark mode, responsive design | ✅ Complete |
+| Week | Deliverable    | Key Tasks                                                    | Status      |
+| ---- | -------------- | ------------------------------------------------------------ | ----------- |
+| 5    | Model router   | Vercel AI SDK setup, routing logic, cost tracking            | ✅ Complete |
+| 6    | Chat interface | Context-aware chatbot, message storage, conversation history | ✅ Complete |
+| 7    | Hybrid RAG     | pgvector search, long-context integration, citation system   | ✅ Complete |
+| 8    | UI polish      | Premium styling, dark mode, responsive design                | ✅ Complete |
 
 **Delivered**: AI Model Router, cost tracking system, chat API with Hybrid RAG, Chat UI with citations
 
 ### Phase 3: Integrations ✅ COMPLETED (2026-04-10)
+
 **Goal**: MCP connectivity and data sync
 
-| Week | Deliverable | Key Tasks | Status |
-|------|-------------|-----------|--------|
-| 9 | OAuth framework | Connection manager, token encryption, status monitoring | ✅ Complete |
-| 10 | Slack + Drive | Real-time sync, message ingestion, file processing | ✅ Complete |
-| 11 | Notion + Teams | Database sync, page indexing, meeting transcripts | ✅ Complete |
-| 12 | Zoom + Email | Transcript processing, email thread analysis | ✅ Complete |
+| Week | Deliverable     | Key Tasks                                               | Status      |
+| ---- | --------------- | ------------------------------------------------------- | ----------- |
+| 9    | OAuth framework | Connection manager, token encryption, status monitoring | ✅ Complete |
+| 10   | Slack + Drive   | Real-time sync, message ingestion, file processing      | ✅ Complete |
+| 11   | Notion + Teams  | Database sync, page indexing, meeting transcripts       | ✅ Complete |
+| 12   | Zoom + Email    | Transcript processing, email thread analysis            | ✅ Complete |
 
 **Delivered**: OAuth framework, MCP connectors for Slack, Drive, Notion, Teams
 
 ### Phase 4: Scale & Admin ✅ COMPLETED (2026-04-10)
+
 **Goal**: Admin dashboards and production readiness
 
-| Week | Deliverable | Key Tasks | Status |
-|------|-------------|-----------|--------|
-| 13 | Admin dashboard | Tenant overview, cost command center, security logs | ✅ Complete |
-| 14 | ROI features | Usage analytics, time saved calculations, knowledge gap detection | ✅ Complete |
-| 15 | Context Map | D3.js visualization, knowledge graph, interactive clusters | ✅ Complete |
-| 16 | Production polish | Performance optimization, error handling, monitoring | ✅ Complete |
+| Week | Deliverable       | Key Tasks                                                         | Status      |
+| ---- | ----------------- | ----------------------------------------------------------------- | ----------- |
+| 13   | Admin dashboard   | Tenant overview, cost command center, security logs               | ✅ Complete |
+| 14   | ROI features      | Usage analytics, time saved calculations, knowledge gap detection | ✅ Complete |
+| 15   | Context Map       | D3.js visualization, knowledge graph, interactive clusters        | ✅ Complete |
+| 16   | Production polish | Performance optimization, error handling, monitoring              | ✅ Complete |
 
 **Delivered**: Admin dashboards, ROI analytics, Cost Command Center, tenant management
 
 ### Phase 5: Launch ✅ COMPLETED (2026-04-11)
+
 **Goal**: Public launch and viral features
 
-| Week | Deliverable | Key Tasks | Status |
-|------|-------------|-----------|--------|
-| 17 | Public site | Landing page, viral trigger UI, pricing page | ✅ Complete |
-| 18 | Onboarding flow | 4-stage ingestion hub, progress tracking, brain visualization | ✅ Complete |
-| 19 | Testing & QA | E2E tests, load testing, security audit | ✅ Complete |
-| 20 | Launch | Production deployment, monitoring, support docs | 🔄 Pending |
+| Week | Deliverable     | Key Tasks                                                     | Status      |
+| ---- | --------------- | ------------------------------------------------------------- | ----------- |
+| 17   | Public site     | Landing page, viral trigger UI, pricing page                  | ✅ Complete |
+| 18   | Onboarding flow | 4-stage ingestion hub, progress tracking, brain visualization | ✅ Complete |
+| 19   | Testing & QA    | E2E tests, load testing, security audit                       | ✅ Complete |
+| 20   | Launch          | Production deployment, monitoring, support docs               | 🔄 Pending  |
 
 **Delivered**: Marketing site with neural network hero, pricing page, 4-stage onboarding flow, comprehensive testing infrastructure (Vitest + Playwright, 31 unit tests)
 
 ### Phase 6: Scale & Enterprise (Planned) (Weeks 21-24)
+
 **Goal**: Enterprise features and advanced analytics  
 **Status**: 🔄 Not Started - Planned for post-launch
 
-| Week | Deliverable | Key Tasks |
-|------|-------------|-----------|
-| 21 | Real-time features | Activity feeds, notifications, WebSocket architecture |
-| 22 | Webhook system | Outgoing webhooks, API key management, developer portal |
-| 23 | Enterprise auth | SSO/SAML integration, SCIM provisioning, custom roles |
-| 24 | Advanced analytics | Anomaly detection, predictive insights, churn risk |
+| Week | Deliverable        | Key Tasks                                               |
+| ---- | ------------------ | ------------------------------------------------------- |
+| 21   | Real-time features | Activity feeds, notifications, WebSocket architecture   |
+| 22   | Webhook system     | Outgoing webhooks, API key management, developer portal |
+| 23   | Enterprise auth    | SSO/SAML integration, SCIM provisioning, custom roles   |
+| 24   | Advanced analytics | Anomaly detection, predictive insights, churn risk      |
 
 ### Phase 7: Optimization & Ecosystem (Planned) (Weeks 25-28)
+
 **Goal**: Performance optimization and ecosystem expansion  
 **Status**: 🔄 Not Started - Planned for post-launch
 
-| Week | Deliverable | Key Tasks |
-|------|-------------|-----------|
-| 25 | Search enhancement | Full-text search, semantic boosting, saved searches |
-| 26 | Document management | Versioning, relationships, bulk operations, exports |
-| 27 | Workflow automation | Scheduled tasks, workflow builder, smart alerts |
-| 28 | Performance polish | Edge caching, query optimization, load testing |
+| Week | Deliverable         | Key Tasks                                           |
+| ---- | ------------------- | --------------------------------------------------- |
+| 25   | Search enhancement  | Full-text search, semantic boosting, saved searches |
+| 26   | Document management | Versioning, relationships, bulk operations, exports |
+| 27   | Workflow automation | Scheduled tasks, workflow builder, smart alerts     |
+| 28   | Performance polish  | Edge caching, query optimization, load testing      |
 
 ---
 
@@ -1866,38 +1928,38 @@ The following features are planned for future releases beyond the initial launch
 
 ### Code Deliverables
 
-| Item | Location | Description |
-|------|----------|-------------|
-| **Application Code** | `/app` | Next.js App Router application |
-| **Database Schema** | `/db/schema.ts` | Drizzle ORM schema definitions |
-| **Migrations** | `/db/migrations/` | Version-controlled migrations |
-| **Components** | `/components/` | React components organized by domain |
-| **API Routes** | `/app/api/` | REST and tRPC endpoints |
-| **AI Logic** | `/lib/ai/` | Model router, prompt engineering |
-| **Integrations** | `/lib/integrations/` | MCP clients for external services |
-| **Utils** | `/lib/utils/` | Helper functions, hooks |
-| **Types** | `/types/` | Shared TypeScript definitions |
-| **Tests** | `/tests/` | Unit, integration, E2E tests |
+| Item                 | Location             | Description                          |
+| -------------------- | -------------------- | ------------------------------------ |
+| **Application Code** | `/app`               | Next.js App Router application       |
+| **Database Schema**  | `/db/schema.ts`      | Drizzle ORM schema definitions       |
+| **Migrations**       | `/db/migrations/`    | Version-controlled migrations        |
+| **Components**       | `/components/`       | React components organized by domain |
+| **API Routes**       | `/app/api/`          | REST and tRPC endpoints              |
+| **AI Logic**         | `/lib/ai/`           | Model router, prompt engineering     |
+| **Integrations**     | `/lib/integrations/` | MCP clients for external services    |
+| **Utils**            | `/lib/utils/`        | Helper functions, hooks              |
+| **Types**            | `/types/`            | Shared TypeScript definitions        |
+| **Tests**            | `/tests/`            | Unit, integration, E2E tests         |
 
 ### Documentation Deliverables
 
-| Item | Format | Purpose |
-|------|--------|---------|
-| **README** | Markdown | Project setup, architecture overview |
-| **API Documentation** | OpenAPI/Swagger | API reference for integrations |
-| **MCP Spec** | Markdown | Model Context Protocol specification |
-| **Deployment Guide** | Markdown | Vercel + VPS deployment instructions |
-| **Security Whitepaper** | PDF | Compliance and security details |
-| **User Manual** | Web/MD | End-user and admin documentation |
+| Item                    | Format          | Purpose                              |
+| ----------------------- | --------------- | ------------------------------------ |
+| **README**              | Markdown        | Project setup, architecture overview |
+| **API Documentation**   | OpenAPI/Swagger | API reference for integrations       |
+| **MCP Spec**            | Markdown        | Model Context Protocol specification |
+| **Deployment Guide**    | Markdown        | Vercel + VPS deployment instructions |
+| **Security Whitepaper** | PDF             | Compliance and security details      |
+| **User Manual**         | Web/MD          | End-user and admin documentation     |
 
 ### Infrastructure Deliverables
 
-| Item | Specification |
-|------|---------------|
-| **Vercel Config** | `vercel.json` with edge functions |
-| **Docker Compose** | `docker-compose.yml` for local dev |
-| **Terraform** | `infra/` folder for AWS/GCP provisioning |
-| **GitHub Actions** | `.github/workflows/` CI/CD pipelines |
+| Item               | Specification                            |
+| ------------------ | ---------------------------------------- |
+| **Vercel Config**  | `vercel.json` with edge functions        |
+| **Docker Compose** | `docker-compose.yml` for local dev       |
+| **Terraform**      | `infra/` folder for AWS/GCP provisioning |
+| **GitHub Actions** | `.github/workflows/` CI/CD pipelines     |
 
 ---
 
@@ -1905,46 +1967,46 @@ The following features are planned for future releases beyond the initial launch
 
 ### Product Metrics
 
-| Metric | Target | Measurement |
-|--------|--------|-------------|
-| **Time to First Value** | < 5 minutes | From signup to first indexed document |
-| **Query Latency (p95)** | < 2 seconds | End-to-end response time |
-| **Answer Accuracy** | > 90% | User feedback + citation relevance |
-| **Daily Active Users** | 70% of seats | Engagement per tenant |
-| **Documents Indexed** | > 1000 per tenant | Successful ingestion rate |
+| Metric                  | Target            | Measurement                           |
+| ----------------------- | ----------------- | ------------------------------------- |
+| **Time to First Value** | < 5 minutes       | From signup to first indexed document |
+| **Query Latency (p95)** | < 2 seconds       | End-to-end response time              |
+| **Answer Accuracy**     | > 90%             | User feedback + citation relevance    |
+| **Daily Active Users**  | 70% of seats      | Engagement per tenant                 |
+| **Documents Indexed**   | > 1000 per tenant | Successful ingestion rate             |
 
 ### Business Metrics
 
-| Metric | Target | Measurement |
-|--------|--------|-------------|
-| **Viral Coefficient** | > 0.7 | Invites per new user |
-| **Net Revenue Retention** | > 120% | Expansion - Churn |
-| **Gross Margin** | > 75% | (Revenue - COGS) / Revenue |
-| **Cost per Query** | < $0.05 | Token costs + infrastructure |
-| **Enterprise Conversions** | > 20% | Free → Paid → Enterprise |
+| Metric                     | Target  | Measurement                  |
+| -------------------------- | ------- | ---------------------------- |
+| **Viral Coefficient**      | > 0.7   | Invites per new user         |
+| **Net Revenue Retention**  | > 120%  | Expansion - Churn            |
+| **Gross Margin**           | > 75%   | (Revenue - COGS) / Revenue   |
+| **Cost per Query**         | < $0.05 | Token costs + infrastructure |
+| **Enterprise Conversions** | > 20%   | Free → Paid → Enterprise     |
 
 ### Technical Metrics
 
-| Metric | Target | Measurement |
-|--------|--------|-------------|
-| **Uptime** | 99.9% | Vercel + VPS monitoring |
-| **API Response (p99)** | < 500ms | Edge function performance |
-| **Vector Search Latency** | < 100ms | pgvector query time |
-| **Ingestion Throughput** | > 100 docs/hour | Background worker capacity |
-| **Error Rate** | < 0.1% | Sentry tracking |
+| Metric                    | Target          | Measurement                |
+| ------------------------- | --------------- | -------------------------- |
+| **Uptime**                | 99.9%           | Vercel + VPS monitoring    |
+| **API Response (p99)**    | < 500ms         | Edge function performance  |
+| **Vector Search Latency** | < 100ms         | pgvector query time        |
+| **Ingestion Throughput**  | > 100 docs/hour | Background worker capacity |
+| **Error Rate**            | < 0.1%          | Sentry tracking            |
 
 ---
 
 ## Risk Assessment & Mitigation
 
-| Risk | Likelihood | Impact | Mitigation |
-|------|------------|--------|------------|
-| **LLM API Costs** | High | High | Model router, caching, rate limiting |
-| **Data Privacy Concerns** | Medium | Critical | Zero-training guarantee, SOC 2 audit |
-| **Integration Failures** | Medium | Medium | Retry logic, circuit breakers, fallbacks |
-| **Scaling Challenges** | Medium | High | Horizontal scaling, read replicas, edge caching |
-| **Competitor Response** | High | Medium | Network effects, data gravity, rapid feature iteration |
-| **Technical Debt** | Medium | Medium | Strict TypeScript, comprehensive tests, code reviews |
+| Risk                      | Likelihood | Impact   | Mitigation                                             |
+| ------------------------- | ---------- | -------- | ------------------------------------------------------ |
+| **LLM API Costs**         | High       | High     | Model router, caching, rate limiting                   |
+| **Data Privacy Concerns** | Medium     | Critical | Zero-training guarantee, SOC 2 audit                   |
+| **Integration Failures**  | Medium     | Medium   | Retry logic, circuit breakers, fallbacks               |
+| **Scaling Challenges**    | Medium     | High     | Horizontal scaling, read replicas, edge caching        |
+| **Competitor Response**   | High       | Medium   | Network effects, data gravity, rapid feature iteration |
+| **Technical Debt**        | Medium     | Medium   | Strict TypeScript, comprehensive tests, code reviews   |
 
 ---
 
@@ -1953,33 +2015,36 @@ The following features are planned for future releases beyond the initial launch
 > **📄 Full Details:** See `docs/PENDING_REQUIREMENTS.md` for comprehensive specification
 
 ### Overview
+
 Following the completion of Phases 1-5 (Core Product), the following production readiness requirements must be implemented before public launch. These items represent the "last mile" of a production SaaS product.
 
 ### Summary by Category
 
-| Category | Items | Effort | Priority |
-|----------|-------|--------|----------|
-| **Marketing UI Consistency** | 5 pages overhaul | 1 week | P0 |
-| **New Use Case Page** | 1 new page | 2 days | P1 |
-| **Contact Page Premium** | Dropdown redesign | 1 day | P1 |
-| **Admin CMS** | Content management | 2 weeks | P0 |
-| **Legal Pages** | 3 pages + admin | 1 week | P0 |
-| **Footer Enhancement** | Social links | 2 days | P1 |
-| **Stripe Billing** | Full integration | 2 weeks | P0 |
-| **Dynamic Pricing** | Admin-managed plans | 1 week | P1 |
-| **Settings & SEO** | Branding, webmasters | 1 week | P1 |
-| **API Status Dashboard** | Health monitoring | 2 days | P2 |
-| **Logout Options** | /app + /admin | 1 day | P0 |
+| Category                     | Items                | Effort  | Priority |
+| ---------------------------- | -------------------- | ------- | -------- |
+| **Marketing UI Consistency** | 5 pages overhaul     | 1 week  | P0       |
+| **New Use Case Page**        | 1 new page           | 2 days  | P1       |
+| **Contact Page Premium**     | Dropdown redesign    | 1 day   | P1       |
+| **Admin CMS**                | Content management   | 2 weeks | P0       |
+| **Legal Pages**              | 3 pages + admin      | 1 week  | P0       |
+| **Footer Enhancement**       | Social links         | 2 days  | P1       |
+| **Stripe Billing**           | Full integration     | 2 weeks | P0       |
+| **Dynamic Pricing**          | Admin-managed plans  | 1 week  | P1       |
+| **Settings & SEO**           | Branding, webmasters | 1 week  | P1       |
+| **API Status Dashboard**     | Health monitoring    | 2 days  | P2       |
+| **Logout Options**           | /app + /admin        | 1 day   | P0       |
 
 ### Critical Path for Launch
 
 **Week 1-2: Marketing Consistency & CMS**
+
 - UI overhaul all marketing pages to match homepage theme
 - Extract shared Header/Footer components
 - Create admin CMS interface for content management
 - Implement legal pages with admin editing
 
 **Week 3-4: Billing Integration**
+
 - Stripe account setup and configuration
 - Subscription management UI
 - Checkout flow with trial support
@@ -1987,12 +2052,14 @@ Following the completion of Phases 1-5 (Core Product), the following production 
 - Webhook handling for events
 
 **Week 5-6: Dynamic Features**
+
 - Pricing plan CRUD in admin
 - Monthly/Yearly toggle with discount display
 - Social links management in footer
 - General/Branding/SEO settings
 
 **Week 7-8: Polish & Launch Prep**
+
 - API integration status dashboard
 - End-to-end testing
 - Legal content final review
@@ -2002,13 +2069,13 @@ Following the completion of Phases 1-5 (Core Product), the following production 
 
 ```typescript
 // CMS Tables
-cms_pages, cms_sections, cms_media
+(cms_pages, cms_sections, cms_media);
 
-// Billing Tables  
-subscriptions, invoices, pricing_plans
+// Billing Tables
+(subscriptions, invoices, pricing_plans);
 
 // Settings Tables
-site_settings, settings
+(site_settings, settings);
 
 // Additional Indexes
 // (See PENDING_REQUIREMENTS.md Section 4.3 for full schema)
@@ -2017,17 +2084,20 @@ site_settings, settings
 ### Dependencies
 
 **Required Accounts:**
+
 - Stripe account (test + live keys)
 - Google Analytics (optional)
 - Google Search Console
 - Social media accounts for footer links
 
 **Legal Review:**
+
 - Terms & Conditions (legal counsel)
 - Privacy Policy (GDPR compliance)
 - Refund Policy (alignment with Stripe)
 
 **Technical:**
+
 - SSL certificate
 - Production PostgreSQL
 - Redis instance
@@ -2177,10 +2247,10 @@ interface APIResponse<T> {
 
 **Document Control**
 
-| Version | Date | Author | Changes |
-|---------|------|--------|---------|
-| 1.0 | April 2026 | Project Team | Initial SOW document |
+| Version | Date       | Author       | Changes              |
+| ------- | ---------- | ------------ | -------------------- |
+| 1.0     | April 2026 | Project Team | Initial SOW document |
 
 ---
 
-*This Scope of Work document serves as the comprehensive blueprint for the Corporate Brain project. All development activities, technical decisions, and design implementations should reference and align with the specifications outlined herein.*
+_This Scope of Work document serves as the comprehensive blueprint for the Corporate Brain project. All development activities, technical decisions, and design implementations should reference and align with the specifications outlined herein._

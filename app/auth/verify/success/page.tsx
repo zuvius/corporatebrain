@@ -8,7 +8,9 @@ import { CheckCircle, XCircle, Loader2 } from "lucide-react";
 export default function VerifySuccessPage() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
-  const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
+  const [status, setStatus] = useState<"loading" | "success" | "error">(
+    "loading",
+  );
   const [message, setMessage] = useState("Verifying your email...");
 
   useEffect(() => {
@@ -26,7 +28,7 @@ export default function VerifySuccessPage() {
         if (response.ok) {
           setStatus("success");
           setMessage(data.message || "Email verified successfully!");
-          
+
           // Redirect to app after 3 seconds
           setTimeout(() => {
             window.location.href = data.redirectTo || "/app";
@@ -35,7 +37,7 @@ export default function VerifySuccessPage() {
           setStatus("error");
           setMessage(data.error || "Failed to verify email");
         }
-      } catch (error) {
+      } catch {
         setStatus("error");
         setMessage("An error occurred while verifying your email.");
       }

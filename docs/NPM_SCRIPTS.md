@@ -9,14 +9,14 @@
 
 ## Quick Reference
 
-| Category | Command | Purpose |
-|----------|---------|---------|
-| 🚀 **Development** | `npm run dev` | Auto-seed database + start dev server |
-| 🏗️ **Build** | `npm run build` | Production build with pre-checks |
-| 🧪 **Testing** | `npm run test:unit` | Run 31 passing unit tests |
-| 🗄️ **Database** | `npm run db:setup` | Migrate + seed fresh database |
-| 🐳 **Docker** | `npm run docker:start` | Start PostgreSQL + Redis |
-| 🔧 **Setup** | `npm run setup` | Complete project initialization |
+| Category           | Command                | Purpose                               |
+| ------------------ | ---------------------- | ------------------------------------- |
+| 🚀 **Development** | `npm run dev`          | Auto-seed database + start dev server |
+| 🏗️ **Build**       | `npm run build`        | Production build with pre-checks      |
+| 🧪 **Testing**     | `npm run test:unit`    | Run 31 passing unit tests             |
+| 🗄️ **Database**    | `npm run db:setup`     | Migrate + seed fresh database         |
+| 🐳 **Docker**      | `npm run docker:start` | Start PostgreSQL + Redis              |
+| 🔧 **Setup**       | `npm run setup`        | Complete project initialization       |
 
 ---
 
@@ -25,15 +25,18 @@
 ### `npm run dev` ⭐ **Primary Development Command**
 
 **What it does:**
+
 1. Runs `predev` hook → `npm run db:seed` (seeds database if needed)
 2. Starts Next.js development server on `http://localhost:3004`
 
 **When to use:**
+
 - Starting daily development
 - After pulling new changes
 - Testing the application locally
 
 **Output:**
+
 ```
 🌱 Seeding tenants...
   ⏭️  Tenant 'acme' already exists, skipping
@@ -48,6 +51,7 @@
 ```
 
 **Features:**
+
 - Idempotent (safe to run multiple times)
 - Skips existing data automatically
 - Seeds admin + member test users
@@ -58,6 +62,7 @@
 ### `npm run setup` ⭐ **One-Time Project Setup**
 
 **What it does:**
+
 ```bash
 npm install                    # Install dependencies
 && npm run docker:start        # Start PostgreSQL + Redis
@@ -66,11 +71,13 @@ npm install                    # Install dependencies
 ```
 
 **When to use:**
+
 - First time cloning the repository
 - Setting up a new development environment
 - After `rm -rf node_modules`
 
 **Prerequisites:**
+
 - Docker Desktop installed and running
 - Node.js 18+ and npm 9+
 
@@ -84,6 +91,7 @@ npm install                    # Install dependencies
 **File:** `db/seeds/index.ts`
 
 **Creates:**
+
 - **Tenant:** "Acme Corporation" (slug: `acme`)
 - **Admin User:** `admin@acme.com` / `password123`
 - **Member User:** `member@acme.com` / `password123`
@@ -92,6 +100,7 @@ npm install                    # Install dependencies
 - **Integrations:** Slack, Google Drive, Notion (disconnected)
 
 **When to use:**
+
 - After database reset
 - Setting up new developer environment
 - Need fresh test data
@@ -101,12 +110,14 @@ npm install                    # Install dependencies
 ### `npm run db:setup`
 
 **What it does:**
+
 ```bash
 npm run db:migrate    # Push schema to database
 && npm run db:seed    # Seed with test data
 ```
 
 **When to use:**
+
 - First time database initialization
 - After schema changes
 - Creating fresh database instance
@@ -119,6 +130,7 @@ npm run db:migrate    # Push schema to database
 **Command:** `drizzle-kit push:pg`
 
 **When to use:**
+
 - After modifying `lib/db/schema.ts`
 - Creating new tables or columns
 - Schema synchronization
@@ -128,6 +140,7 @@ npm run db:migrate    # Push schema to database
 ### `npm run db:reset` ⚠️ **Destructive**
 
 **What it does:**
+
 ```bash
 tsx scripts/db-reset.ts      # Drop all tables
 && npm run db:migrate        # Recreate schema
@@ -137,6 +150,7 @@ tsx scripts/db-reset.ts      # Drop all tables
 **⚠️ Warning:** This **DELETES ALL DATA** - use with caution!
 
 **When to use:**
+
 - Corrupted database state
 - Schema conflicts
 - Starting completely fresh
@@ -149,12 +163,14 @@ tsx scripts/db-reset.ts      # Drop all tables
 **URL:** `https://local.drizzle.studio`
 
 **Features:**
+
 - Browse tables and records
 - Edit data inline
 - View relationships
 - Export/import data
 
 **When to use:**
+
 - Debugging database issues
 - Manual data inspection
 - Schema verification
@@ -167,6 +183,7 @@ tsx scripts/db-reset.ts      # Drop all tables
 **Command:** `drizzle-kit generate:pg`
 
 **When to use:**
+
 - Before running migrations
 - Creating versioned schema changes
 - Production deployments
@@ -181,10 +198,12 @@ tsx scripts/db-reset.ts      # Drop all tables
 **Command:** `docker-compose up -d`
 
 **Services:**
+
 - **PostgreSQL** (port 5432) - Main database with pgvector extension
 - **Redis** (port 6379) - Session cache and job queue
 
 **When to use:**
+
 - Before first `npm run dev`
 - After system restart
 - When Docker Desktop was stopped
@@ -197,6 +216,7 @@ tsx scripts/db-reset.ts      # Drop all tables
 **Command:** `docker-compose down`
 
 **When to use:**
+
 - Shutting down development
 - Freeing system resources
 - Before system restart
@@ -209,6 +229,7 @@ tsx scripts/db-reset.ts      # Drop all tables
 **Command:** `docker-compose logs -f`
 
 **When to use:**
+
 - Debugging database connection issues
 - Monitoring Redis operations
 - Troubleshooting container errors
@@ -221,11 +242,13 @@ tsx scripts/db-reset.ts      # Drop all tables
 
 **Purpose:** Run Vitest in interactive watch mode  
 **Features:**
+
 - Auto-runs tests on file changes
 - Interactive UI for filtering tests
 - Hot reloading for rapid iteration
 
 **When to use:**
+
 - Writing new tests
 - Refactoring code
 - Continuous test-driven development
@@ -236,11 +259,13 @@ tsx scripts/db-reset.ts      # Drop all tables
 
 **Purpose:** Run all tests once (CI mode)  
 **Features:**
+
 - No watch mode
 - Exits with code on failure
 - Suitable for scripts
 
 **When to use:**
+
 - Pre-commit validation
 - CI/CD pipelines
 - Quick check before push
@@ -253,6 +278,7 @@ tsx scripts/db-reset.ts      # Drop all tables
 **Command:** `vitest run lib/ --reporter=verbose`
 
 **Current Status:**
+
 ```
 ✓ lib/utils.test.ts (22 tests) - PASSING
 ✓ lib/ai/cost-tracker.test.ts (9 tests) - PASSING
@@ -260,6 +286,7 @@ Total: 31 unit tests passing
 ```
 
 **When to use:**
+
 - Fast feedback on utility functions
 - Business logic validation
 - Before committing changes to `lib/`
@@ -272,15 +299,18 @@ Total: 31 unit tests passing
 **Browsers:** Chromium, Firefox, WebKit
 
 **Test Files:**
+
 - `tests/e2e/auth.spec.ts` - Authentication flows
 - `tests/e2e/chat.spec.ts` - Chat interface
 - `tests/e2e/onboarding.spec.ts` - Onboarding flow
 
 **Requirements:**
+
 - Dev server running on `localhost:3004`
 - Database seeded with test users
 
 **When to use:**
+
 - Full user journey validation
 - Pre-release testing
 - CI/CD quality gates
@@ -293,6 +323,7 @@ Total: 31 unit tests passing
 **Command:** `vitest run && playwright test`
 
 **When to use:**
+
 - GitHub Actions workflows
 - Pre-deployment validation
 - Full quality assurance
@@ -305,11 +336,13 @@ Total: 31 unit tests passing
 
 **Purpose:** Production build  
 **Pre-build hooks:**
+
 ```bash
 prebuild: npm run db:generate && npm run db:migrate && npm run type-check
 ```
 
 **When to use:**
+
 - Production deployment
 - Vercel/GitHub Actions builds
 - Performance testing
@@ -322,6 +355,7 @@ prebuild: npm run db:generate && npm run db:migrate && npm run type-check
 **Requires:** `npm run build` first
 
 **When to use:**
+
 - Production environment
 - Docker production containers
 - Local production testing
@@ -334,6 +368,7 @@ prebuild: npm run db:generate && npm run db:migrate && npm run type-check
 **Command:** `tsc --noEmit`
 
 **When to use:**
+
 - Before builds
 - CI/CD pipelines
 - Catching type errors early
@@ -348,6 +383,7 @@ prebuild: npm run db:generate && npm run db:migrate && npm run type-check
 **Command:** `next lint`
 
 **When to use:**
+
 - Code style enforcement
 - Pre-commit hooks
 - CI quality gates
@@ -362,6 +398,7 @@ prebuild: npm run db:generate && npm run db:migrate && npm run type-check
 **Command:** `prettier --write .`
 
 **When to use:**
+
 - Before committing
 - Bulk formatting
 - Consistent code style
@@ -374,6 +411,7 @@ prebuild: npm run db:generate && npm run db:migrate && npm run type-check
 **Command:** `prettier --check .`
 
 **When to use:**
+
 - CI/CD validation
 - Pre-commit checks
 - Enforcing formatting standards
@@ -386,11 +424,13 @@ prebuild: npm run db:generate && npm run db:migrate && npm run type-check
 
 **Purpose:** Verify Windsurf memory bank integrity  
 **Checks:**
+
 - Directory structure (`.windsurf/`, `context/`, `memory/`)
 - Required files (rules.md, workflows, etc.)
 - Changelog entries
 
 **When to use:**
+
 - After file changes
 - Before commits
 - Troubleshooting context issues
@@ -403,6 +443,7 @@ prebuild: npm run db:generate && npm run db:migrate && npm run type-check
 **Command:** `node .windsurf/scripts/memory-tracker.js --update`
 
 **When to use:**
+
 - After completing features
 - End of development session
 - Manual context refresh
@@ -415,6 +456,7 @@ prebuild: npm run db:generate && npm run db:migrate && npm run type-check
 **Command:** `node .windsurf/scripts/memory-tracker.js --gather`
 
 **When to use:**
+
 - Preparing for AI assistance
 - Summarizing recent work
 - Context switching
@@ -427,6 +469,7 @@ prebuild: npm run db:generate && npm run db:migrate && npm run type-check
 **Command:** `npm run memory:verify && npm run type-check && npm run lint`
 
 **When to use:**
+
 - Pre-commit validation
 - Quality gates
 - Final checks before push
@@ -437,10 +480,12 @@ prebuild: npm run db:generate && npm run db:migrate && npm run type-check
 
 **Purpose:** Install Git hooks for auto-tracking  
 **Hooks:**
+
 - `post-commit` - Track changes after commits
 - `prepare-commit-msg` - Context-aware commit messages
 
 **When to use:**
+
 - First time project setup
 - After cloning repository
 - Reinstalling hooks
@@ -452,6 +497,7 @@ prebuild: npm run db:generate && npm run db:migrate && npm run type-check
 These scripts run automatically as part of other commands:
 
 ### `predev`
+
 **Runs before:** `npm run dev`  
 **Command:** `npm run db:seed`  
 **Purpose:** Ensure database is seeded before starting server
@@ -459,6 +505,7 @@ These scripts run automatically as part of other commands:
 ---
 
 ### `prebuild`
+
 **Runs before:** `npm run build`  
 **Command:** `npm run db:generate && npm run db:migrate && npm run type-check`  
 **Purpose:** Validate and prepare before production build
@@ -466,6 +513,7 @@ These scripts run automatically as part of other commands:
 ---
 
 ### `postinstall`
+
 **Runs after:** `npm install`  
 **Command:** `drizzle-kit generate:pg`  
 **Purpose:** Generate Drizzle types immediately after install
@@ -475,6 +523,7 @@ These scripts run automatically as part of other commands:
 ## Common Workflows
 
 ### First-Time Setup (New Developer)
+
 ```bash
 # 1. Clone and enter directory
 git clone <repo-url>
@@ -493,6 +542,7 @@ curl http://localhost:3004
 ---
 
 ### Daily Development
+
 ```bash
 # Ensure Docker is running
 npm run docker:start
@@ -510,6 +560,7 @@ npm run context:check
 ---
 
 ### Database Reset (Starting Fresh)
+
 ```bash
 # ⚠️ Destroys all data!
 npm run db:reset
@@ -523,6 +574,7 @@ npm run db:setup
 ---
 
 ### Testing Workflow
+
 ```bash
 # 1. Unit tests (fast)
 npm run test:unit
@@ -540,6 +592,7 @@ npm run test:ci
 ---
 
 ### Pre-Commit Checklist
+
 ```bash
 # Run full verification
 npm run context:check
@@ -557,16 +610,17 @@ npm run test:unit       # Tests passing
 
 After running `npm run dev` or `npm run db:seed`:
 
-| Role | Email | Password | Access |
-|------|-------|----------|--------|
-| **Admin** | `admin@acme.com` | `password123` | `/app` + `/admin/*` |
-| **Member** | `member@acme.com` | `password123` | `/app` only |
+| Role       | Email             | Password      | Access              |
+| ---------- | ----------------- | ------------- | ------------------- |
+| **Admin**  | `admin@acme.com`  | `password123` | `/app` + `/admin/*` |
+| **Member** | `member@acme.com` | `password123` | `/app` only         |
 
 ---
 
 ## Troubleshooting
 
 ### "Cannot connect to database"
+
 ```bash
 # Start Docker containers
 npm run docker:start
@@ -579,6 +633,7 @@ npm run docker:logs
 ```
 
 ### "Database not seeded"
+
 ```bash
 # Manual seed
 npm run db:seed
@@ -588,6 +643,7 @@ npm run db:reset
 ```
 
 ### "Type errors in tests"
+
 ```bash
 # Regenerate Drizzle types
 npm run db:generate
@@ -597,6 +653,7 @@ npm run type-check
 ```
 
 ### "Memory verification failed"
+
 ```bash
 # Update memory bank
 npm run memory:update

@@ -1,7 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { X, CheckCircle, AlertCircle, AlertTriangle, Info, Loader2 } from "lucide-react";
+import {
+  X,
+  CheckCircle,
+  AlertCircle,
+  AlertTriangle,
+  Info,
+  Loader2,
+} from "lucide-react";
 
 // Premium Confirmation Dialog
 interface ConfirmDialogProps {
@@ -48,28 +55,32 @@ export function ConfirmDialog({
       icon: AlertTriangle,
       iconBg: "bg-red-100 dark:bg-red-900/30",
       iconColor: "text-red-600 dark:text-red-400",
-      buttonBg: "bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700",
+      buttonBg:
+        "bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700",
       borderColor: "border-red-200 dark:border-red-800",
     },
     warning: {
       icon: AlertCircle,
       iconBg: "bg-amber-100 dark:bg-amber-900/30",
       iconColor: "text-amber-600 dark:text-amber-400",
-      buttonBg: "bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700",
+      buttonBg:
+        "bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700",
       borderColor: "border-amber-200 dark:border-amber-800",
     },
     info: {
       icon: Info,
       iconBg: "bg-blue-100 dark:bg-blue-900/30",
       iconColor: "text-blue-600 dark:text-blue-400",
-      buttonBg: "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700",
+      buttonBg:
+        "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700",
       borderColor: "border-blue-200 dark:border-blue-800",
     },
     success: {
       icon: CheckCircle,
       iconBg: "bg-green-100 dark:bg-green-900/30",
       iconColor: "text-green-600 dark:text-green-400",
-      buttonBg: "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700",
+      buttonBg:
+        "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700",
       borderColor: "border-green-200 dark:border-green-800",
     },
   };
@@ -101,10 +112,10 @@ export function ConfirmDialog({
             type === "danger"
               ? "from-red-500 to-rose-500"
               : type === "warning"
-              ? "from-amber-500 to-orange-500"
-              : type === "success"
-              ? "from-green-500 to-emerald-500"
-              : "from-blue-500 to-indigo-500"
+                ? "from-amber-500 to-orange-500"
+                : type === "success"
+                  ? "from-green-500 to-emerald-500"
+                  : "from-blue-500 to-indigo-500"
           }`}
         />
 
@@ -240,16 +251,16 @@ function ToastItem({
   return (
     <div
       className={`pointer-events-auto w-full ${config.bg} rounded-xl shadow-xl border ${config.border} overflow-hidden transition-all duration-300 ${
-        isVisible
-          ? "opacity-100 translate-x-0"
-          : "opacity-0 translate-x-full"
+        isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"
       }`}
     >
       {/* Top gradient bar */}
       <div className={`h-1 w-full bg-gradient-to-r ${config.gradient}`} />
 
       <div className="p-4 flex items-start gap-3">
-        <div className={`flex-shrink-0 w-10 h-10 rounded-lg ${config.iconBg} flex items-center justify-center`}>
+        <div
+          className={`flex-shrink-0 w-10 h-10 rounded-lg ${config.iconBg} flex items-center justify-center`}
+        >
           <Icon className={`w-5 h-5 ${config.iconColor}`} />
         </div>
 
@@ -312,7 +323,12 @@ interface AlertBannerProps {
   onDismiss?: () => void;
 }
 
-export function AlertBanner({ type, title, message, onDismiss }: AlertBannerProps) {
+export function AlertBanner({
+  type,
+  title,
+  message,
+  onDismiss,
+}: AlertBannerProps) {
   const config = {
     success: {
       icon: CheckCircle,
@@ -351,13 +367,21 @@ export function AlertBanner({ type, title, message, onDismiss }: AlertBannerProp
       className={`relative overflow-hidden rounded-xl border ${config.border} ${config.bg} p-4`}
     >
       {/* Gradient accent */}
-      <div className={`absolute top-0 left-0 w-1 h-full bg-gradient-to-b ${config.gradient}`} />
+      <div
+        className={`absolute top-0 left-0 w-1 h-full bg-gradient-to-b ${config.gradient}`}
+      />
 
       <div className="flex items-start gap-3 pl-3">
         <Icon className={`flex-shrink-0 w-5 h-5 ${config.iconColor}`} />
         <div className="flex-1">
-          <h4 className="text-sm font-semibold text-gray-900 dark:text-white">{title}</h4>
-          {message && <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{message}</p>}
+          <h4 className="text-sm font-semibold text-gray-900 dark:text-white">
+            {title}
+          </h4>
+          {message && (
+            <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+              {message}
+            </p>
+          )}
         </div>
         {onDismiss && (
           <button

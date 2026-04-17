@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth/auth";
-import { getOAuthUrl, IntegrationProvider } from "@/lib/integrations/oauth-framework";
+import {
+  getOAuthUrl,
+  IntegrationProvider,
+} from "@/lib/integrations/oauth-framework";
 import { cookies } from "next/headers";
 import { v4 as uuidv4 } from "uuid";
 
@@ -14,7 +17,7 @@ const VALID_PROVIDERS: IntegrationProvider[] = [
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ provider: string }> }
+  { params }: { params: Promise<{ provider: string }> },
 ) {
   try {
     const session = await auth();
@@ -24,17 +27,14 @@ export async function GET(
 
     const { provider: providerParam } = await params;
     const provider = providerParam as IntegrationProvider;
-    
+
     if (!VALID_PROVIDERS.includes(provider)) {
-      return NextResponse.json(
-        { error: "Invalid provider" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Invalid provider" }, { status: 400 });
     }
 
     // Generate state for CSRF protection
     const state = uuidv4();
-    
+
     // Store state in cookie (short-lived)
     const cookieStore = await cookies();
     cookieStore.set("oauth_state", state, {
@@ -59,7 +59,7 @@ export async function GET(
     console.error("OAuth initiation error:", error);
     return NextResponse.json(
       { error: "Failed to initiate OAuth" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

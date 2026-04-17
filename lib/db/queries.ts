@@ -32,7 +32,7 @@ export async function getUserByEmail(email: string, tenantId: string) {
   return db.query.users.findFirst({
     where: and(
       eq(schema.users.email, email),
-      eq(schema.users.tenantId, tenantId)
+      eq(schema.users.tenantId, tenantId),
     ),
   });
 }
@@ -61,7 +61,10 @@ export async function updateUser(id: string, data: Partial<schema.NewUser>) {
 }
 
 // Knowledge source queries
-export async function getKnowledgeSourcesByTenant(tenantId: string, limit = 100) {
+export async function getKnowledgeSourcesByTenant(
+  tenantId: string,
+  limit = 100,
+) {
   return db.query.knowledgeSources.findMany({
     where: eq(schema.knowledgeSources.tenantId, tenantId),
     limit,
@@ -70,13 +73,16 @@ export async function getKnowledgeSourcesByTenant(tenantId: string, limit = 100)
 }
 
 export async function createKnowledgeSource(data: schema.NewKnowledgeSource) {
-  const [source] = await db.insert(schema.knowledgeSources).values(data).returning();
+  const [source] = await db
+    .insert(schema.knowledgeSources)
+    .values(data)
+    .returning();
   return source;
 }
 
 export async function updateKnowledgeSource(
   id: string,
-  data: Partial<schema.NewKnowledgeSource>
+  data: Partial<schema.NewKnowledgeSource>,
 ) {
   const [source] = await db
     .update(schema.knowledgeSources)
@@ -91,7 +97,7 @@ export async function searchSimilarDocuments(
   tenantId: string,
   embedding: number[],
   limit = 5,
-  threshold = 0.3
+  threshold = 0.3,
 ) {
   const results = await db.execute(sql`
     SELECT 
@@ -112,7 +118,7 @@ export async function getConversationsByUser(userId: string, tenantId: string) {
   return db.query.conversations.findMany({
     where: and(
       eq(schema.conversations.userId, userId),
-      eq(schema.conversations.tenantId, tenantId)
+      eq(schema.conversations.tenantId, tenantId),
     ),
     orderBy: desc(schema.conversations.updatedAt),
   });
@@ -139,7 +145,7 @@ export async function createConversation(data: schema.NewConversation) {
 
 export async function updateConversation(
   id: string,
-  data: Partial<schema.NewConversation>
+  data: Partial<schema.NewConversation>,
 ) {
   const [conversation] = await db
     .update(schema.conversations)
@@ -175,11 +181,14 @@ export async function getIntegrationsByTenant(tenantId: string) {
   });
 }
 
-export async function getIntegrationByProvider(tenantId: string, provider: string) {
+export async function getIntegrationByProvider(
+  tenantId: string,
+  provider: string,
+) {
   return db.query.integrations.findFirst({
     where: and(
       eq(schema.integrations.tenantId, tenantId),
-      eq(schema.integrations.provider, provider)
+      eq(schema.integrations.provider, provider),
     ),
   });
 }
@@ -194,7 +203,7 @@ export async function createIntegration(data: schema.NewIntegration) {
 
 export async function updateIntegration(
   id: string,
-  data: Partial<schema.NewIntegration>
+  data: Partial<schema.NewIntegration>,
 ) {
   const [integration] = await db
     .update(schema.integrations)
@@ -219,7 +228,9 @@ export async function getAuditLogsByTenant(tenantId: string, limit = 100) {
 }
 
 // Verification token queries
-export async function createVerificationToken(data: schema.NewVerificationToken) {
+export async function createVerificationToken(
+  data: schema.NewVerificationToken,
+) {
   const [token] = await db
     .insert(schema.verificationTokens)
     .values(data)
@@ -231,11 +242,13 @@ export async function getVerificationToken(identifier: string, token: string) {
   return db.query.verificationTokens.findFirst({
     where: and(
       eq(schema.verificationTokens.identifier, identifier),
-      eq(schema.verificationTokens.token, token)
+      eq(schema.verificationTokens.token, token),
     ),
   });
 }
 
 export async function deleteVerificationToken(id: string) {
-  await db.delete(schema.verificationTokens).where(eq(schema.verificationTokens.id, id));
+  await db
+    .delete(schema.verificationTokens)
+    .where(eq(schema.verificationTokens.id, id));
 }

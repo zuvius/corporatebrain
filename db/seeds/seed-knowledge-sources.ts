@@ -26,7 +26,8 @@ export async function seedKnowledgeSources(tenantId: string) {
       type: "pdf",
       source: "upload",
       title: "Employee Handbook 2024",
-      content: "Welcome to Acme Corporation. This handbook outlines our policies, benefits, and procedures...",
+      content:
+        "Welcome to Acme Corporation. This handbook outlines our policies, benefits, and procedures...",
       metadata: {
         fileName: "handbook.pdf",
         fileSize: 2457600,
@@ -40,7 +41,8 @@ export async function seedKnowledgeSources(tenantId: string) {
       type: "docx",
       source: "upload",
       title: "Q1 Sales Report",
-      content: "Q1 2024 Sales Performance: Revenue increased by 23% compared to Q1 2023...",
+      content:
+        "Q1 2024 Sales Performance: Revenue increased by 23% compared to Q1 2023...",
       metadata: {
         fileName: "q1-sales.docx",
         fileSize: 1024000,
@@ -53,7 +55,8 @@ export async function seedKnowledgeSources(tenantId: string) {
       type: "txt",
       source: "slack",
       title: "Project Phoenix Discussion",
-      content: "John: When is the Project Phoenix deadline?\nSarah: The deadline is March 15th...",
+      content:
+        "John: When is the Project Phoenix deadline?\nSarah: The deadline is March 15th...",
       metadata: {
         channel: "#project-phoenix",
         date: "2024-01-15",
@@ -74,24 +77,29 @@ export async function seedKnowledgeSources(tenantId: string) {
       });
 
       if (existing) {
-        console.log(`  ⏭️  Document '${docData.title}' already exists, skipping`);
+        console.log(
+          `  ⏭️  Document '${docData.title}' already exists, skipping`,
+        );
         createdDocs.push(existing);
         continue;
       }
 
       // Insert document
-      const [doc] = await db.insert(knowledgeSources).values({
-        tenantId,
-        type: docData.type,
-        source: docData.source,
-        title: docData.title,
-        content: docData.content,
-        metadata: JSON.stringify(docData.metadata),
-        status: docData.status,
-        chunkIndex: 0,
-        totalChunks: 1,
-        tokenCount: docData.tokenCount,
-      }).returning();
+      const [doc] = await db
+        .insert(knowledgeSources)
+        .values({
+          tenantId,
+          type: docData.type,
+          source: docData.source,
+          title: docData.title,
+          content: docData.content,
+          metadata: JSON.stringify(docData.metadata),
+          status: docData.status,
+          chunkIndex: 0,
+          totalChunks: 1,
+          tokenCount: docData.tokenCount,
+        })
+        .returning();
 
       console.log(`  ✅ Created document: ${doc.title}`);
       createdDocs.push(doc);
@@ -101,7 +109,9 @@ export async function seedKnowledgeSources(tenantId: string) {
     }
   }
 
-  console.log(`🌱 [seed-knowledge-sources] Completed: ${createdDocs.length} documents ready`);
+  console.log(
+    `🌱 [seed-knowledge-sources] Completed: ${createdDocs.length} documents ready`,
+  );
   return createdDocs;
 }
 

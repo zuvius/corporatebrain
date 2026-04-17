@@ -17,12 +17,19 @@ interface ExtractedDocument {
 export async function extractTextFromDocument(
   buffer: Buffer,
   contentType: string,
-  filename?: string
+  filename?: string,
 ): Promise<ExtractedDocument> {
   // Use Unstructured for complex document types
-  if (shouldUseUnstructured(contentType, buffer.length) && process.env.UNSTRUCTURED_API_KEY) {
+  if (
+    shouldUseUnstructured(contentType, buffer.length) &&
+    process.env.UNSTRUCTURED_API_KEY
+  ) {
     try {
-      const result = await extractWithUnstructured(buffer, filename || "document", contentType);
+      const result = await extractWithUnstructured(
+        buffer,
+        filename || "document",
+        contentType,
+      );
       return {
         text: result.text,
         metadata: {
@@ -36,7 +43,10 @@ export async function extractTextFromDocument(
         },
       };
     } catch (error) {
-      console.warn("Unstructured.io failed, falling back to local parser:", error);
+      console.warn(
+        "Unstructured.io failed, falling back to local parser:",
+        error,
+      );
       // Fall through to local parsers
     }
   }
@@ -55,7 +65,7 @@ export async function extractTextFromDocument(
       // Word docs require Unstructured or similar - error if we got here
       throw new Error(
         "Word documents require Unstructured.io. " +
-        "Please configure UNSTRUCTURED_API_KEY in your .env file."
+          "Please configure UNSTRUCTURED_API_KEY in your .env file.",
       );
 
     default:
@@ -76,6 +86,8 @@ async function extractFromPDF(buffer: Buffer): Promise<ExtractedDocument> {
     };
   } catch (error) {
     console.error("PDF parsing failed:", error);
-    throw new Error(`Failed to parse PDF: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    throw new Error(
+      `Failed to parse PDF: ${error instanceof Error ? error.message : "Unknown error"}`,
+    );
   }
 }

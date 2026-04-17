@@ -1,7 +1,9 @@
 import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
 
-const dbUrl = process.env.DATABASE_URL || "postgresql://corp_brain:corpbrain123@localhost:5432/corporate_brain";
+const dbUrl =
+  process.env.DATABASE_URL ||
+  "postgresql://corp_brain:corpbrain123@localhost:5432/corporate_brain";
 
 export default defineConfig({
   schema: "./lib/db/schema.ts",

@@ -144,6 +144,7 @@ ssh-keygen -t ed25519 -C "your.email@company.com"
 ### Step 3: Add SSH Key to SSH Agent
 
 **On macOS:**
+
 ```bash
 # Start ssh-agent
  eval "$(ssh-agent -s)"
@@ -153,6 +154,7 @@ ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 ```
 
 **On Windows (PowerShell as Admin):**
+
 ```powershell
 # Start ssh-agent
 Get-Service ssh-agent | Set-Service -StartupType Automatic
@@ -163,6 +165,7 @@ ssh-add $env:USERPROFILE\.ssh\id_ed25519
 ```
 
 **On Linux:**
+
 ```bash
 # Start ssh-agent
  eval "$(ssh-agent -s)"
@@ -174,6 +177,7 @@ ssh-add ~/.ssh/id_ed25519
 ### Step 4: Add SSH Key to GitHub
 
 1. Copy the public key:
+
 ```bash
 # macOS
 pbcopy < ~/.ssh/id_ed25519.pub
@@ -217,10 +221,12 @@ Pull latest → Create branch → Make changes → Commit → Push → Pull Requ
 #### 1. Pull Latest Changes (Start of Day)
 
 **Using UI:**
+
 - Click the **Refresh** icon in Source Control panel
 - Or click **Pull** in the bottom status bar
 
 **Using Terminal:**
+
 ```bash
 git pull origin main
 ```
@@ -228,17 +234,20 @@ git pull origin main
 #### 2. Create a Feature Branch
 
 **Using UI:**
+
 1. Click branch name in bottom-left status bar
 2. Select **Create new branch**
 3. Name it: `feature/description` or `fix/bug-description`
 
 **Using Terminal:**
+
 ```bash
 # Create and switch to new branch
 git checkout -b feature/user-authentication
 ```
 
 **Branch Naming Conventions:**
+
 - `feature/description` - New features
 - `fix/bug-description` - Bug fixes
 - `docs/description` - Documentation
@@ -248,12 +257,14 @@ git checkout -b feature/user-authentication
 #### 3. Make Changes and Commit
 
 **Stage Changes:**
+
 1. Edit files in Windsurf
 2. Go to **Source Control** panel (`Ctrl+Shift+G`)
 3. See changed files under **Changes**
 4. Hover over file → Click **+** to stage (or click **+** next to "Changes" to stage all)
 
 **Write Commit Message:**
+
 1. Type message in the input box above the checkmark icon
 2. Use conventional commits format:
    ```
@@ -265,9 +276,11 @@ git checkout -b feature/user-authentication
    ```
 
 **Commit:**
+
 - Press `Ctrl+Enter` or click the **✓** checkmark icon
 
 **Using Terminal:**
+
 ```bash
 # Stage specific files
 git add filename.ts
@@ -282,10 +295,12 @@ git commit -m "feat: add user authentication flow"
 #### 4. Push to GitHub
 
 **Using UI:**
+
 1. Look for **Publish Branch** button in Source Control panel
 2. Or click **...** menu → **Push**
 
 **Using Terminal:**
+
 ```bash
 # First push of new branch
 git push -u origin feature/user-authentication
@@ -322,13 +337,13 @@ git push origin --delete feature/user-authentication
 
 ### Keyboard Shortcuts in Windsurf
 
-| Action | Windows/Linux | macOS |
-|--------|--------------|-------|
-| Open Source Control | `Ctrl+Shift+G` | `Cmd+Shift+G` |
-| Stage file | `Ctrl+Enter` (on file) | `Cmd+Enter` |
-| Commit | `Ctrl+Enter` | `Cmd+Enter` |
-| Push | `Ctrl+Shift+P` → type "Git: Push" | `Cmd+Shift+P` → type "Git: Push" |
-| Pull | `Ctrl+Shift+P` → type "Git: Pull" | `Cmd+Shift+P` → type "Git: Pull" |
+| Action              | Windows/Linux                     | macOS                            |
+| ------------------- | --------------------------------- | -------------------------------- |
+| Open Source Control | `Ctrl+Shift+G`                    | `Cmd+Shift+G`                    |
+| Stage file          | `Ctrl+Enter` (on file)            | `Cmd+Enter`                      |
+| Commit              | `Ctrl+Enter`                      | `Cmd+Enter`                      |
+| Push                | `Ctrl+Shift+P` → type "Git: Push" | `Cmd+Shift+P` → type "Git: Push" |
+| Pull                | `Ctrl+Shift+P` → type "Git: Pull" | `Cmd+Shift+P` → type "Git: Pull" |
 
 ---
 
@@ -345,11 +360,13 @@ Pull latest → Create branch → Make changes → Commit → Push → Pull Requ
 #### 1. Pull Latest Changes (Start of Day)
 
 **Using UI:**
+
 - Open **Source Control** panel (`Ctrl+Shift+G`)
 - Click the **...** (More Actions) menu → **Pull**
 - Or use Command Palette: `Ctrl+Shift+P` → type "Git: Pull"
 
 **Using Terminal (VS Code Integrated):**
+
 ```bash
 # Open terminal: Ctrl+` (backtick)
 git pull origin main
@@ -358,23 +375,27 @@ git pull origin main
 #### 2. Create a Feature Branch
 
 **Using UI:**
+
 1. Click branch name in **bottom-left status bar**
 2. Select **Create new branch...**
 3. Name it: `feature/description` or `fix/bug-description`
 4. Press Enter
 
 **Using Command Palette:**
+
 1. `Ctrl+Shift+P` → type "Git: Create Branch"
 2. Enter branch name
 3. Press Enter
 
 **Using Terminal:**
+
 ```bash
 # Create and switch to new branch
 git checkout -b feature/user-authentication
 ```
 
 **Branch Naming Conventions:**
+
 - `feature/description` - New features
 - `fix/bug-description` - Bug fixes
 - `docs/description` - Documentation
@@ -384,6 +405,7 @@ git checkout -b feature/user-authentication
 #### 3. Make Changes and Commit
 
 **Stage Changes:**
+
 1. Edit files in VS Code
 2. Go to **Source Control** panel (`Ctrl+Shift+G`)
 3. See changed files under **Changes**
@@ -391,6 +413,7 @@ git checkout -b feature/user-authentication
 5. Or click checkbox next to each file
 
 **Write Commit Message:**
+
 1. Type message in the **Message** input box at the top
 2. Use conventional commits format:
    ```
@@ -402,10 +425,12 @@ git checkout -b feature/user-authentication
    ```
 
 **Commit:**
+
 - Press `Ctrl+Enter` or click the **✓** checkmark icon
 - Or use Command Palette: `Ctrl+Shift+P` → "Git: Commit"
 
 **Using Terminal:**
+
 ```bash
 # Stage specific files
 git add filename.ts
@@ -420,14 +445,17 @@ git commit -m "feat: add user authentication flow"
 #### 4. Push to GitHub
 
 **Using UI:**
+
 1. Look for **Publish Branch** button in Source Control panel (for new branches)
 2. Or click **...** menu → **Push**
 3. Or click the **sync icon** (circular arrows) in the status bar
 
 **Using Command Palette:**
+
 - `Ctrl+Shift+P` → type "Git: Push"
 
 **Using Terminal:**
+
 ```bash
 # First push of new branch
 git push -u origin feature/user-authentication
@@ -439,6 +467,7 @@ git push
 #### 5. Create Pull Request
 
 **Option A: Using VS Code with GitHub Extension**
+
 1. Install **GitHub Pull Requests and Issues** extension
 2. Open **GitHub** panel from the sidebar
 3. Click **Create Pull Request**
@@ -446,6 +475,7 @@ git push
 5. Click **Create**
 
 **Option B: Using Browser**
+
 1. Go to GitHub repository
 2. Click **Pull requests** → **New pull request**
 3. Select your feature branch → Compare with `main`
@@ -457,11 +487,13 @@ git push
 #### 6. After Merge: Clean Up
 
 **Using VS Code:**
+
 1. Switch to main: Click branch name in status bar → Select **main**
 2. Pull latest: **...** menu → **Pull**
 3. Delete branch: **...** menu → **Delete Branch**
 
 **Using Terminal:**
+
 ```bash
 # Switch back to main
 git checkout main
@@ -518,23 +550,24 @@ git push origin --delete feature/user-authentication
    - Conventional commit linting
 
 **Install via Command Palette:**
+
 ```
 Ctrl+Shift+P → Extensions: Install Extensions
 ```
 
 ### Keyboard Shortcuts in VS Code
 
-| Action | Windows/Linux | macOS |
-|--------|--------------|-------|
-| Open Source Control | `Ctrl+Shift+G` | `Cmd+Shift+G` |
-| Open Terminal | `` Ctrl+` `` | `` Cmd+` `` |
-| Stage file | Click **+** next to file | Click **+** next to file |
-| Stage all | Hover over "Changes" → **+** | Hover over "Changes" → **+** |
-| Commit | `Ctrl+Enter` | `Cmd+Enter` |
-| Push | `Ctrl+Shift+P` → "Git: Push" | `Cmd+Shift+P` → "Git: Push" |
-| Pull | `Ctrl+Shift+P` → "Git: Pull" | `Cmd+Shift+P` → "Git: Pull" |
-| Create branch | `Ctrl+Shift+P` → "Git: Create Branch" | `Cmd+Shift+P` → "Git: Create Branch" |
-| Open Command Palette | `Ctrl+Shift+P` | `Cmd+Shift+P` |
+| Action               | Windows/Linux                         | macOS                                |
+| -------------------- | ------------------------------------- | ------------------------------------ |
+| Open Source Control  | `Ctrl+Shift+G`                        | `Cmd+Shift+G`                        |
+| Open Terminal        | `` Ctrl+` ``                          | `` Cmd+` ``                          |
+| Stage file           | Click **+** next to file              | Click **+** next to file             |
+| Stage all            | Hover over "Changes" → **+**          | Hover over "Changes" → **+**         |
+| Commit               | `Ctrl+Enter`                          | `Cmd+Enter`                          |
+| Push                 | `Ctrl+Shift+P` → "Git: Push"          | `Cmd+Shift+P` → "Git: Push"          |
+| Pull                 | `Ctrl+Shift+P` → "Git: Pull"          | `Cmd+Shift+P` → "Git: Pull"          |
+| Create branch        | `Ctrl+Shift+P` → "Git: Create Branch" | `Cmd+Shift+P` → "Git: Create Branch" |
+| Open Command Palette | `Ctrl+Shift+P`                        | `Cmd+Shift+P`                        |
 
 ### VS Code Source Control View Breakdown
 
@@ -556,10 +589,12 @@ Ctrl+Shift+P → Extensions: Install Extensions
 ### VS Code Integrated Terminal
 
 **Open Terminal:**
+
 - `` Ctrl+` `` (backtick)
 - Or menu: **View** → **Terminal**
 
 **Advantages:**
+
 - Same directory as current file
 - Split terminal: Click **+** icon
 - Multiple terminals: Use dropdown
@@ -579,11 +614,13 @@ A git hook that analyzes your changes and suggests conventional commit messages.
 1. The hook file is already created at `.git/hooks/prepare-commit-msg`
 
 2. Make it executable (Git Bash/WSL/macOS/Linux):
+
 ```bash
 chmod +x .git/hooks/prepare-commit-msg
 ```
 
 **How it works:**
+
 - When you run `git commit` without a message, the hook analyzes staged files
 - Detects file types (`.ts`, `.tsx`, `.md`, etc.)
 - Identifies scope (`api`, `db`, `ui`, `auth`, `ai`, `app`)
@@ -591,6 +628,7 @@ chmod +x .git/hooks/prepare-commit-msg
 - Pre-fills the commit message editor
 
 **Example workflow:**
+
 ```bash
 git add .
 git commit  # Opens editor with suggested message like: feat(api): add or update API endpoint
@@ -611,11 +649,13 @@ Windsurf supports GitHub Copilot which can suggest commit messages.
 AI-powered commit message generator using OpenAI/Anthropic.
 
 **Installation:**
+
 ```bash
 npm install -g opencommit
 ```
 
 **Setup:**
+
 ```bash
 # Configure with your AI provider API key
 oco config set OCO_OPENAI_API_KEY=your-key
@@ -624,6 +664,7 @@ oco config set OCO_LANGUAGE=en
 ```
 
 **Usage:**
+
 ```bash
 git add .
 oco  # Generates and commits with AI message
@@ -634,11 +675,13 @@ oco  # Generates and commits with AI message
 Standardized commit messages with prompts.
 
 **Installation:**
+
 ```bash
 npm install --save-dev @commitlint/config-conventional @commitlint/cli commitizen cz-conventional-changelog
 ```
 
 **Setup in package.json:**
+
 ```json
 {
   "scripts": {
@@ -653,6 +696,7 @@ npm install --save-dev @commitlint/config-conventional @commitlint/cli commitize
 ```
 
 **Usage:**
+
 ```bash
 git add .
 npm run commit  # Interactive prompt for commit type, scope, message
@@ -663,19 +707,20 @@ npm run commit  # Interactive prompt for commit type, scope, message
 Since you have AI providers configured, create a custom script:
 
 **Create `scripts/generate-commit.ts`:**
+
 ```typescript
-import { execSync } from 'child_process';
-import { generateText } from 'ai';
-import { openai } from '@ai-sdk/openai';
+import { execSync } from "child_process";
+import { generateText } from "ai";
+import { openai } from "@ai-sdk/openai";
 
 async function generateCommitMessage() {
-  const diff = execSync('git diff --cached --stat').toString();
-  
+  const diff = execSync("git diff --cached --stat").toString();
+
   const { text } = await generateText({
-    model: openai('gpt-4o-mini'),
+    model: openai("gpt-4o-mini"),
     prompt: `Generate a conventional commit message for these changes:\n${diff}\n\nFormat: type(scope): description`,
   });
-  
+
   console.log(text);
 }
 
@@ -683,6 +728,7 @@ generateCommitMessage();
 ```
 
 **Usage:**
+
 ```bash
 git add .
 npx tsx scripts/generate-commit.ts
@@ -692,6 +738,7 @@ npx tsx scripts/generate-commit.ts
 ### Conventional Commits Format
 
 All options follow this format:
+
 ```
 type(scope): description
 
@@ -701,6 +748,7 @@ type(scope): description
 ```
 
 **Types:**
+
 - `feat` - New feature
 - `fix` - Bug fix
 - `docs` - Documentation only
@@ -711,6 +759,7 @@ type(scope): description
 - `ci` - CI/CD changes
 
 **Scopes for this project:**
+
 - `api` - API endpoints
 - `db` - Database schema/queries
 - `ui` - Components and styling
@@ -755,8 +804,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -779,8 +828,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -798,8 +847,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -847,15 +896,15 @@ jobs:
 2. Click **New repository secret**
 3. Add these secrets:
 
-| Secret Name | Value | How to Get |
-|-------------|-------|------------|
-| `NEXTAUTH_SECRET` | Random 32-char string | `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` |
-| `NEXTAUTH_URL` | Your production URL | e.g., `https://corporate-brain.vercel.app` |
-| `DATABASE_URL` | PostgreSQL connection string | From Neon, Supabase, etc. |
-| `OPENAI_API_KEY` | Your OpenAI API key | From OpenAI dashboard |
-| `VERCEL_TOKEN` | Vercel API token | Vercel Settings → Tokens |
-| `VERCEL_ORG_ID` | Vercel organization ID | From `.vercel/project.json` |
-| `VERCEL_PROJECT_ID` | Vercel project ID | From `.vercel/project.json` |
+| Secret Name         | Value                        | How to Get                                                                 |
+| ------------------- | ---------------------------- | -------------------------------------------------------------------------- |
+| `NEXTAUTH_SECRET`   | Random 32-char string        | `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` |
+| `NEXTAUTH_URL`      | Your production URL          | e.g., `https://corporate-brain.vercel.app`                                 |
+| `DATABASE_URL`      | PostgreSQL connection string | From Neon, Supabase, etc.                                                  |
+| `OPENAI_API_KEY`    | Your OpenAI API key          | From OpenAI dashboard                                                      |
+| `VERCEL_TOKEN`      | Vercel API token             | Vercel Settings → Tokens                                                   |
+| `VERCEL_ORG_ID`     | Vercel organization ID       | From `.vercel/project.json`                                                |
+| `VERCEL_PROJECT_ID` | Vercel project ID            | From `.vercel/project.json`                                                |
 
 ### Step 5: Commit and Push
 
@@ -910,6 +959,7 @@ Protect your main branch from direct pushes and require reviews.
 3. Preview deployments for every pull request
 
 **Setup:**
+
 ```bash
 # Install Vercel CLI
 npm i -g vercel
@@ -964,6 +1014,7 @@ jobs:
 ### Authentication Issues
 
 **Problem: "Permission denied (publickey)"**
+
 ```bash
 # Test SSH connection
 ssh -T git@github.com
@@ -974,6 +1025,7 @@ ssh-add ~/.ssh/id_ed25519
 ```
 
 **Problem: "Repository not found"**
+
 - Check if you have access to the repository
 - Verify remote URL: `git remote -v`
 - Update remote: `git remote set-url origin git@github.com:username/repo.git`
@@ -981,6 +1033,7 @@ ssh-add ~/.ssh/id_ed25519
 ### Sync Issues
 
 **Problem: "Failed to push some refs"**
+
 ```bash
 # Pull latest changes first
 git pull origin main
@@ -990,6 +1043,7 @@ git push
 ```
 
 **Problem: Merge conflicts**
+
 ```bash
 # See conflicting files
 git status
@@ -1003,11 +1057,13 @@ git commit -m "resolve merge conflicts"
 ### CI/CD Issues
 
 **Problem: CI tests fail**
+
 - Check Actions tab in GitHub for detailed logs
 - Run tests locally first: `npm test`
 - Ensure all environment secrets are set
 
 **Problem: Deployment fails**
+
 - Verify all secrets in GitHub Settings
 - Check service credentials (Vercel token, VPS SSH key)
 - Review deployment logs in Actions
@@ -1015,41 +1071,49 @@ git commit -m "resolve merge conflicts"
 ### Windsurf-Specific
 
 **Problem: Git panel not showing**
+
 - Reload window: `Ctrl+Shift+P` → "Developer: Reload Window"
 - Check Git is installed: `git --version`
 
 **Problem: Changes not detected**
+
 - Refresh: Click refresh icon in Source Control
 - Check file is not in `.gitignore`
 
 ### VS Code-Specific
 
 **Problem: Git panel shows "There are no changes to commit"**
+
 - Ensure files are saved: `Ctrl+S`
 - Check files are not in `.gitignore`
 - Reload window: `Ctrl+Shift+P` → "Developer: Reload Window"
 
 **Problem: Git commands fail in terminal**
+
 - Check Git is in PATH: `git --version`
 - Use VS Code's integrated terminal instead of external
 - Verify terminal shell is configured correctly
 
 **Problem: Cannot push to remote**
+
 - Check remote URL: `git remote -v`
 - Verify SSH key is loaded: `ssh-add -l`
 - Try HTTPS instead of SSH if behind firewall
 
 **Problem: Extension not working**
+
 - Reload VS Code window
 - Update extension to latest version
 - Check extension output log: `Ctrl+Shift+P` → "Show Logs" → "Extension Host"
 
 **Problem: Source Control view shows incorrect branch**
+
 - Click branch name in status bar
 - Select correct branch from dropdown
 - Or use: `Ctrl+Shift+P` → "Git: Checkout to"
 
 **Problem: Merge conflict markers not highlighted**
+
 - Install "Merge Conflict" extension
 - Or search settings for "merge conflict"
 - Enable "Git: Show Inline Diff"
@@ -1104,6 +1168,7 @@ git push --force-with-lease
 ## Summary Checklist
 
 **Initial Setup:**
+
 - [ ] GitHub repository created
 - [ ] SSH key generated and added to GitHub
 - [ ] Local project connected to GitHub
@@ -1111,27 +1176,32 @@ git push --force-with-lease
 - [ ] `.gitignore` configured (Node template)
 
 **Daily Git Workflow in Windsurf:**
+
 - [ ] Git panel visible and working
 - [ ] Autofetch enabled
 - [ ] Can commit/push from UI
 
 **Daily Git Workflow in VS Code (Alternative):**
+
 - [ ] Source Control panel configured
 - [ ] GitLens or GitHub extensions installed
 - [ ] Integrated terminal working
 - [ ] Can commit/push from UI
 
 **Auto Commit Message Generation (Optional):**
+
 - [ ] Git hook configured for smart commit messages
 - [ ] Conventional commits understood
 
 **CI/CD Setup:**
+
 - [ ] `.github/workflows/ci.yml` created
 - [ ] `.github/workflows/deploy.yml` created (optional)
 - [ ] GitHub Secrets configured
 - [ ] Branch protection rules enabled
 
 **Team Workflow:**
+
 - [ ] Feature branch workflow understood
 - [ ] Pull request process documented
 - [ ] Code review requirements set

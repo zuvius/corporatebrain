@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth/auth";
 import { db } from "@/lib/db/client";
-import { integrations, usageLogs, knowledgeSources, conversations } from "@/lib/db/schema";
+import {
+  integrations,
+  usageLogs,
+  knowledgeSources,
+  conversations,
+} from "@/lib/db/schema";
 import { eq, gte, sql, and, desc } from "drizzle-orm";
 
 export async function GET(_req: NextRequest) {
@@ -12,12 +17,17 @@ export async function GET(_req: NextRequest) {
     }
 
     // Check if user is admin (simplified check - would need proper role check in production)
-    const isAdmin = (session.user as any).role === "admin" || (session.user as any).role === "owner";
+    const isAdmin =
+      session.user.role === "admin" ||
+      session.user.role === "owner";
     if (!isAdmin) {
-      return NextResponse.json({ error: "Admin access required" }, { status: 403 });
+      return NextResponse.json(
+        { error: "Admin access required" },
+        { status: 403 },
+      );
     }
 
-    const tenantId = (session.user as any).tenantId;
+    const tenantId = session.user.tenantId;
     const now = new Date();
     const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
     const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
@@ -33,8 +43,8 @@ export async function GET(_req: NextRequest) {
       .where(
         and(
           eq(usageLogs.tenantId, tenantId),
-          gte(usageLogs.createdAt, thirtyDaysAgo)
-        )
+          gte(usageLogs.createdAt, thirtyDaysAgo),
+        ),
       );
 
     // Get active integrations count
@@ -76,8 +86,8 @@ export async function GET(_req: NextRequest) {
       .where(
         and(
           eq(usageLogs.tenantId, tenantId),
-          gte(usageLogs.createdAt, sevenDaysAgo)
-        )
+          gte(usageLogs.createdAt, sevenDaysAgo),
+        ),
       )
       .groupBy(sql`DATE(${usageLogs.createdAt})`)
       .orderBy(desc(sql`DATE(${usageLogs.createdAt})`));
@@ -94,8 +104,8 @@ export async function GET(_req: NextRequest) {
       .where(
         and(
           eq(usageLogs.tenantId, tenantId),
-          gte(usageLogs.createdAt, thirtyDaysAgo)
-        )
+          gte(usageLogs.createdAt, thirtyDaysAgo),
+        ),
       )
       .groupBy(usageLogs.model);
 
@@ -118,7 +128,7 @@ export async function GET(_req: NextRequest) {
     console.error("Admin dashboard error:", error);
     return NextResponse.json(
       { error: "Failed to fetch dashboard data" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

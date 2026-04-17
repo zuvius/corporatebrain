@@ -47,7 +47,7 @@ export async function generateEmbeddings(text: string): Promise<number[]> {
 
 export async function generateChatCompletion(
   model: Pick<AIModelConfig, "id" | "provider">,
-  messages: Array<{ role: string; content: string }>
+  messages: Array<{ role: string; content: string }>,
 ) {
   switch (model.provider) {
     case "openai":
@@ -63,7 +63,7 @@ export async function generateChatCompletion(
 
 async function generateOpenAICompletion(
   modelId: string,
-  messages: Array<{ role: string; content: string }>
+  messages: Array<{ role: string; content: string }>,
 ) {
   const client = getOpenAIClient();
   const response = await client.chat.completions.create({
@@ -78,16 +78,21 @@ async function generateOpenAICompletion(
 
   return {
     content: response.choices[0]?.message?.content || "",
-    usage: response.usage || { prompt_tokens: 0, completion_tokens: 0, total_tokens: 0 },
+    usage: response.usage || {
+      prompt_tokens: 0,
+      completion_tokens: 0,
+      total_tokens: 0,
+    },
   };
 }
 
 async function generateAnthropicCompletion(
   modelId: string,
-  messages: Array<{ role: string; content: string }>
+  messages: Array<{ role: string; content: string }>,
 ) {
   const client = getAnthropicClient();
-  const systemMessage = messages.find((m) => m.role === "system")?.content || "";
+  const systemMessage =
+    messages.find((m) => m.role === "system")?.content || "";
   const userMessages = messages.filter((m) => m.role !== "system");
 
   const response = await client.messages.create({
@@ -117,12 +122,14 @@ async function generateAnthropicCompletion(
 
 async function generateGoogleCompletion(
   modelId: string,
-  messages: Array<{ role: string; content: string }>
+  messages: Array<{ role: string; content: string }>,
 ) {
   const client = getGoogleAIClient();
 
-  const systemMessage = messages.find((m) => m.role === "system")?.content || "";
-  const userMessage = messages.filter((m) => m.role !== "system").pop()?.content || "";
+  const systemMessage =
+    messages.find((m) => m.role === "system")?.content || "";
+  const userMessage =
+    messages.filter((m) => m.role !== "system").pop()?.content || "";
 
   const result = await client.models.generateContent({
     model: modelId,

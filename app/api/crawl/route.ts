@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
     console.error("Crawl initiation failed:", error);
     return NextResponse.json(
       { error: "Failed to start crawl" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -67,10 +67,7 @@ export async function GET(req: NextRequest) {
     const sourceId = searchParams.get("sourceId");
 
     if (!sourceId) {
-      return NextResponse.json(
-        { error: "sourceId required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "sourceId required" }, { status: 400 });
     }
 
     const [source] = await db
@@ -88,10 +85,7 @@ export async function GET(req: NextRequest) {
       .limit(1);
 
     if (!source) {
-      return NextResponse.json(
-        { error: "Source not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Source not found" }, { status: 404 });
     }
 
     const metadata = source.metadata as { pagesCrawled?: number } | null;
@@ -106,10 +100,7 @@ export async function GET(req: NextRequest) {
     });
   } catch (error) {
     console.error("Status check failed:", error);
-    return NextResponse.json(
-      { error: "Status check failed" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Status check failed" }, { status: 500 });
   }
 }
 

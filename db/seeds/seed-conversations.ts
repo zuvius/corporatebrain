@@ -40,10 +40,15 @@ export async function seedConversations(tenantId: string, userId: string) {
 
     let conversation;
     if (existing) {
-      console.log(`  ⏭️  Conversation '${conversationData.title}' already exists, skipping`);
+      console.log(
+        `  ⏭️  Conversation '${conversationData.title}' already exists, skipping`,
+      );
       conversation = existing;
     } else {
-      [conversation] = await db.insert(conversations).values(conversationData).returning();
+      [conversation] = await db
+        .insert(conversations)
+        .values(conversationData)
+        .returning();
       console.log(`  ✅ Created conversation: ${conversation.title}`);
     }
 
@@ -61,7 +66,8 @@ export async function seedConversations(tenantId: string, userId: string) {
       },
       {
         role: "assistant",
-        content: "According to the Employee Handbook 2024, Acme Corporation offers:\n\n- 15 days of paid time off per year for full-time employees\n- 10 days of sick leave\n- 11 paid holidays\n- Unlimited mental health days (with manager approval)\n\nPTO accrues monthly and can be rolled over up to 5 days per year.",
+        content:
+          "According to the Employee Handbook 2024, Acme Corporation offers:\n\n- 15 days of paid time off per year for full-time employees\n- 10 days of sick leave\n- 11 paid holidays\n- Unlimited mental health days (with manager approval)\n\nPTO accrues monthly and can be rolled over up to 5 days per year.",
         model: "gpt-4",
         promptTokens: 12,
         completionTokens: 78,
@@ -87,7 +93,9 @@ export async function seedConversations(tenantId: string, userId: string) {
           conversationId: conversation.id,
           ...messageData,
         });
-        console.log(`    ✅ Added message: ${messageData.role} (${messageData.totalTokens} tokens)`);
+        console.log(
+          `    ✅ Added message: ${messageData.role} (${messageData.totalTokens} tokens)`,
+        );
       } catch (error) {
         console.error(`    ❌ Failed to add message:`, error);
         // Continue with other messages

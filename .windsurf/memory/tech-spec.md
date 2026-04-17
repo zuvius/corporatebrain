@@ -13,19 +13,19 @@ graph TB
         C[Zustand Store]
         D[TailwindCSS UI]
     end
-    
+
     subgraph Backend
         E[API Routes]
         F[NextAuth.js]
         G[Drizzle ORM]
     end
-    
+
     subgraph Data
         H[PostgreSQL]
         I[Redis Cache]
         J[External APIs]
     end
-    
+
     A --> E
     B --> C
     C --> E
@@ -60,15 +60,15 @@ public/               # Static assets
 
 ## Key Dependencies
 
-| Package | Purpose | Version |
-|---------|---------|---------|
-| next | Framework | ^15.0.0 |
-| react | UI Library | ^19.0.0 |
-| drizzle-orm | Database ORM | ^0.30.0 |
-| next-auth | Authentication | ^5.0.0-beta.15 |
-| zustand | State Management | ^4.5.0 |
-| tailwindcss | Styling | ^3.4.0 |
-| zod | Validation | ^3.22.0 |
+| Package     | Purpose          | Version        |
+| ----------- | ---------------- | -------------- |
+| next        | Framework        | ^15.0.0        |
+| react       | UI Library       | ^19.0.0        |
+| drizzle-orm | Database ORM     | ^0.30.0        |
+| next-auth   | Authentication   | ^5.0.0-beta.15 |
+| zustand     | State Management | ^4.5.0         |
+| tailwindcss | Styling          | ^3.4.0         |
+| zod         | Validation       | ^3.22.0        |
 
 ## Database Schema
 

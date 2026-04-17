@@ -39,7 +39,7 @@ export function ActionButtons({ onAction }: ActionButtonsProps) {
           className={cn(
             "inline-flex items-center space-x-1 px-3 py-1.5 rounded-full",
             "bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600",
-            "text-sm text-gray-700 dark:text-gray-300 transition-colors"
+            "text-sm text-gray-700 dark:text-gray-300 transition-colors",
           )}
         >
           <span>{action.icon}</span>

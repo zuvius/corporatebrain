@@ -88,15 +88,22 @@ export default function ROIDashboard() {
         <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl p-8 text-white mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-green-100 text-sm font-medium">Return on Investment</p>
+              <p className="text-green-100 text-sm font-medium">
+                Return on Investment
+              </p>
               <p className="text-5xl font-bold mt-2">{metrics.roi}%</p>
               <p className="text-green-100 mt-2">
-                For every $1 spent, you saved ${(metrics.roi / 100 + 1).toFixed(2)} in productivity
+                For every $1 spent, you saved $
+                {(metrics.roi / 100 + 1).toFixed(2)} in productivity
               </p>
             </div>
             <div className="text-right">
-              <p className="text-green-100 text-sm font-medium">Total Value Generated</p>
-              <p className="text-4xl font-bold mt-2">${metrics.estimatedValue.toLocaleString()}</p>
+              <p className="text-green-100 text-sm font-medium">
+                Total Value Generated
+              </p>
+              <p className="text-4xl font-bold mt-2">
+                ${metrics.estimatedValue.toLocaleString()}
+              </p>
             </div>
           </div>
         </div>
@@ -137,8 +144,11 @@ export default function ROIDashboard() {
                 <p className="text-sm text-gray-500">queries resolved</p>
               </div>
               <div className="text-right">
-                <p className={`text-sm font-medium ${trends.queryGrowth >= 0 ? "text-green-600" : "text-red-600"}`}>
-                  {trends.queryGrowth >= 0 ? "↑" : "↓"} {Math.abs(trends.queryGrowth)}%
+                <p
+                  className={`text-sm font-medium ${trends.queryGrowth >= 0 ? "text-green-600" : "text-red-600"}`}
+                >
+                  {trends.queryGrowth >= 0 ? "↑" : "↓"}{" "}
+                  {Math.abs(trends.queryGrowth)}%
                 </p>
                 <p className="text-xs text-gray-500">vs previous period</p>
               </div>
@@ -146,7 +156,9 @@ export default function ROIDashboard() {
             <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
               <div className="flex justify-between text-sm">
                 <span className="text-gray-500">Previous period:</span>
-                <span className="text-gray-900 dark:text-white">{trends.previousPeriodQueries.toLocaleString()}</span>
+                <span className="text-gray-900 dark:text-white">
+                  {trends.previousPeriodQueries.toLocaleString()}
+                </span>
               </div>
             </div>
           </div>
@@ -157,19 +169,29 @@ export default function ROIDashboard() {
             </h3>
             <ul className="space-y-3 text-sm">
               <li className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-400">Time saved per query:</span>
-                <span className="font-medium">{assumptions.timeSavedPerQueryMinutes} minutes</span>
+                <span className="text-gray-600 dark:text-gray-400">
+                  Time saved per query:
+                </span>
+                <span className="font-medium">
+                  {assumptions.timeSavedPerQueryMinutes} minutes
+                </span>
               </li>
               <li className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-400">Assumed hourly rate:</span>
+                <span className="text-gray-600 dark:text-gray-400">
+                  Assumed hourly rate:
+                </span>
                 <span className="font-medium">${assumptions.hourlyRate}</span>
               </li>
               <li className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-400">Manual search time:</span>
+                <span className="text-gray-600 dark:text-gray-400">
+                  Manual search time:
+                </span>
                 <span className="font-medium">15 minutes</span>
               </li>
               <li className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-400">Corporate Brain time:</span>
+                <span className="text-gray-600 dark:text-gray-400">
+                  Corporate Brain time:
+                </span>
                 <span className="font-medium">1 minute</span>
               </li>
             </ul>
@@ -209,15 +231,23 @@ function MetricCard({
 }) {
   const colorClasses = {
     blue: "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800",
-    green: "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800",
-    purple: "bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800",
+    green:
+      "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800",
+    purple:
+      "bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800",
   };
 
   return (
     <div className={`p-6 rounded-lg border ${colorClasses[color]}`}>
-      <p className="text-sm font-medium text-gray-600 dark:text-gray-400">{title}</p>
-      <p className="text-3xl font-bold text-gray-900 dark:text-white mt-2">{value}</p>
-      <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">{subtitle}</p>
+      <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+        {title}
+      </p>
+      <p className="text-3xl font-bold text-gray-900 dark:text-white mt-2">
+        {value}
+      </p>
+      <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+        {subtitle}
+      </p>
     </div>
   );
 }

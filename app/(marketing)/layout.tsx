@@ -17,13 +17,35 @@ export default function MarketingLayout({
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-fuchsia-600">
               <Sparkles className="h-5 w-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-white">Corporate Brain</span>
+            <span className="text-xl font-bold text-white">
+              Corporate Brain
+            </span>
           </Link>
           <nav className="hidden md:flex items-center gap-8">
-            <Link href="/features" className="text-sm text-white/60 hover:text-white transition-colors">Features</Link>
-            <Link href="/how-it-works" className="text-sm text-white/60 hover:text-white transition-colors">How It Works</Link>
-            <Link href="/pricing" className="text-sm text-white/60 hover:text-white transition-colors">Pricing</Link>
-            <Link href="/about" className="text-sm text-white/60 hover:text-white transition-colors">About</Link>
+            <Link
+              href="/features"
+              className="text-sm text-white/60 hover:text-white transition-colors"
+            >
+              Features
+            </Link>
+            <Link
+              href="/how-it-works"
+              className="text-sm text-white/60 hover:text-white transition-colors"
+            >
+              How It Works
+            </Link>
+            <Link
+              href="/pricing"
+              className="text-sm text-white/60 hover:text-white transition-colors"
+            >
+              Pricing
+            </Link>
+            <Link
+              href="/about"
+              className="text-sm text-white/60 hover:text-white transition-colors"
+            >
+              About
+            </Link>
           </nav>
           <div className="flex items-center gap-4">
             <Link
@@ -44,9 +66,7 @@ export default function MarketingLayout({
       </header>
 
       {/* Main Content Area */}
-      <main className="pt-18">
-        {children}
-      </main>
+      <main className="pt-18">{children}</main>
 
       {/* Footer - Shared across all marketing pages */}
       <footer className="border-t border-white/5 bg-[#0a0a0f] px-6 py-16">
@@ -66,28 +86,112 @@ export default function MarketingLayout({
             <div>
               <h4 className="text-white font-semibold mb-4">Product</h4>
               <ul className="space-y-3">
-                <li><Link href="/features" className="text-sm text-white/40 hover:text-white transition-colors">Features</Link></li>
-                <li><Link href="/pricing" className="text-sm text-white/40 hover:text-white transition-colors">Pricing</Link></li>
-                <li><Link href="/integrations" className="text-sm text-white/40 hover:text-white transition-colors">Integrations</Link></li>
-                <li><Link href="/enterprise" className="text-sm text-white/40 hover:text-white transition-colors">Enterprise</Link></li>
+                <li>
+                  <Link
+                    href="/features"
+                    className="text-sm text-white/40 hover:text-white transition-colors"
+                  >
+                    Features
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/pricing"
+                    className="text-sm text-white/40 hover:text-white transition-colors"
+                  >
+                    Pricing
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/integrations"
+                    className="text-sm text-white/40 hover:text-white transition-colors"
+                  >
+                    Integrations
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/enterprise"
+                    className="text-sm text-white/40 hover:text-white transition-colors"
+                  >
+                    Enterprise
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="text-white font-semibold mb-4">Company</h4>
               <ul className="space-y-3">
-                <li><Link href="/about" className="text-sm text-white/40 hover:text-white transition-colors">About</Link></li>
-                <li><Link href="/blog" className="text-sm text-white/40 hover:text-white transition-colors">Blog</Link></li>
-                <li><Link href="/careers" className="text-sm text-white/40 hover:text-white transition-colors">Careers</Link></li>
-                <li><Link href="/contact" className="text-sm text-white/40 hover:text-white transition-colors">Contact</Link></li>
+                <li>
+                  <Link
+                    href="/about"
+                    className="text-sm text-white/40 hover:text-white transition-colors"
+                  >
+                    About
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/blog"
+                    className="text-sm text-white/40 hover:text-white transition-colors"
+                  >
+                    Blog
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/careers"
+                    className="text-sm text-white/40 hover:text-white transition-colors"
+                  >
+                    Careers
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/contact"
+                    className="text-sm text-white/40 hover:text-white transition-colors"
+                  >
+                    Contact
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="text-white font-semibold mb-4">Resources</h4>
               <ul className="space-y-3">
-                <li><Link href="/docs" className="text-sm text-white/40 hover:text-white transition-colors">Documentation</Link></li>
-                <li><Link href="/api" className="text-sm text-white/40 hover:text-white transition-colors">API Reference</Link></li>
-                <li><Link href="/security" className="text-sm text-white/40 hover:text-white transition-colors">Security</Link></li>
-                <li><Link href="/privacy" className="text-sm text-white/40 hover:text-white transition-colors">Privacy</Link></li>
+                <li>
+                  <Link
+                    href="/docs"
+                    className="text-sm text-white/40 hover:text-white transition-colors"
+                  >
+                    Documentation
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/api"
+                    className="text-sm text-white/40 hover:text-white transition-colors"
+                  >
+                    API Reference
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/security"
+                    className="text-sm text-white/40 hover:text-white transition-colors"
+                  >
+                    Security
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/privacy"
+                    className="text-sm text-white/40 hover:text-white transition-colors"
+                  >
+                    Privacy
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
@@ -96,8 +200,18 @@ export default function MarketingLayout({
               © 2026 Corporate Brain. All rights reserved.
             </p>
             <div className="flex items-center gap-6">
-              <Link href="/terms" className="text-sm text-white/30 hover:text-white transition-colors">Terms</Link>
-              <Link href="/privacy" className="text-sm text-white/30 hover:text-white transition-colors">Privacy</Link>
+              <Link
+                href="/terms"
+                className="text-sm text-white/30 hover:text-white transition-colors"
+              >
+                Terms
+              </Link>
+              <Link
+                href="/privacy"
+                className="text-sm text-white/30 hover:text-white transition-colors"
+              >
+                Privacy
+              </Link>
             </div>
           </div>
         </div>

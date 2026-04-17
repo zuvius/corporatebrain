@@ -19,15 +19,18 @@ A beginner-friendly guide to deploying the Corporate Brain application on **Loca
 Before starting, ensure you have the following installed:
 
 ### For All Deployments:
+
 - **Git** - To clone the repository
 - **Node.js 18+** - JavaScript runtime ([Download](https://nodejs.org/))
 - **npm** or **pnpm** - Package manager (comes with Node.js)
 
 ### For Local Development:
+
 - **Docker Desktop** - Container platform ([Download](https://www.docker.com/products/docker-desktop/))
 - **Docker Compose** - Usually included with Docker Desktop
 
 ### For VPS Deployment:
+
 - **SSH access** to your VPS server
 - **Domain name** (optional but recommended)
 
@@ -105,18 +108,19 @@ QSTASH_NEXT_SIGNING_KEY=""
 If your PostgreSQL password contains special characters (`@`, `#`, `$`, `%`, `&`, `+`, `/`, `:`, `?`), you must URL-encode them in the `DATABASE_URL`:
 
 | Character | URL-Encoded |
-|-----------|-------------|
-| `@` | `%40` |
-| `#` | `%23` |
-| `$` | `%24` |
-| `%` | `%25` |
-| `&` | `%26` |
-| `+` | `%2B` |
-| `/` | `%2F` |
-| `:` | `%3A` |
-| `?` | `%3F` |
+| --------- | ----------- |
+| `@`       | `%40`       |
+| `#`       | `%23`       |
+| `$`       | `%24`       |
+| `%`       | `%25`       |
+| `&`       | `%26`       |
+| `+`       | `%2B`       |
+| `/`       | `%2F`       |
+| `:`       | `%3A`       |
+| `?`       | `%3F`       |
 
 **Example:**
+
 ```bash
 # If password is: P@ss#w0rd$2024
 # Encode as: P%40ss%23w0rd%242024
@@ -125,17 +129,20 @@ DATABASE_URL="postgresql://brainuser:P%40ss%23w0rd%242024@localhost:5432/corpora
 ```
 
 **Quick command to encode your password:**
+
 ```bash
 node -e "console.log(encodeURIComponent('your-password-here'))"
 ```
 
 **How to generate a random secret (32 characters):**
+
 ```bash
 # Run this command and copy the output
 node -e "console.log(require('crypto').randomBytes(16).toString('hex'))"
 ```
 
 **For enhanced security (64 characters):**
+
 ```bash
 # Run this command for a 64-character secret
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
@@ -167,10 +174,12 @@ healthcheck:
 ```
 
 **You should see:**
+
 - `postgres` container running on port 5432 (container) mapped to 5433 (host)
 - `redis` container running on port 6379
 
 **Verify Docker containers are working:**
+
 ```bash
 # 1. Check containers are running
 docker ps
@@ -229,6 +238,7 @@ psql -U postgres -d corporate_brain -c "CREATE EXTENSION IF NOT EXISTS vector;"
 ```
 
 **Alternative for Windows (Easiest):**
+
 ```bash
 # Use WSL2 (Windows Subsystem for Linux)
 # 1. Install WSL2: wsl --install
@@ -237,6 +247,7 @@ psql -U postgres -d corporate_brain -c "CREATE EXTENSION IF NOT EXISTS vector;"
 ```
 
 **Verify pgvector is installed:**
+
 ```bash
 psql -U postgres -d corporate_brain -c "SELECT * FROM pg_extension WHERE extname = 'vector';"
 ```
@@ -272,6 +283,7 @@ pnpm dev
 ```
 
 **Wait for the message:**
+
 ```
 > Ready on http://localhost:3000
 ```
@@ -281,6 +293,7 @@ pnpm dev
 Navigate to: **http://localhost:3000**
 
 **Default login credentials (if seeded):**
+
 - Email: `admin@example.com`
 - Password: `password123`
 
@@ -327,6 +340,7 @@ docker-compose up -d
 ```
 
 **Why port 5433?** The default PostgreSQL port 5432 is often already in use by:
+
 - Another Docker container
 - Locally installed PostgreSQL
 - Another development project
@@ -372,23 +386,25 @@ git push -u origin main
 
 In the Vercel dashboard, go to **Settings > Environment Variables** and add:
 
-| Variable | Value | Environment |
-|----------|-------|-------------|
-| `DATABASE_URL` | Your PostgreSQL connection string | Production |
-| `AUTH_SECRET` | Random 32-character string | Production |
-| `AUTH_URL` | Your Vercel deployment URL | Production |
-| `OPENAI_API_KEY` | Your OpenAI API key | Production |
-| `ANTHROPIC_API_KEY` | Your Anthropic API key (optional) | Production |
-| `GOOGLE_AI_API_KEY` | Your Google AI API key (optional) | Production |
-| `UPSTASH_REDIS_REST_URL` | Your Redis URL (optional) | Production |
-| `UPSTASH_REDIS_REST_TOKEN` | Your Redis token (optional) | Production |
+| Variable                   | Value                             | Environment |
+| -------------------------- | --------------------------------- | ----------- |
+| `DATABASE_URL`             | Your PostgreSQL connection string | Production  |
+| `AUTH_SECRET`              | Random 32-character string        | Production  |
+| `AUTH_URL`                 | Your Vercel deployment URL        | Production  |
+| `OPENAI_API_KEY`           | Your OpenAI API key               | Production  |
+| `ANTHROPIC_API_KEY`        | Your Anthropic API key (optional) | Production  |
+| `GOOGLE_AI_API_KEY`        | Your Google AI API key (optional) | Production  |
+| `UPSTASH_REDIS_REST_URL`   | Your Redis URL (optional)         | Production  |
+| `UPSTASH_REDIS_REST_TOKEN` | Your Redis token (optional)       | Production  |
 
 **For database, you need a hosted PostgreSQL:**
+
 - **Option 1:** [Neon](https://neon.tech) - Serverless PostgreSQL (Recommended)
 - **Option 2:** [Supabase](https://supabase.com) - Free tier available
 - **Option 3:** [Railway](https://railway.app) - Easy setup
 
 **For caching and queues, you need Redis/Upstash:**
+
 - **Option 1:** [Upstash](https://upstash.com) - Serverless Redis (Recommended for Vercel)
   - Create account, create Redis database, copy REST URL and token
   - Also create QStash for background job queues (optional)
@@ -396,6 +412,7 @@ In the Vercel dashboard, go to **Settings > Environment Variables** and add:
 - **Option 3:** Self-hosted Redis (see VPS section)
 
 **How to get Neon Database URL:**
+
 1. Sign up at [neon.tech](https://neon.tech)
 2. Create a new project
 3. Copy the connection string: `postgresql://user:password@host/dbname`
@@ -465,6 +482,7 @@ git push
 Deploy to your own Virtual Private Server for full control and data sovereignty.
 
 ### Recommended VPS Providers
+
 - **DigitalOcean** - [digitalocean.com](https://digitalocean.com) (Ubuntu Droplet)
 - **Linode** - [linode.com](https://linode.com)
 - **AWS Lightsail** - [aws.amazon.com/lightsail](https://aws.amazon.com/lightsail)
@@ -600,6 +618,7 @@ REDIS_URL="redis://localhost:6379"
 ```
 
 **Generate a secure secret:**
+
 ```bash
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
@@ -625,23 +644,25 @@ nano ecosystem.config.js
 
 ```javascript
 module.exports = {
-  apps: [{
-    name: 'corporate-brain',
-    cwd: '/var/www/corporate-brain',
-    script: 'node_modules/next/dist/bin/next',
-    args: 'start',
-    instances: 1,
-    autorestart: true,
-    watch: false,
-    max_memory_restart: '1G',
-    env: {
-      NODE_ENV: 'production',
-      PORT: 3000
+  apps: [
+    {
+      name: "corporate-brain",
+      cwd: "/var/www/corporate-brain",
+      script: "node_modules/next/dist/bin/next",
+      args: "start",
+      instances: 1,
+      autorestart: true,
+      watch: false,
+      max_memory_restart: "1G",
+      env: {
+        NODE_ENV: "production",
+        PORT: 3000,
+      },
+      error_file: "/var/log/corporate-brain/err.log",
+      out_file: "/var/log/corporate-brain/out.log",
+      log_date_format: "YYYY-MM-DD HH:mm:ss Z",
     },
-    error_file: '/var/log/corporate-brain/err.log',
-    out_file: '/var/log/corporate-brain/out.log',
-    log_date_format: 'YYYY-MM-DD HH:mm:ss Z'
-  }]
+  ],
 };
 ```
 
@@ -778,6 +799,7 @@ tail -f /var/log/nginx/error.log
 ### Local Development Issues
 
 **Problem:** `docker-compose up` fails
+
 ```bash
 # Solution: Check if Docker is running
 docker ps
@@ -789,6 +811,7 @@ docker-compose up -d
 ```
 
 **Problem:** Database connection errors
+
 ```bash
 # Solution: Reset database
 docker-compose down -v
@@ -797,6 +820,7 @@ npx drizzle-kit push:pg
 ```
 
 **Problem:** Port 3000 already in use
+
 ```bash
 # Solution: Kill process on port 3000
 npx kill-port 3000
@@ -806,6 +830,7 @@ npm run dev -- --port 3001
 ```
 
 **Problem:** Docker port conflicts (running multiple projects)
+
 ```bash
 # Solution: Change ports in docker-compose.yml for second project
 # Change:
@@ -816,6 +841,7 @@ npm run dev -- --port 3001
 ```
 
 **Problem:** PostgreSQL connection fails with `28P01` password authentication error
+
 ```bash
 # Root Cause: Another PostgreSQL instance already using port 5432
 
@@ -834,6 +860,7 @@ npm run dev -- --port 3001
 ### Vercel Deployment Issues
 
 **Problem:** Build fails with "Module not found"
+
 ```bash
 # Solution: Clear cache and redeploy
 # In Vercel dashboard:
@@ -841,6 +868,7 @@ npm run dev -- --port 3001
 ```
 
 **Problem:** Database connection timeout
+
 ```bash
 # Solution: Check DATABASE_URL format
 # Must be: postgresql://user:pass@host:port/dbname
@@ -848,6 +876,7 @@ npm run dev -- --port 3001
 ```
 
 **Problem:** Environment variables not working
+
 ```bash
 # Solution: Verify variables in Vercel dashboard
 # Settings > Environment Variables
@@ -858,6 +887,7 @@ npm run dev -- --port 3001
 ### VPS Deployment Issues
 
 **Problem:** Cannot connect via SSH
+
 ```bash
 # Solution: Check firewall and SSH service
 # On server console:
@@ -867,6 +897,7 @@ systemctl restart ssh
 ```
 
 **Problem:** 502 Bad Gateway (Nginx)
+
 ```bash
 # Solution: Check if app is running
 pm2 status
@@ -880,6 +911,7 @@ curl http://localhost:3000
 ```
 
 **Problem:** SSL certificate errors
+
 ```bash
 # Solution: Renew certificate
 certbot renew
@@ -887,6 +919,7 @@ systemctl restart nginx
 ```
 
 **Problem:** Permission denied when running commands
+
 ```bash
 # Solution: Use sudo or check ownership
 sudo chown -R $USER:$USER /var/www/corporate-brain
@@ -898,30 +931,30 @@ sudo chown -R $USER:$USER /var/www/corporate-brain
 
 ### Environment Variables Checklist
 
-| Variable | Local | Vercel | VPS | Description |
-|----------|-------|--------|-----|-------------|
-| `DATABASE_URL` | ✅ | ✅ | ✅ | PostgreSQL connection |
-| `AUTH_SECRET` | ✅ | ✅ | ✅ | Random 32-char string |
-| `AUTH_URL` | ✅ | ✅ | ✅ | Your domain URL |
-| `AUTH_TRUST_HOST` | ✅ | ❌ | ❌ | Trust localhost (dev only) |
-| `OPENAI_API_KEY` | ✅ | ✅ | ✅ | OpenAI API access |
-| `ANTHROPIC_API_KEY` | Optional | Optional | Optional | Claude API access |
-| `GOOGLE_AI_API_KEY` | Optional | Optional | Optional | Gemini API access |
-| `REDIS_URL` | ✅ (Docker) | ❌ | ✅ (Local) | Self-hosted Redis connection |
-| `UPSTASH_REDIS_REST_URL` | Optional | Optional | Optional | Upstash Redis (serverless) |
-| `UPSTASH_REDIS_REST_TOKEN` | Optional | Optional | Optional | Upstash Redis auth token |
-| `QSTASH_URL` | Optional | Optional | Optional | Upstash QStash (queue) |
-| `QSTASH_TOKEN` | Optional | Optional | Optional | QStash auth token |
+| Variable                   | Local       | Vercel   | VPS        | Description                  |
+| -------------------------- | ----------- | -------- | ---------- | ---------------------------- |
+| `DATABASE_URL`             | ✅          | ✅       | ✅         | PostgreSQL connection        |
+| `AUTH_SECRET`              | ✅          | ✅       | ✅         | Random 32-char string        |
+| `AUTH_URL`                 | ✅          | ✅       | ✅         | Your domain URL              |
+| `AUTH_TRUST_HOST`          | ✅          | ❌       | ❌         | Trust localhost (dev only)   |
+| `OPENAI_API_KEY`           | ✅          | ✅       | ✅         | OpenAI API access            |
+| `ANTHROPIC_API_KEY`        | Optional    | Optional | Optional   | Claude API access            |
+| `GOOGLE_AI_API_KEY`        | Optional    | Optional | Optional   | Gemini API access            |
+| `REDIS_URL`                | ✅ (Docker) | ❌       | ✅ (Local) | Self-hosted Redis connection |
+| `UPSTASH_REDIS_REST_URL`   | Optional    | Optional | Optional   | Upstash Redis (serverless)   |
+| `UPSTASH_REDIS_REST_TOKEN` | Optional    | Optional | Optional   | Upstash Redis auth token     |
+| `QSTASH_URL`               | Optional    | Optional | Optional   | Upstash QStash (queue)       |
+| `QSTASH_TOKEN`             | Optional    | Optional | Optional   | QStash auth token            |
 
 ### Common Commands
 
-| Task | Command |
-|------|---------|
-| Start dev server | `npm run dev` |
-| Build for production | `npm run build` |
-| Start production | `npm start` |
-| Run migrations | `npx drizzle-kit push:pg` |
-| View logs | `pm2 logs` or `docker-compose logs` |
+| Task                 | Command                             |
+| -------------------- | ----------------------------------- |
+| Start dev server     | `npm run dev`                       |
+| Build for production | `npm run build`                     |
+| Start production     | `npm start`                         |
+| Run migrations       | `npx drizzle-kit push:pg`           |
+| View logs            | `pm2 logs` or `docker-compose logs` |
 
 ---
 

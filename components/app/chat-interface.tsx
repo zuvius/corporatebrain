@@ -1,7 +1,14 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Send, Sparkles, Bot, User, FileText, ExternalLink } from "lucide-react";
+import {
+  Send,
+  Sparkles,
+  Bot,
+  User,
+  FileText,
+  ExternalLink,
+} from "lucide-react";
 
 interface Message {
   id: string;
@@ -35,19 +42,25 @@ interface ChatResponse {
   citations: Citation[];
 }
 
-export function ChatInterface({ tenantId, initialConversationId }: ChatInterfaceProps) {
+export function ChatInterface({
+  tenantId,
+  initialConversationId,
+}: ChatInterfaceProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
       role: "assistant",
-      content: "Hello! I'm your Corporate Brain assistant. I can help you find information from your knowledge sources. What would you like to know?",
+      content:
+        "Hello! I'm your Corporate Brain assistant. I can help you find information from your knowledge sources. What would you like to know?",
       createdAt: new Date(),
     },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
-  const [conversationId, setConversationId] = useState<string | undefined>(initialConversationId);
+  const [conversationId, setConversationId] = useState<string | undefined>(
+    initialConversationId,
+  );
   const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -79,7 +92,7 @@ export function ChatInterface({ tenantId, initialConversationId }: ChatInterface
               role: m.role,
               content: m.content,
               createdAt: new Date(m.createdAt),
-            }))
+            })),
           );
         }
       }
@@ -103,7 +116,7 @@ export function ChatInterface({ tenantId, initialConversationId }: ChatInterface
       createdAt: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
     setError(null);
@@ -137,7 +150,7 @@ export function ChatInterface({ tenantId, initialConversationId }: ChatInterface
         id: (Date.now() + 1).toString(),
         role: "assistant",
         content: data.message,
-        sources: data.citations?.map(c => ({
+        sources: data.citations?.map((c) => ({
           id: c.id,
           name: c.title,
           type: "file",
@@ -146,19 +159,20 @@ export function ChatInterface({ tenantId, initialConversationId }: ChatInterface
         createdAt: new Date(),
       };
 
-      setMessages(prev => [...prev, assistantMessage]);
+      setMessages((prev) => [...prev, assistantMessage]);
     } catch (err) {
       console.error("Chat error:", err);
       setError(err instanceof Error ? err.message : "Failed to get response");
-      
+
       // Add error message to chat
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: "Sorry, I encountered an error processing your request. Please try again.",
+        content:
+          "Sorry, I encountered an error processing your request. Please try again.",
         createdAt: new Date(),
       };
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
@@ -175,7 +189,9 @@ export function ChatInterface({ tenantId, initialConversationId }: ChatInterface
           <div>
             <h1 className="font-semibold text-gray-900">Chat</h1>
             <p className="text-sm text-gray-500">
-              {conversationId ? "Conversation active" : "Ask anything about your knowledge base"}
+              {conversationId
+                ? "Conversation active"
+                : "Ask anything about your knowledge base"}
             </p>
           </div>
         </div>
@@ -202,7 +218,7 @@ export function ChatInterface({ tenantId, initialConversationId }: ChatInterface
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6">
-        {messages.map(message => (
+        {messages.map((message) => (
           <div
             key={message.id}
             className={`flex gap-4 ${message.role === "assistant" ? "bg-gray-50 -mx-6 px-6 py-4" : ""}`}
@@ -227,10 +243,15 @@ export function ChatInterface({ tenantId, initialConversationId }: ChatInterface
                   {message.role === "assistant" ? "Corporate Brain" : "You"}
                 </span>
                 <span className="text-xs text-gray-400">
-                  {hasMounted ? message.createdAt.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : ""}
+                  {hasMounted
+                    ? message.createdAt.toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })
+                    : ""}
                 </span>
               </div>
-              
+
               <div className="prose prose-sm max-w-none text-gray-700">
                 {message.content}
               </div>
@@ -238,18 +259,24 @@ export function ChatInterface({ tenantId, initialConversationId }: ChatInterface
               {/* Sources */}
               {message.sources && message.sources.length > 0 && (
                 <div className="mt-4 space-y-2">
-                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Sources</p>
+                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                    Sources
+                  </p>
                   <div className="flex flex-wrap gap-2">
-                    {message.sources.map(source => (
+                    {message.sources.map((source) => (
                       <div
                         key={source.id}
                         className="flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-lg hover:border-violet-300 transition-colors cursor-pointer group"
                       >
                         <FileText className="h-4 w-4 text-violet-500" />
                         <div className="max-w-[200px]">
-                          <p className="text-sm font-medium text-gray-700 truncate">{source.name}</p>
+                          <p className="text-sm font-medium text-gray-700 truncate">
+                            {source.name}
+                          </p>
                           {source.snippet && (
-                            <p className="text-xs text-gray-400 truncate">{source.snippet}</p>
+                            <p className="text-xs text-gray-400 truncate">
+                              {source.snippet}
+                            </p>
                           )}
                         </div>
                         <ExternalLink className="h-3 w-3 text-gray-400 group-hover:text-violet-500" />
@@ -270,15 +297,28 @@ export function ChatInterface({ tenantId, initialConversationId }: ChatInterface
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
-                <span className="font-medium text-gray-900">Corporate Brain</span>
+                <span className="font-medium text-gray-900">
+                  Corporate Brain
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="flex gap-1">
-                  <div className="h-2 w-2 rounded-full bg-violet-500 animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <div className="h-2 w-2 rounded-full bg-violet-500 animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <div className="h-2 w-2 rounded-full bg-violet-500 animate-bounce" style={{ animationDelay: '300ms' }} />
+                  <div
+                    className="h-2 w-2 rounded-full bg-violet-500 animate-bounce"
+                    style={{ animationDelay: "0ms" }}
+                  />
+                  <div
+                    className="h-2 w-2 rounded-full bg-violet-500 animate-bounce"
+                    style={{ animationDelay: "150ms" }}
+                  />
+                  <div
+                    className="h-2 w-2 rounded-full bg-violet-500 animate-bounce"
+                    style={{ animationDelay: "300ms" }}
+                  />
                 </div>
-                <span className="text-sm text-gray-500">Searching your knowledge base...</span>
+                <span className="text-sm text-gray-500">
+                  Searching your knowledge base...
+                </span>
               </div>
             </div>
           </div>
@@ -295,7 +335,7 @@ export function ChatInterface({ tenantId, initialConversationId }: ChatInterface
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
+                if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
                   handleSubmit(e);
                 }
@@ -303,10 +343,10 @@ export function ChatInterface({ tenantId, initialConversationId }: ChatInterface
               placeholder="Ask anything about your knowledge base..."
               rows={1}
               className="w-full resize-none rounded-lg border border-gray-300 bg-white px-4 py-3 pr-12 text-sm text-gray-900 placeholder-gray-400 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
-              style={{ minHeight: '44px', maxHeight: '120px' }}
+              style={{ minHeight: "44px", maxHeight: "120px" }}
             />
           </div>
-          
+
           <button
             type="submit"
             disabled={!input.trim() || isLoading}
@@ -315,7 +355,7 @@ export function ChatInterface({ tenantId, initialConversationId }: ChatInterface
             <Send className="h-5 w-5" />
           </button>
         </form>
-        
+
         <p className="mt-2 text-xs text-center text-gray-400">
           AI can make mistakes. Please verify important information.
         </p>

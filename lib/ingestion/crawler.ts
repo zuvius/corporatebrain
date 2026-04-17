@@ -13,7 +13,7 @@ interface CrawlOptions {
 export async function crawlUrl(
   sourceId: string,
   url: string,
-  options: CrawlOptions = {}
+  options: CrawlOptions = {},
 ) {
   const { maxPages = 10 } = options;
 
@@ -92,11 +92,11 @@ interface FirecrawlResult {
 
 async function firecrawlScrape(
   url: string,
-  options: { maxPages: number }
+  options: { maxPages: number },
 ): Promise<FirecrawlResult> {
   // For development, simulate crawling
   // In production, integrate with Firecrawl API
-  
+
   console.log(`[Firecrawl] Scraping ${url} (max ${options.maxPages} pages)`);
 
   // Mock response for development

@@ -28,6 +28,7 @@ git branch
 ```
 
 **Output:**
+
 ```
 * main              <-- You're on main
 ```
@@ -39,11 +40,13 @@ git checkout -b feat/your-feature-name
 ```
 
 **Example:**
+
 ```bash
 git checkout -b feat/user-authentication
 ```
 
 **Output:**
+
 ```
 Switched to a new branch 'feat/user-authentication'
 ```
@@ -55,6 +58,7 @@ git branch
 ```
 
 **Output:**
+
 ```
   main
 * feat/user-authentication    <-- * shows current branch
@@ -71,6 +75,7 @@ git status
 ```
 
 **Example Output:**
+
 ```
 On branch feat/user-authentication
 Changes not staged for commit:
@@ -85,11 +90,13 @@ Untracked files:
 #### Step 6: Stage Changes
 
 **Stage everything:**
+
 ```bash
 git add .
 ```
 
 **Or stage specific files:**
+
 ```bash
 git add src/app/page.tsx
 git add src/components/
@@ -117,6 +124,7 @@ Impact: UI - New auth flow, API - New endpoints"
 ```
 
 **What happens:**
+
 - Commit saved locally on `feat/user-authentication` branch
 - Memory bank auto-updates (via git hook)
 - NOT on GitHub yet!
@@ -132,11 +140,13 @@ git push -u origin feat/user-authentication
 ```
 
 **What this does:**
+
 - `-u` = Set upstream tracking (link local branch to remote)
 - Creates `feat/user-authentication` branch on GitHub
 - Uploads your commits to GitHub
 
 **Output:**
+
 ```
 Enumerating objects: 15, done.
 Counting objects: 100% (15/15), done.
@@ -159,6 +169,7 @@ branch 'feat/user-authentication' set up to track 'origin/feat/user-authenticati
 Go to: `https://github.com/username/repo/branches`
 
 You should see:
+
 ```
 Branches
 ├── main (default) ✓
@@ -175,6 +186,7 @@ Branches
 **Option A: Click the link from push output**
 
 The push output shows:
+
 ```
 https://github.com/username/repo/pull/new/feat/user-authentication
 ```
@@ -200,12 +212,14 @@ Description:
 This PR implements user authentication using NextAuth.
 
 Changes:
+
 - Login page with credentials provider
 - Logout functionality
 - Session management
 - Protected routes middleware
 
 Testing:
+
 - [x] Manual testing complete
 - [x] Unit tests added
 - [x] E2E tests passing
@@ -219,6 +233,7 @@ Closes #123 (if applicable)
 #### Step 12: Automated Checks Run
 
 GitHub Actions (if configured) will:
+
 ```
 ✓ Build passing
 ✓ Tests passing
@@ -247,10 +262,12 @@ GitHub Actions (if configured) will:
 #### Step 14: Merge Pull Request
 
 On GitHub PR page, click:
+
 - **"Merge pull request"** (keeps all commits)
 - OR **"Squash and merge"** (combines into 1 commit)
 
 **What happens:**
+
 - Your `feat/user-authentication` changes → merged into `main`
 - PR marked as "Merged"
 - Branch can be deleted
@@ -258,11 +275,13 @@ On GitHub PR page, click:
 #### Step 15: Delete Feature Branch (Cleanup)
 
 **On GitHub:**
+
 ```
 After merge, click "Delete branch" button
 ```
 
 **Locally:**
+
 ```bash
 # Switch to main
 git checkout main
@@ -280,7 +299,7 @@ git pull origin main
 
 ```
 LOCAL MACHINE                          GITHUB REMOTE
-                                                    
+
 ┌─────────────────┐                   ┌─────────────────┐
 │  main (frozen)  │                   │  main (default) │
 │  Don't touch!   │                   │  Production     │
@@ -432,19 +451,19 @@ git checkout feat/your-feature
 
 ## Command Summary Table
 
-| Phase | Command | What It Does |
-|-------|---------|--------------|
-| **Start** | `git branch` | Check current branch |
-| **Start** | `git checkout -b feat/x` | Create and switch to branch |
-| **Work** | `git add .` | Stage changes |
-| **Work** | `git commit -m "msg"` | Save to local branch |
-| **Work** | `git status` | See what's happening |
-| **Push** | `git push -u origin feat/x` | Upload to GitHub |
-| **Update** | `git push` | Update existing remote branch |
-| **Sync** | `git pull` | Get latest changes |
-| **Cleanup** | `git checkout main` | Switch to main |
-| **Cleanup** | `git pull` | Get merged changes |
-| **Cleanup** | `git branch -d feat/x` | Delete local branch |
+| Phase       | Command                     | What It Does                  |
+| ----------- | --------------------------- | ----------------------------- |
+| **Start**   | `git branch`                | Check current branch          |
+| **Start**   | `git checkout -b feat/x`    | Create and switch to branch   |
+| **Work**    | `git add .`                 | Stage changes                 |
+| **Work**    | `git commit -m "msg"`       | Save to local branch          |
+| **Work**    | `git status`                | See what's happening          |
+| **Push**    | `git push -u origin feat/x` | Upload to GitHub              |
+| **Update**  | `git push`                  | Update existing remote branch |
+| **Sync**    | `git pull`                  | Get latest changes            |
+| **Cleanup** | `git checkout main`         | Switch to main                |
+| **Cleanup** | `git pull`                  | Get merged changes            |
+| **Cleanup** | `git branch -d feat/x`      | Delete local branch           |
 
 ---
 
@@ -504,6 +523,7 @@ main → checkout -b feat/x → edit → commit → push → PR → merge
 ---
 
 **Next Steps:**
+
 1. Run `npm run hooks:install` (one-time)
 2. Run `git checkout -b feat/test-feature`
 3. Make a small change

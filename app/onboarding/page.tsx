@@ -43,7 +43,7 @@ export default function OnboardingPage() {
     try {
       const response = await fetch("/api/onboarding/status");
       if (!response.ok) throw new Error("Failed to fetch status");
-      
+
       const data = await response.json();
       setState((prev) => ({
         ...prev,
@@ -80,7 +80,7 @@ export default function OnboardingPage() {
   }) => {
     try {
       setState((prev) => ({ ...prev, isLoading: true, error: null }));
-      
+
       const response = await fetch("/api/onboarding/workspace", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -111,7 +111,7 @@ export default function OnboardingPage() {
   const completeOnboarding = async () => {
     try {
       setState((prev) => ({ ...prev, isLoading: true, error: null }));
-      
+
       const response = await fetch("/api/onboarding/complete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -127,7 +127,8 @@ export default function OnboardingPage() {
       setState((prev) => ({
         ...prev,
         isLoading: false,
-        error: err instanceof Error ? err.message : "Failed to complete onboarding",
+        error:
+          err instanceof Error ? err.message : "Failed to complete onboarding",
       }));
     }
   };
@@ -160,7 +161,9 @@ export default function OnboardingPage() {
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
       {state.error && (
         <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-          <p className="text-red-600 dark:text-red-400 text-sm">{state.error}</p>
+          <p className="text-red-600 dark:text-red-400 text-sm">
+            {state.error}
+          </p>
         </div>
       )}
 
@@ -178,7 +181,9 @@ export default function OnboardingPage() {
               >
                 {step.id < state.currentStep ? "✓" : step.id}
               </div>
-              <span className="text-xs text-gray-500 dark:text-gray-400 hidden sm:block">{step.title}</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400 hidden sm:block">
+                {step.title}
+              </span>
             </div>
           ))}
         </div>
@@ -201,7 +206,12 @@ export default function OnboardingPage() {
           />
         )}
         {state.currentStep === 3 && <ConnectStep onNext={nextStep} />}
-        {state.currentStep === 4 && <CompleteStep onComplete={completeOnboarding} isLoading={state.isLoading} />}
+        {state.currentStep === 4 && (
+          <CompleteStep
+            onComplete={completeOnboarding}
+            isLoading={state.isLoading}
+          />
+        )}
       </div>
 
       {/* Navigation */}
@@ -239,21 +249,28 @@ function WelcomeStep({ onNext }: { onNext: () => void }) {
         Welcome to Corporate Brain!
       </h2>
       <p className="text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto mb-8">
-        Let&apos;s get your team&apos;s knowledge base set up in just a few minutes. 
-        We&apos;ll guide you through connecting your tools and inviting your team.
+        Let&apos;s get your team&apos;s knowledge base set up in just a few
+        minutes. We&apos;ll guide you through connecting your tools and inviting
+        your team.
       </p>
       <div className="grid md:grid-cols-3 gap-4 max-w-2xl mx-auto mb-8">
         <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
           <div className="text-2xl mb-2">⚡</div>
-          <p className="text-sm text-gray-600 dark:text-gray-400">5 minute setup</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            5 minute setup
+          </p>
         </div>
         <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
           <div className="text-2xl mb-2">🔌</div>
-          <p className="text-sm text-gray-600 dark:text-gray-400">Connect your tools</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Connect your tools
+          </p>
         </div>
         <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
           <div className="text-2xl mb-2">🚀</div>
-          <p className="text-sm text-gray-600 dark:text-gray-400">Start asking questions</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Start asking questions
+          </p>
         </div>
       </div>
       <button
@@ -272,16 +289,20 @@ function WorkspaceStep({
   isLoading,
 }: {
   initialData: { name: string; teamSize: string; useCase: string };
-  onSave: (data: { name: string; teamSize: string; useCase: string }) => Promise<void>;
+  onSave: (data: {
+    name: string;
+    teamSize: string;
+    useCase: string;
+  }) => Promise<void>;
   isLoading: boolean;
 }) {
   const [teamName, setTeamName] = useState(initialData.name);
   const [teamSize, setTeamSize] = useState(initialData.teamSize);
   const [useCase, setUseCase] = useState(initialData.useCase);
-  const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const validate = () => {
-    const newErrors: {[key: string]: string} = {};
+    const newErrors: { [key: string]: string } = {};
     if (!teamName.trim()) newErrors.name = "Team name is required";
     if (!teamSize) newErrors.teamSize = "Team size is required";
     if (!useCase) newErrors.useCase = "Use case is required";
@@ -297,7 +318,9 @@ function WorkspaceStep({
 
   return (
     <div className="py-8">
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Set Up Your Workspace</h2>
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+        Set Up Your Workspace
+      </h2>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
         Tell us a bit about your team so we can optimize your experience.
       </p>
@@ -317,7 +340,9 @@ function WorkspaceStep({
             placeholder="Acme Inc."
             className={`w-full px-4 py-2 rounded-lg border ${errors.name ? "border-red-500" : "border-gray-300 dark:border-gray-600"} bg-white dark:bg-gray-700 text-gray-900 dark:text-white`}
           />
-          {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+          {errors.name && (
+            <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+          )}
         </div>
 
         <div>
@@ -339,7 +364,9 @@ function WorkspaceStep({
             <option value="201-500">201-500 people</option>
             <option value="500+">500+ people</option>
           </select>
-          {errors.teamSize && <p className="text-red-500 text-sm mt-1">{errors.teamSize}</p>}
+          {errors.teamSize && (
+            <p className="text-red-500 text-sm mt-1">{errors.teamSize}</p>
+          )}
         </div>
 
         <div>
@@ -372,11 +399,15 @@ function WorkspaceStep({
                   }}
                   className="mr-3"
                 />
-                <span className="text-gray-700 dark:text-gray-300">{option.label}</span>
+                <span className="text-gray-700 dark:text-gray-300">
+                  {option.label}
+                </span>
               </label>
             ))}
           </div>
-          {errors.useCase && <p className="text-red-500 text-sm mt-1">{errors.useCase}</p>}
+          {errors.useCase && (
+            <p className="text-red-500 text-sm mt-1">{errors.useCase}</p>
+          )}
         </div>
 
         <button
@@ -392,17 +423,19 @@ function WorkspaceStep({
 }
 
 function ConnectStep({ onNext }: { onNext: () => void }) {
-  const [integrations, setIntegrations] = useState<Array<{
-    id: string;
-    name: string;
-    icon: string;
-    description: string;
-    status?: string;
-    canConnect: boolean;
-    isTeaserRestricted: boolean;
-    unavailableReason?: string;
-    popular?: boolean;
-  }>>([]);
+  const [integrations, setIntegrations] = useState<
+    Array<{
+      id: string;
+      name: string;
+      icon: string;
+      description: string;
+      status?: string;
+      canConnect: boolean;
+      isTeaserRestricted: boolean;
+      unavailableReason?: string;
+      popular?: boolean;
+    }>
+  >([]);
   const [isLoading, setIsLoading] = useState(true);
   const [connecting, setConnecting] = useState<string | null>(null);
 
@@ -460,9 +493,12 @@ function ConnectStep({ onNext }: { onNext: () => void }) {
 
   return (
     <div className="py-8">
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Connect Your Tools</h2>
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+        Connect Your Tools
+      </h2>
       <p className="text-gray-600 dark:text-gray-400 mb-8">
-        Link the platforms where your team stores knowledge. You can add more later.
+        Link the platforms where your team stores knowledge. You can add more
+        later.
       </p>
 
       <div className="grid md:grid-cols-2 gap-4">
@@ -474,20 +510,23 @@ function ConnectStep({ onNext }: { onNext: () => void }) {
               integration.status === "connected"
                 ? "border-green-500 bg-green-50 dark:bg-green-900/20"
                 : integration.status === "pending"
-                ? "border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20"
-                : "border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-500"
+                  ? "border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20"
+                  : "border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-500"
             }`}
           >
             <div className="flex items-start">
               <div className="text-3xl mr-4">{integration.icon}</div>
               <div className="flex-1">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-gray-900 dark:text-white">{integration.name}</h3>
-                  {integration.popular && integration.status !== "connected" && (
-                    <span className="text-xs bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 px-2 py-1 rounded">
-                      Popular
-                    </span>
-                  )}
+                  <h3 className="font-semibold text-gray-900 dark:text-white">
+                    {integration.name}
+                  </h3>
+                  {integration.popular &&
+                    integration.status !== "connected" && (
+                      <span className="text-xs bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 px-2 py-1 rounded">
+                        Popular
+                      </span>
+                    )}
                   {integration.status === "connected" && (
                     <span className="text-xs bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 px-2 py-1 rounded">
                       Connected
@@ -500,7 +539,9 @@ function ConnectStep({ onNext }: { onNext: () => void }) {
                   )}
                 </div>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {connecting === integration.id ? "Connecting..." : integration.description}
+                  {connecting === integration.id
+                    ? "Connecting..."
+                    : integration.description}
                 </p>
               </div>
             </div>
@@ -544,27 +585,37 @@ function CompleteStep({
         You&apos;re All Set!
       </h2>
       <p className="text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto mb-8">
-        Your workspace is configured and ready to go. Start asking questions or 
+        Your workspace is configured and ready to go. Start asking questions or
         invite your team to join.
       </p>
 
       <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-6 max-w-md mx-auto mb-8">
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Quick Start Guide</h3>
+        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+          Quick Start Guide
+        </h3>
         <ul className="text-left space-y-3">
           <li className="flex items-center text-gray-700 dark:text-gray-300">
-            <span className="w-6 h-6 bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center text-sm mr-3">1</span>
+            <span className="w-6 h-6 bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center text-sm mr-3">
+              1
+            </span>
             Ask your first question in the chat
           </li>
           <li className="flex items-center text-gray-700 dark:text-gray-300">
-            <span className="w-6 h-6 bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center text-sm mr-3">2</span>
+            <span className="w-6 h-6 bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center text-sm mr-3">
+              2
+            </span>
             Connect more integrations from Settings
           </li>
           <li className="flex items-center text-gray-700 dark:text-gray-300">
-            <span className="w-6 h-6 bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center text-sm mr-3">3</span>
+            <span className="w-6 h-6 bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center text-sm mr-3">
+              3
+            </span>
             Invite teammates to collaborate
           </li>
           <li className="flex items-center text-gray-700 dark:text-gray-300">
-            <span className="w-6 h-6 bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center text-sm mr-3">4</span>
+            <span className="w-6 h-6 bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center text-sm mr-3">
+              4
+            </span>
             Explore the Admin Dashboard for insights
           </li>
         </ul>

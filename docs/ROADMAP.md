@@ -22,6 +22,7 @@ A comprehensive, step-by-step guide to building the Corporate Brain application 
 ## Overview
 
 ### Total Timeline
+
 - **Phase 1-5 (Core Product):** 20 weeks (5 months) ✅ Complete
 - **Phase 5.5 (Production Readiness):** 8 weeks (2 months) - Current Focus
 - **Full Enterprise Ready:** 40 weeks (10 months)
@@ -30,6 +31,7 @@ A comprehensive, step-by-step guide to building the Corporate Brain application 
 > **📋 Current Status:** See `docs/PENDING_REQUIREMENTS.md` for detailed Phase 5.5 specifications
 
 ### Technology Stack
+
 - **Frontend:** Next.js 15 + TypeScript + Tailwind CSS
 - **Database:** PostgreSQL 15 + pgvector
 - **AI:** Multi-model orchestration (OpenAI, Anthropic, Google)
@@ -39,16 +41,16 @@ A comprehensive, step-by-step guide to building the Corporate Brain application 
 
 ### Milestone Summary
 
-| Phase | Duration | Key Deliverable | User Impact | Status |
-|-------|----------|-----------------|-------------|--------|
-| 1 | Weeks 1-4 | Working dev environment | Developers can run locally | ✅ Complete |
-| 2 | Weeks 5-8 | AI chat with context | Users can ask questions | ✅ Complete |
-| 3 | Weeks 9-12 | 8 integrations connected | Data flows from all tools | ✅ Complete |
-| 4 | Weeks 13-16 | Admin dashboards | Owners see ROI & control costs | ✅ Complete |
-| 5 | Weeks 17-20 | Public launch | Anyone can sign up | ✅ Complete |
+| Phase   | Duration        | Key Deliverable          | User Impact                     | Status         |
+| ------- | --------------- | ------------------------ | ------------------------------- | -------------- |
+| 1       | Weeks 1-4       | Working dev environment  | Developers can run locally      | ✅ Complete    |
+| 2       | Weeks 5-8       | AI chat with context     | Users can ask questions         | ✅ Complete    |
+| 3       | Weeks 9-12      | 8 integrations connected | Data flows from all tools       | ✅ Complete    |
+| 4       | Weeks 13-16     | Admin dashboards         | Owners see ROI & control costs  | ✅ Complete    |
+| 5       | Weeks 17-20     | Public launch            | Anyone can sign up              | ✅ Complete    |
 | **5.5** | **Weeks 21-28** | **Production readiness** | **Billing, CMS, legal, polish** | **🔄 Current** |
-| 6 | Weeks 29-32 | Enterprise features | SSO, audit logs, compliance | Future |
-| 7 | Weeks 37-40 | Advanced features | Automation, enhanced search | Future |
+| 6       | Weeks 29-32     | Enterprise features      | SSO, audit logs, compliance     | Future         |
+| 7       | Weeks 37-40     | Advanced features        | Automation, enhanced search     | Future         |
 
 - **MCP Documentation:** [modelcontextprotocol.io](https://modelcontextprotocol.io)
 - **Drizzle ORM Docs:** [orm.drizzle.team](https://orm.drizzle.team)
@@ -63,6 +65,7 @@ A comprehensive, step-by-step guide to building the Corporate Brain application 
 ### Week 1: Project Scaffolding
 
 **Objectives:**
+
 - Set up Next.js project with TypeScript
 - Configure Tailwind CSS theme
 - Set up Drizzle ORM
@@ -70,15 +73,15 @@ A comprehensive, step-by-step guide to building the Corporate Brain application 
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Commands/Instructions |
-|-----|------|----------------------|
-| **1** | Initialize project | `npx create-next-app@latest corporate-brain --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"` |
-| **2** | Configure Tailwind theme | Edit `tailwind.config.ts` with custom colors (Neural Purple, Electric Cyan, Sovereign Gold) |
-| **3** | Set up Drizzle ORM | `npm install drizzle-orm pg @types/pg` + `npm install -D drizzle-kit` |
-| **4** | Configure TypeScript | Update `tsconfig.json` with strict settings, path aliases |
-| **5** | Set up project structure | Create `/app`, `/components`, `/lib`, `/db`, `/types` directories |
-| **6** | Initialize Git | `git init`, create `.gitignore` (node_modules, .env, .next) |
-| **7** | Week 1 review | Ensure `npm run dev` works, project structure complete |
+| Day   | Task                     | Commands/Instructions                                                                                              |
+| ----- | ------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| **1** | Initialize project       | `npx create-next-app@latest corporate-brain --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"` |
+| **2** | Configure Tailwind theme | Edit `tailwind.config.ts` with custom colors (Neural Purple, Electric Cyan, Sovereign Gold)                        |
+| **3** | Set up Drizzle ORM       | `npm install drizzle-orm pg @types/pg` + `npm install -D drizzle-kit`                                              |
+| **4** | Configure TypeScript     | Update `tsconfig.json` with strict settings, path aliases                                                          |
+| **5** | Set up project structure | Create `/app`, `/components`, `/lib`, `/db`, `/types` directories                                                  |
+| **6** | Initialize Git           | `git init`, create `.gitignore` (node_modules, .env, .next)                                                        |
+| **7** | Week 1 review            | Ensure `npm run dev` works, project structure complete                                                             |
 
 **Deliverable:** Clean project structure ready for development
 
@@ -87,6 +90,7 @@ A comprehensive, step-by-step guide to building the Corporate Brain application 
 ### Week 2: Database & Auth
 
 **Objectives:**
+
 - Set up PostgreSQL with pgvector
 - Create database schema
 - Implement Auth.js authentication
@@ -94,52 +98,68 @@ A comprehensive, step-by-step guide to building the Corporate Brain application 
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Commands/Instructions |
-|-----|------|----------------------|
-| **8** | Install dependencies | `npm install next-auth@beta @auth/drizzle-adapter` |
-| **9** | Create schema file | Create `/db/schema.ts` with tenants, users, knowledge_sources tables |
-| **10** | Set up Docker Compose | Create `docker-compose.yml` with PostgreSQL + Redis |
-| **11** | Run migrations | `npx drizzle-kit generate:pg` then `npx drizzle-kit push:pg` |
-| **12** | Configure Auth.js | Create `/app/api/auth/[...nextauth]/route.ts` with providers |
-| **13** | Add multi-tenancy | Create middleware for tenant detection (subdomain/header) |
-| **14** | Test auth flow | Verify login/logout works, tenant isolation works |
+| Day    | Task                  | Commands/Instructions                                                |
+| ------ | --------------------- | -------------------------------------------------------------------- |
+| **8**  | Install dependencies  | `npm install next-auth@beta @auth/drizzle-adapter`                   |
+| **9**  | Create schema file    | Create `/db/schema.ts` with tenants, users, knowledge_sources tables |
+| **10** | Set up Docker Compose | Create `docker-compose.yml` with PostgreSQL + Redis                  |
+| **11** | Run migrations        | `npx drizzle-kit generate:pg` then `npx drizzle-kit push:pg`         |
+| **12** | Configure Auth.js     | Create `/app/api/auth/[...nextauth]/route.ts` with providers         |
+| **13** | Add multi-tenancy     | Create middleware for tenant detection (subdomain/header)            |
+| **14** | Test auth flow        | Verify login/logout works, tenant isolation works                    |
 
 **Database Schema to Create:**
 
 ```typescript
 // /db/schema.ts
-import { pgTable, uuid, varchar, text, timestamp, jsonb, index } from 'drizzle-orm/pg-core';
+import {
+  pgTable,
+  uuid,
+  varchar,
+  text,
+  timestamp,
+  jsonb,
+  index,
+} from "drizzle-orm/pg-core";
 
-export const tenants = pgTable('tenants', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  name: varchar('name', { length: 255 }).notNull(),
-  slug: varchar('slug', { length: 100 }).notNull().unique(),
-  plan: varchar('plan', { length: 50 }).default('starter'),
-  settings: jsonb('settings').default('{}'),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+export const tenants = pgTable("tenants", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  name: varchar("name", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 100 }).notNull().unique(),
+  plan: varchar("plan", { length: 50 }).default("starter"),
+  settings: jsonb("settings").default("{}"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-export const users = pgTable('users', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  tenantId: uuid('tenant_id').references(() => tenants.id).notNull(),
-  email: varchar('email', { length: 255 }).notNull(),
-  name: varchar('name', { length: 255 }),
-  role: varchar('role', { length: 50 }).default('member'),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-}, (table) => ({
-  tenantEmailIdx: index('tenant_email_idx').on(table.tenantId, table.email),
-}));
+export const users = pgTable(
+  "users",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    tenantId: uuid("tenant_id")
+      .references(() => tenants.id)
+      .notNull(),
+    email: varchar("email", { length: 255 }).notNull(),
+    name: varchar("name", { length: 255 }),
+    role: varchar("role", { length: 50 }).default("member"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => ({
+    tenantEmailIdx: index("tenant_email_idx").on(table.tenantId, table.email),
+  }),
+);
 
-export const knowledgeSources = pgTable('knowledge_sources', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  tenantId: uuid('tenant_id').references(() => tenants.id).notNull(),
-  type: varchar('type', { length: 50 }).notNull(),
-  title: varchar('title', { length: 500 }),
-  content: text('content'),
-  metadata: jsonb('metadata').default('{}'),
-  status: varchar('status', { length: 50 }).default('pending'),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
+export const knowledgeSources = pgTable("knowledge_sources", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  tenantId: uuid("tenant_id")
+    .references(() => tenants.id)
+    .notNull(),
+  type: varchar("type", { length: 50 }).notNull(),
+  title: varchar("title", { length: 500 }),
+  content: text("content"),
+  metadata: jsonb("metadata").default("{}"),
+  status: varchar("status", { length: 50 }).default("pending"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 ```
 
@@ -150,27 +170,32 @@ export const knowledgeSources = pgTable('knowledge_sources', {
 ### Week 3: Basic Ingestion
 
 **Objectives:**
+
 - Build file upload API
 - Integrate Unstructured.io
 - Store vectors in pgvector
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Commands/Instructions |
-|-----|------|----------------------|
-| **15** | File upload API | Create `/app/api/upload/route.ts` with multipart/form-data |
-| **16** | Add Unstructured.io | `npm install unstructured-client`, create processing utility |
-| **17** | Create chunking logic | Implement text splitting (1000 chars, 200 overlap) |
-| **18** | Set up embeddings | Add OpenAI embeddings API integration |
-| **19** | Store vectors | Create pgvector insertion with 1536-dim vectors |
-| **20** | Create upload UI | Build drag-and-drop component with progress |
-| **21** | Test ingestion | Upload PDF, verify chunks stored with embeddings |
+| Day    | Task                  | Commands/Instructions                                        |
+| ------ | --------------------- | ------------------------------------------------------------ |
+| **15** | File upload API       | Create `/app/api/upload/route.ts` with multipart/form-data   |
+| **16** | Add Unstructured.io   | `npm install unstructured-client`, create processing utility |
+| **17** | Create chunking logic | Implement text splitting (1000 chars, 200 overlap)           |
+| **18** | Set up embeddings     | Add OpenAI embeddings API integration                        |
+| **19** | Store vectors         | Create pgvector insertion with 1536-dim vectors              |
+| **20** | Create upload UI      | Build drag-and-drop component with progress                  |
+| **21** | Test ingestion        | Upload PDF, verify chunks stored with embeddings             |
 
 **Key Implementation:**
 
 ```typescript
 // /lib/ingestion/chunker.ts
-export function chunkText(text: string, chunkSize = 1000, overlap = 200): string[] {
+export function chunkText(
+  text: string,
+  chunkSize = 1000,
+  overlap = 200,
+): string[] {
   const chunks: string[] = [];
   let i = 0;
   while (i < text.length) {
@@ -188,21 +213,22 @@ export function chunkText(text: string, chunkSize = 1000, overlap = 200): string
 ### Week 4: URL Crawling
 
 **Objectives:**
+
 - Integrate Firecrawl
 - Build crawl progress UI
 - Basic indexing system
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Commands/Instructions |
-|-----|------|----------------------|
-| **22** | Add Firecrawl | `npm install @mendable/firecrawl-js` |
-| **23** | Create crawl API | Build `/app/api/crawl/route.ts` endpoint |
-| **24** | Progress tracking | Create job queue table, WebSocket for progress |
-| **25** | Build crawl UI | Create URL input form with progress visualization |
-| **26** | Handle crawl results | Process crawled pages into knowledge sources |
-| **27** | Add rate limiting | Implement crawl throttling per domain |
-| **28** | Phase 1 review | All features working end-to-end |
+| Day    | Task                 | Commands/Instructions                             |
+| ------ | -------------------- | ------------------------------------------------- |
+| **22** | Add Firecrawl        | `npm install @mendable/firecrawl-js`              |
+| **23** | Create crawl API     | Build `/app/api/crawl/route.ts` endpoint          |
+| **24** | Progress tracking    | Create job queue table, WebSocket for progress    |
+| **25** | Build crawl UI       | Create URL input form with progress visualization |
+| **26** | Handle crawl results | Process crawled pages into knowledge sources      |
+| **27** | Add rate limiting    | Implement crawl throttling per domain             |
+| **28** | Phase 1 review       | All features working end-to-end                   |
 
 **Deliverable:** Users can enter a URL and watch it being crawled
 
@@ -227,21 +253,22 @@ export function chunkText(text: string, chunkSize = 1000, overlap = 200): string
 ### Week 5: Model Router
 
 **Objectives:**
+
 - Set up Vercel AI SDK (optional)
 - Build routing logic
 - Implement cost tracking
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Implementation |
-|-----|------|----------------|
-| **29** | Install AI SDK | `npm install ai` |
-| **30** | Configure providers | Set up OpenAI, Anthropic, Google clients |
-| **31** | Build router | Create `/lib/ai/router.ts` with routing logic |
-| **32** | Cost tracking | Add token counting, cost per request calculation |
-| **33** | Routing rules | Implement complexity-based routing |
-| **34** | Add caching | Implement Redis caching for common queries |
-| **35** | Test routing | Verify correct model selected per query type |
+| Day    | Task                | Implementation                                   |
+| ------ | ------------------- | ------------------------------------------------ |
+| **29** | Install AI SDK      | `npm install ai`                                 |
+| **30** | Configure providers | Set up OpenAI, Anthropic, Google clients         |
+| **31** | Build router        | Create `/lib/ai/router.ts` with routing logic    |
+| **32** | Cost tracking       | Add token counting, cost per request calculation |
+| **33** | Routing rules       | Implement complexity-based routing               |
+| **34** | Add caching         | Implement Redis caching for common queries       |
+| **35** | Test routing        | Verify correct model selected per query type     |
 
 **Router Logic:**
 
@@ -250,11 +277,13 @@ export function chunkText(text: string, chunkSize = 1000, overlap = 200): string
 export function selectModel(query: string, context: string): ModelConfig {
   const complexity = analyzeComplexity(query);
   const contextSize = context.length;
-  
-  if (contextSize > 100000) return { model: 'gemini-3-pro', provider: 'google' };
-  if (complexity > 0.8) return { model: 'gpt-5.4', provider: 'openai' };
-  if (complexity > 0.5) return { model: 'claude-4.6-opus', provider: 'anthropic' };
-  return { model: 'gemini-2.5-flash', provider: 'google' };
+
+  if (contextSize > 100000)
+    return { model: "gemini-3-pro", provider: "google" };
+  if (complexity > 0.8) return { model: "gpt-5.4", provider: "openai" };
+  if (complexity > 0.5)
+    return { model: "claude-4.6-opus", provider: "anthropic" };
+  return { model: "gemini-2.5-flash", provider: "google" };
 }
 ```
 
@@ -265,21 +294,22 @@ export function selectModel(query: string, context: string): ModelConfig {
 ### Week 6: Chat Interface
 
 **Objectives:**
+
 - Build context-aware chatbot
 - Message storage system
 - Conversation history
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Implementation |
-|-----|------|----------------|
-| **36** | Chat UI component | Build message list, input area, send button |
-| **37** | State management | Use React Context or Zustand for chat state |
-| **38** | Streaming responses | Implement SSE for real-time AI responses |
-| **39** | Message persistence | Save messages to database |
-| **40** | Conversation list | Sidebar showing past conversations |
-| **41** | New chat button | Ability to start fresh conversations |
-| **42** | Chat testing | End-to-end chat flow working |
+| Day    | Task                | Implementation                              |
+| ------ | ------------------- | ------------------------------------------- |
+| **36** | Chat UI component   | Build message list, input area, send button |
+| **37** | State management    | Use React Context or Zustand for chat state |
+| **38** | Streaming responses | Implement SSE for real-time AI responses    |
+| **39** | Message persistence | Save messages to database                   |
+| **40** | Conversation list   | Sidebar showing past conversations          |
+| **41** | New chat button     | Ability to start fresh conversations        |
+| **42** | Chat testing        | End-to-end chat flow working                |
 
 **Deliverable:** Users can have a conversation with the AI
 
@@ -288,21 +318,22 @@ export function selectModel(query: string, context: string): ModelConfig {
 ### Week 7: Hybrid RAG
 
 **Objectives:**
+
 - pgvector search implementation
 - Long-context integration
 - Citation system
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Implementation |
-|-----|------|----------------|
-| **43** | Vector search | Create similarity search function |
-| **44** | HNSW indexing | Optimize vector search performance |
-| **45** | Hybrid search | Combine vector + keyword search |
+| Day    | Task              | Implementation                      |
+| ------ | ----------------- | ----------------------------------- |
+| **43** | Vector search     | Create similarity search function   |
+| **44** | HNSW indexing     | Optimize vector search performance  |
+| **45** | Hybrid search     | Combine vector + keyword search     |
 | **46** | Context injection | Feed relevant chunks into AI prompt |
-| **47** | Citation system | Track which sources used in answers |
-| **48** | Source sidebar | UI showing referenced documents |
-| **49** | RAG testing | Verify answers use correct context |
+| **47** | Citation system   | Track which sources used in answers |
+| **48** | Source sidebar    | UI showing referenced documents     |
+| **49** | RAG testing       | Verify answers use correct context  |
 
 **Vector Search Query:**
 
@@ -311,12 +342,12 @@ export function selectModel(query: string, context: string): ModelConfig {
 export async function searchSimilar(
   tenantId: string,
   embedding: number[],
-  limit = 5
+  limit = 5,
 ) {
   return db.query.knowledgeSources.findMany({
     where: and(
       eq(knowledgeSources.tenantId, tenantId),
-      sql`embedding <-> ${JSON.stringify(embedding)} < 0.3`
+      sql`embedding <-> ${JSON.stringify(embedding)} < 0.3`,
     ),
     orderBy: sql`embedding <-> ${JSON.stringify(embedding)}`,
     limit,
@@ -331,21 +362,22 @@ export async function searchSimilar(
 ### Week 8: UI Polish
 
 **Objectives:**
+
 - Premium styling
 - Dark mode implementation
 - Responsive design
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Implementation |
-|-----|------|----------------|
-| **50** | Color system | Implement CSS variables for theming |
-| **51** | Dark mode | Add next-themes, toggle component |
-| **52** | Mobile layout | Responsive sidebar, chat layout |
-| **53** | Animations | Add Framer Motion for smooth transitions |
+| Day    | Task            | Implementation                               |
+| ------ | --------------- | -------------------------------------------- |
+| **50** | Color system    | Implement CSS variables for theming          |
+| **51** | Dark mode       | Add next-themes, toggle component            |
+| **52** | Mobile layout   | Responsive sidebar, chat layout              |
+| **53** | Animations      | Add Framer Motion for smooth transitions     |
 | **54** | Premium touches | Glass effects, gradients, micro-interactions |
-| **55** | Accessibility | ARIA labels, keyboard navigation |
-| **56** | Phase 2 review | All AI features polished and working |
+| **55** | Accessibility   | ARIA labels, keyboard navigation             |
+| **56** | Phase 2 review  | All AI features polished and working         |
 
 **Deliverable:** Beautiful, responsive chat interface
 
@@ -370,21 +402,22 @@ export async function searchSimilar(
 ### Week 9: OAuth Framework
 
 **Objectives:**
+
 - Build connection manager
 - Token encryption
 - Status monitoring
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Implementation |
-|-----|------|----------------|
-| **57** | OAuth flow | Create OAuth callback handlers |
-| **58** | Token storage | Encrypt tokens with AES-256 |
-| **59** | Connection UI | Build "Connect" buttons for each service |
-| **60** | Status tracking | Show connection health indicators |
-| **61** | Disconnect flow | Allow users to revoke access |
-| **62** | Reconnection | Handle expired tokens, auto-refresh |
-| **63** | OAuth testing | Verify all providers connect correctly |
+| Day    | Task            | Implementation                           |
+| ------ | --------------- | ---------------------------------------- |
+| **57** | OAuth flow      | Create OAuth callback handlers           |
+| **58** | Token storage   | Encrypt tokens with AES-256              |
+| **59** | Connection UI   | Build "Connect" buttons for each service |
+| **60** | Status tracking | Show connection health indicators        |
+| **61** | Disconnect flow | Allow users to revoke access             |
+| **62** | Reconnection    | Handle expired tokens, auto-refresh      |
+| **63** | OAuth testing   | Verify all providers connect correctly   |
 
 **Deliverable:** Users can connect Slack, Drive, Notion, etc.
 
@@ -393,21 +426,22 @@ export async function searchSimilar(
 ### Week 10: Slack + Drive
 
 **Objectives:**
+
 - Slack real-time sync
 - Message ingestion
 - Google Drive file processing
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Implementation |
-|-----|------|----------------|
-| **64** | Slack events | Set up Events API webhook handler |
-| **65** | Message sync | Store Slack messages as knowledge sources |
-| **66** | Drive OAuth | Complete Google OAuth flow |
-| **67** | File listing | Browse and select Drive files |
-| **68** | Drive sync | Process Google Docs, PDFs from Drive |
-| **69** | Error handling | Handle rate limits, disconnections |
-| **70** | Week 10 review | Slack messages appear in knowledge base |
+| Day    | Task           | Implementation                            |
+| ------ | -------------- | ----------------------------------------- |
+| **64** | Slack events   | Set up Events API webhook handler         |
+| **65** | Message sync   | Store Slack messages as knowledge sources |
+| **66** | Drive OAuth    | Complete Google OAuth flow                |
+| **67** | File listing   | Browse and select Drive files             |
+| **68** | Drive sync     | Process Google Docs, PDFs from Drive      |
+| **69** | Error handling | Handle rate limits, disconnections        |
+| **70** | Week 10 review | Slack messages appear in knowledge base   |
 
 **Deliverable:** Slack messages and Drive files searchable
 
@@ -416,21 +450,22 @@ export async function searchSimilar(
 ### Week 11: Notion + Teams
 
 **Objectives:**
+
 - Notion database sync
 - Page indexing
 - Teams meeting transcripts
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Implementation |
-|-----|------|----------------|
-| **71** | Notion OAuth | Complete Notion integration OAuth |
-| **72** | Page crawler | Recursively fetch Notion pages |
-| **73** | Database sync | Handle Notion databases as structured data |
-| **74** | Teams OAuth | Microsoft Teams OAuth flow |
-| **75** | Meeting data | Fetch Teams meeting transcripts |
-| **76** | Chat sync | Teams channel message ingestion |
-| **77** | Notion testing | Notion pages appear in search |
+| Day    | Task           | Implementation                             |
+| ------ | -------------- | ------------------------------------------ |
+| **71** | Notion OAuth   | Complete Notion integration OAuth          |
+| **72** | Page crawler   | Recursively fetch Notion pages             |
+| **73** | Database sync  | Handle Notion databases as structured data |
+| **74** | Teams OAuth    | Microsoft Teams OAuth flow                 |
+| **75** | Meeting data   | Fetch Teams meeting transcripts            |
+| **76** | Chat sync      | Teams channel message ingestion            |
+| **77** | Notion testing | Notion pages appear in search              |
 
 **Deliverable:** Notion and Teams data integrated
 
@@ -439,21 +474,22 @@ export async function searchSimilar(
 ### Week 12: Zoom + Email
 
 **Objectives:**
+
 - Zoom transcript processing
 - Email thread analysis
 - Integration polish
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Implementation |
-|-----|------|----------------|
-| **78** | Zoom OAuth | Connect Zoom account |
-| **79** | Transcripts | Fetch and process meeting transcripts |
-| **80** | Gmail OAuth | Google Gmail OAuth setup |
-| **81** | Email parsing | Extract content from email threads |
-| **82** | Attachment handling | Process PDF attachments |
-| **83** | Sync scheduling | Background sync with Upstash QStash |
-| **84** | Phase 3 review | All 8 integrations working |
+| Day    | Task                | Implementation                        |
+| ------ | ------------------- | ------------------------------------- |
+| **78** | Zoom OAuth          | Connect Zoom account                  |
+| **79** | Transcripts         | Fetch and process meeting transcripts |
+| **80** | Gmail OAuth         | Google Gmail OAuth setup              |
+| **81** | Email parsing       | Extract content from email threads    |
+| **82** | Attachment handling | Process PDF attachments               |
+| **83** | Sync scheduling     | Background sync with Upstash QStash   |
+| **84** | Phase 3 review      | All 8 integrations working            |
 
 **Deliverable:** All integrations syncing data automatically
 
@@ -477,21 +513,22 @@ export async function searchSimilar(
 ### Week 13: Admin Dashboard
 
 **Objectives:**
+
 - Tenant overview
 - Cost command center
 - Security logs
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Implementation |
-|-----|------|----------------|
-| **85** | Admin layout | Create admin shell with navigation |
-| **86** | Tenant grid | "City view" of all tenants |
-| **87** | Tenant details | Drill-down into specific tenant |
-| **88** | Cost dashboard | Token usage, cost per tenant |
-| **89** | Model usage | Breakdown by AI model |
-| **90** | Security logs | Audit trail viewer |
-| **91** | Admin polish | Charts, filters, exports |
+| Day    | Task           | Implementation                     |
+| ------ | -------------- | ---------------------------------- |
+| **85** | Admin layout   | Create admin shell with navigation |
+| **86** | Tenant grid    | "City view" of all tenants         |
+| **87** | Tenant details | Drill-down into specific tenant    |
+| **88** | Cost dashboard | Token usage, cost per tenant       |
+| **89** | Model usage    | Breakdown by AI model              |
+| **90** | Security logs  | Audit trail viewer                 |
+| **91** | Admin polish   | Charts, filters, exports           |
 
 **Deliverable:** Admin can view all tenant activity and costs
 
@@ -500,21 +537,22 @@ export async function searchSimilar(
 ### Week 14: ROI Features
 
 **Objectives:**
+
 - Usage analytics
 - Time saved calculations
 - Knowledge gap detection
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Implementation |
-|-----|------|----------------|
-| **92** | Query analytics | Track searches per day/week/month |
-| **93** | Time saved | Calculate hours saved vs manual search |
-| **94** | Value calculator | Convert time to dollar savings |
-| **95** | Knowledge gaps | Identify frequently asked unanswered questions |
-| **96** | Gap alerts | Notify admins of missing content |
-| **97** | ROI dashboard | Build user-facing ROI panel |
-| **98** | ROI testing | Verify calculations are accurate |
+| Day    | Task             | Implementation                                 |
+| ------ | ---------------- | ---------------------------------------------- |
+| **92** | Query analytics  | Track searches per day/week/month              |
+| **93** | Time saved       | Calculate hours saved vs manual search         |
+| **94** | Value calculator | Convert time to dollar savings                 |
+| **95** | Knowledge gaps   | Identify frequently asked unanswered questions |
+| **96** | Gap alerts       | Notify admins of missing content               |
+| **97** | ROI dashboard    | Build user-facing ROI panel                    |
+| **98** | ROI testing      | Verify calculations are accurate               |
 
 **Deliverable:** Users see value: "You've saved 22 hours this month"
 
@@ -523,21 +561,22 @@ export async function searchSimilar(
 ### Week 15: Context Map
 
 **Objectives:**
+
 - D3.js visualization
 - Knowledge graph
 - Interactive clusters
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Implementation |
-|-----|------|----------------|
-| **99** | D3 setup | Install D3.js, create canvas |
-| **100** | Node layout | Position documents as nodes |
-| **101** | Connections | Draw edges between related docs |
-| **102** | Clustering | Group by topic, source type |
-| **103** | Interactions | Zoom, pan, click for details |
-| **104** | 3D option | Three.js 3D visualization |
-| **105** | Map polish | Colors, labels, animations |
+| Day     | Task         | Implementation                  |
+| ------- | ------------ | ------------------------------- |
+| **99**  | D3 setup     | Install D3.js, create canvas    |
+| **100** | Node layout  | Position documents as nodes     |
+| **101** | Connections  | Draw edges between related docs |
+| **102** | Clustering   | Group by topic, source type     |
+| **103** | Interactions | Zoom, pan, click for details    |
+| **104** | 3D option    | Three.js 3D visualization       |
+| **105** | Map polish   | Colors, labels, animations      |
 
 **Deliverable:** Visual knowledge map showing all company data
 
@@ -546,21 +585,22 @@ export async function searchSimilar(
 ### Week 16: Production Polish
 
 **Objectives:**
+
 - Performance optimization
 - Error handling
 - Monitoring
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Implementation |
-|-----|------|----------------|
-| **106** | Performance | Optimize bundle size, lazy loading |
-| **107** | Caching | Implement Redis caching strategy |
-| **108** | Error boundaries | Catch and handle React errors |
-| **109** | Sentry setup | Error tracking and alerting |
-| **110** | Health checks | Create `/api/health` endpoint |
-| **111** | Load testing | Test with 100+ concurrent users |
-| **112** | Phase 4 review | App production-ready |
+| Day     | Task             | Implementation                     |
+| ------- | ---------------- | ---------------------------------- |
+| **106** | Performance      | Optimize bundle size, lazy loading |
+| **107** | Caching          | Implement Redis caching strategy   |
+| **108** | Error boundaries | Catch and handle React errors      |
+| **109** | Sentry setup     | Error tracking and alerting        |
+| **110** | Health checks    | Create `/api/health` endpoint      |
+| **111** | Load testing     | Test with 100+ concurrent users    |
+| **112** | Phase 4 review   | App production-ready               |
 
 **Deliverable:** Application ready for public traffic
 
@@ -585,21 +625,22 @@ export async function searchSimilar(
 ### Week 17: Public Site
 
 **Objectives:**
+
 - Landing page
 - Viral trigger UI
 - Pricing page
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Implementation |
-|-----|------|----------------|
-| **113** | Hero section | URL input with terminal styling |
-| **114** | Features grid | Ingest, Reason, Action sections |
-| **115** | Trust section | Security badges, testimonials |
-| **116** | Pricing page | Tier comparison, ROI calculator |
-| **117** | Integrations showcase | Animated connector diagram |
-| **118** | Footer | Links, social, newsletter |
-| **119** | SEO meta | Title, description, Open Graph |
+| Day     | Task                  | Implementation                  |
+| ------- | --------------------- | ------------------------------- |
+| **113** | Hero section          | URL input with terminal styling |
+| **114** | Features grid         | Ingest, Reason, Action sections |
+| **115** | Trust section         | Security badges, testimonials   |
+| **116** | Pricing page          | Tier comparison, ROI calculator |
+| **117** | Integrations showcase | Animated connector diagram      |
+| **118** | Footer                | Links, social, newsletter       |
+| **119** | SEO meta              | Title, description, Open Graph  |
 
 **Deliverable:** Complete marketing website
 
@@ -608,21 +649,22 @@ export async function searchSimilar(
 ### Week 18: Onboarding Flow
 
 **Objectives:**
+
 - 4-stage ingestion hub
 - Progress tracking
 - Brain visualization
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Implementation |
-|-----|------|----------------|
-| **120** | Stage 1: URL | Single input, instant crawl start |
-| **121** | Stage 2: Upload | Drag-drop zone, file queue |
-| **122** | Stage 3: Connect | OAuth buttons, connection status |
-| **123** | Stage 4: Visualize | D3 brain forming animation |
-| **124** | Progress bar | Show completion percentage |
-| **125** | Skip options | Allow users to skip steps |
-| **126** | Onboarding test | Complete flow end-to-end |
+| Day     | Task               | Implementation                    |
+| ------- | ------------------ | --------------------------------- |
+| **120** | Stage 1: URL       | Single input, instant crawl start |
+| **121** | Stage 2: Upload    | Drag-drop zone, file queue        |
+| **122** | Stage 3: Connect   | OAuth buttons, connection status  |
+| **123** | Stage 4: Visualize | D3 brain forming animation        |
+| **124** | Progress bar       | Show completion percentage        |
+| **125** | Skip options       | Allow users to skip steps         |
+| **126** | Onboarding test    | Complete flow end-to-end          |
 
 **Deliverable:** New users guided through setup in < 5 minutes
 
@@ -631,21 +673,22 @@ export async function searchSimilar(
 ### Week 19: Testing & QA
 
 **Objectives:**
+
 - E2E tests
 - Load testing
 - Security audit
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Implementation |
-|-----|------|----------------|
-| **127** | E2E setup | Install Playwright |
-| **128** | Auth tests | Signup, login flows |
-| **129** | Chat tests | Query, response, citation flows |
-| **130** | Upload tests | File upload, processing |
-| **131** | Integration tests | OAuth flows |
-| **132** | Load testing | Artillery or k6 scripts |
-| **133** | Security review | Dependency audit, code review |
+| Day     | Task              | Implementation                  |
+| ------- | ----------------- | ------------------------------- |
+| **127** | E2E setup         | Install Playwright              |
+| **128** | Auth tests        | Signup, login flows             |
+| **129** | Chat tests        | Query, response, citation flows |
+| **130** | Upload tests      | File upload, processing         |
+| **131** | Integration tests | OAuth flows                     |
+| **132** | Load testing      | Artillery or k6 scripts         |
+| **133** | Security review   | Dependency audit, code review   |
 
 **Deliverable:** Test suite passes, load tested to 1000 users
 
@@ -654,21 +697,22 @@ export async function searchSimilar(
 ### Week 20: Launch
 
 **Objectives:**
+
 - Production deployment
 - Monitoring
 - Support docs
 
 **Day-by-Day Breakdown:**
 
-| Day | Task | Implementation |
-|-----|------|----------------|
-| **134** | Deploy to Vercel | Production build, env vars |
-| **135** | Database migration | Run migrations on prod DB |
-| **136** | DNS setup | Configure custom domain |
-| **137** | SSL certificate | Verify HTTPS working |
-| **138** | Analytics | Add Google Analytics, Mixpanel |
-| **139** | Documentation | Help center, API docs |
-| **140** | Launch day | Announce on social, Product Hunt |
+| Day     | Task               | Implementation                   |
+| ------- | ------------------ | -------------------------------- |
+| **134** | Deploy to Vercel   | Production build, env vars       |
+| **135** | Database migration | Run migrations on prod DB        |
+| **136** | DNS setup          | Configure custom domain          |
+| **137** | SSL certificate    | Verify HTTPS working             |
+| **138** | Analytics          | Add Google Analytics, Mixpanel   |
+| **139** | Documentation      | Help center, API docs            |
+| **140** | Launch day         | Announce on social, Product Hunt |
 
 **Deliverable:** Corporate Brain is live and accepting users
 
@@ -686,7 +730,7 @@ export async function searchSimilar(
 
 ---
 
-## Phase 5.5: Production Readiness (Weeks 21-28) 
+## Phase 5.5: Production Readiness (Weeks 21-28)
 
 > **📄 Detailed Spec:** See `docs/PENDING_REQUIREMENTS.md`
 
@@ -699,6 +743,7 @@ export async function searchSimilar(
 ### Week 21: Marketing UI Consistency
 
 **Objectives:**
+
 - Unify all marketing pages to homepage theme
 - Shared header/footer components
 - Premium contact dropdown
@@ -721,6 +766,7 @@ export async function searchSimilar(
 ### Week 22: New Pages & Legal
 
 **Objectives:**
+
 - Create /use-case page
 - Build legal pages
 - Footer enhancement
@@ -743,6 +789,7 @@ export async function searchSimilar(
 ### Week 23: Admin CMS Foundation
 
 **Objectives:**
+
 - Database schema for CMS
 - Admin UI for content management
 - Media library
@@ -765,6 +812,7 @@ export async function searchSimilar(
 ### Week 24: Stripe Billing Integration
 
 **Objectives:**
+
 - Stripe account setup
 - Subscription management
 - Checkout flow
@@ -787,6 +835,7 @@ export async function searchSimilar(
 ### Week 25: Dynamic Pricing & Settings
 
 **Objectives:**
+
 - Admin-managed pricing plans
 - Monthly/Yearly toggle
 - Site settings
@@ -809,6 +858,7 @@ export async function searchSimilar(
 ### Week 26: Webmasters & API Status
 
 **Objectives:**
+
 - Analytics integration
 - API health dashboard
 - Social links management
@@ -831,6 +881,7 @@ export async function searchSimilar(
 ### Week 27-28: Testing & Launch Prep
 
 **Objectives:**
+
 - End-to-end testing
 - Legal review
 - Production deployment
@@ -853,6 +904,7 @@ export async function searchSimilar(
 ### Phase 5.5 Completion Checklist
 
 **Marketing:**
+
 - [ ] All 5 marketing pages visually consistent
 - [ ] /use-case page with 6 use cases
 - [ ] Shared Header/Footer components
@@ -861,6 +913,7 @@ export async function searchSimilar(
 - [ ] Footer with 7 social platform links
 
 **Admin:**
+
 - [ ] CMS interface for all marketing content
 - [ ] Pricing plan CRUD with Stripe sync
 - [ ] Social links management
@@ -869,6 +922,7 @@ export async function searchSimilar(
 - [ ] /app and /admin logout
 
 **Billing:**
+
 - [ ] Stripe integration complete
 - [ ] Subscription management UI
 - [ ] Checkout with trial (14 days)
@@ -877,6 +931,7 @@ export async function searchSimilar(
 - [ ] Webhook handling
 
 **Legal & Compliance:**
+
 - [ ] Terms & Conditions reviewed
 - [ ] Privacy Policy GDPR compliant
 - [ ] Refund Policy aligned with Stripe
@@ -890,11 +945,13 @@ export async function searchSimilar(
 ### Week 29: Real-time Features
 
 **Objectives:**
+
 - Activity feeds
 - Notifications
 - WebSocket architecture
 
 **Implementation:**
+
 - WebSocket server with Socket.io
 - Activity stream aggregation
 - In-app notification bell
@@ -905,11 +962,13 @@ export async function searchSimilar(
 ### Week 30: Webhook System
 
 **Objectives:**
+
 - Outgoing webhooks
 - API key management
 - Developer portal
 
 **Implementation:**
+
 - Webhook registration UI
 - HMAC signature verification
 - API key generation UI
@@ -920,11 +979,13 @@ export async function searchSimilar(
 ### Week 31: Enterprise Auth
 
 **Objectives:**
+
 - SSO/SAML integration
 - SCIM provisioning
 - Custom roles
 
 **Implementation:**
+
 - SAML 2.0 support (Okta, Azure AD)
 - SCIM user provisioning endpoint
 - Role editor (viewer, editor, manager, admin)
@@ -935,11 +996,13 @@ export async function searchSimilar(
 ### Week 32: Advanced Analytics
 
 **Objectives:**
+
 - Anomaly detection
 - Predictive insights
 - Churn risk
 
 **Implementation:**
+
 - ML-based anomaly detection
 - Predictive usage forecasting
 - Churn risk scoring
@@ -964,11 +1027,13 @@ export async function searchSimilar(
 ### Week 37: Search Enhancement
 
 **Objectives:**
+
 - Full-text search
 - Semantic boosting
 - Saved searches
 
 **Implementation:**
+
 - PostgreSQL tsvector indexing
 - Hybrid search ranking
 - Saved search bookmarks
@@ -979,12 +1044,14 @@ export async function searchSimilar(
 ### Week 38: Document Management
 
 **Objectives:**
+
 - Versioning
 - Relationships
 - Bulk operations
 - Exports
 
 **Implementation:**
+
 - Document version history
 - "See also" related documents
 - Bulk delete/tag/export UI
@@ -995,11 +1062,13 @@ export async function searchSimilar(
 ### Week 39: Workflow Automation
 
 **Objectives:**
+
 - Scheduled tasks
 - Workflow builder
 - Smart alerts
 
 **Implementation:**
+
 - Cron job scheduler UI
 - IFTTT-style workflow builder
 - Trigger: Action automation
@@ -1010,11 +1079,13 @@ export async function searchSimilar(
 ### Week 40: Performance Polish
 
 **Objectives:**
+
 - Edge caching
 - Query optimization
 - Load testing at scale
 
 **Implementation:**
+
 - Vercel Edge Config
 - Query result caching
 - Database read replicas

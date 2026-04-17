@@ -7,7 +7,7 @@ export async function GET() {
   try {
     // Check database connection
     const session = await auth();
-    
+
     return NextResponse.json({
       status: "healthy",
       timestamp: new Date().toISOString(),
@@ -23,7 +23,7 @@ export async function GET() {
         timestamp: new Date().toISOString(),
         error: error instanceof Error ? error.message : "Unknown error",
       },
-      { status: 503 }
+      { status: 503 },
     );
   }
 }

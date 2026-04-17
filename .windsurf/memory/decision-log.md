@@ -16,6 +16,7 @@ Need to ensure deterministic, traceable, and well-documented AI coding with zero
 ### Decision
 
 Implement a comprehensive automation system with:
+
 1. `.windsurf/rules.md` - Global AI agent rules
 2. `.windsurf/workflows/` - Standardized workflows
 3. `.windsurf/memory/` - Active context and progress
@@ -26,12 +27,14 @@ Implement a comprehensive automation system with:
 ### Consequences
 
 **Positive**:
+
 - Full traceability of all changes
 - Deterministic code modifications
 - Zero tolerance for regressions
 - Comprehensive documentation
 
 **Negative**:
+
 - Additional overhead for each change
 - Requires discipline to maintain
 
@@ -49,6 +52,7 @@ All future code changes must follow these rules.
 ### Decision
 
 All file references must use absolute Windows paths:
+
 ```
 Format: @c:\Users\seoho\Documents\Corporate Brain\path\to\file.ext:line-start-line-end
 ```
@@ -69,6 +73,7 @@ Format: @c:\Users\seoho\Documents\Corporate Brain\path\to\file.ext:line-start-li
 ### Decision
 
 All code changes must:
+
 1. Not break existing functionality
 2. Not introduce console errors
 3. Not degrade performance

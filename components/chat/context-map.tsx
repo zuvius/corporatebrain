@@ -27,7 +27,9 @@ export function ContextMap() {
       vx: (Math.random() - 0.5) * 0.5,
       vy: (Math.random() - 0.5) * 0.5,
       radius: Math.random() * 8 + 4,
-      color: ["#3B82F6", "#8B5CF6", "#10B981", "#F59E0B"][Math.floor(Math.random() * 4)],
+      color: ["#3B82F6", "#8B5CF6", "#10B981", "#F59E0B"][
+        Math.floor(Math.random() * 4)
+      ],
       label: ["PDF", "URL", "Slack", "Notion"][Math.floor(Math.random() * 4)],
     }));
     setNodes(initialNodes);
@@ -54,11 +56,17 @@ export function ContextMap() {
           if (newY < 0 || newY > canvas.height) node.vy *= -1;
 
           // Keep in bounds
-          newX = Math.max(node.radius, Math.min(canvas.width - node.radius, newX));
-          newY = Math.max(node.radius, Math.min(canvas.height - node.radius, newY));
+          newX = Math.max(
+            node.radius,
+            Math.min(canvas.width - node.radius, newX),
+          );
+          newY = Math.max(
+            node.radius,
+            Math.min(canvas.height - node.radius, newY),
+          );
 
           return { ...node, x: newX, y: newY };
-        })
+        }),
       );
 
       // Draw edges between nearby nodes

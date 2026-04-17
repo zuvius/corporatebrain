@@ -11,16 +11,23 @@ const MAX_RESENDS_PER_DAY = 5;
 export async function POST() {
   try {
     const session = await auth();
-    
+
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const user = session.user as { id: string; email: string; emailVerified: string | null };
+    const user = session.user as {
+      id: string;
+      email: string;
+      emailVerified: string | null;
+    };
 
     // Check if already verified
     if (user.emailVerified) {
-      return NextResponse.json({ error: "Email already verified" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Email already verified" },
+        { status: 400 },
+      );
     }
 
     // Rate limiting: Check recent resends
@@ -29,28 +36,37 @@ export async function POST() {
       where: and(
         eq(verificationTokens.identifier, user.email),
         eq(verificationTokens.type, "email_verification"),
-        gt(verificationTokens.createdAt, oneDayAgo)
+        gt(verificationTokens.createdAt, oneDayAgo),
       ),
     });
 
     if (recentTokens.length >= MAX_RESENDS_PER_DAY) {
       return NextResponse.json(
         { error: "Too many requests. Please try again tomorrow." },
-        { status: 429 }
+        { status: 429 },
       );
     }
 
     // Check last resend time
-    const lastHourAgo = new Date(Date.now() - RATE_LIMIT_HOURS * 60 * 60 * 1000);
-    const recentToken = recentTokens.find(t => new Date(t.createdAt) > lastHourAgo);
-    
+    const lastHourAgo = new Date(
+      Date.now() - RATE_LIMIT_HOURS * 60 * 60 * 1000,
+    );
+    const recentToken = recentTokens.find(
+      (t) => new Date(t.createdAt) > lastHourAgo,
+    );
+
     if (recentToken) {
       const minutesLeft = Math.ceil(
-        (new Date(recentToken.createdAt).getTime() + RATE_LIMIT_HOURS * 60 * 60 * 1000 - Date.now()) / 60000
+        (new Date(recentToken.createdAt).getTime() +
+          RATE_LIMIT_HOURS * 60 * 60 * 1000 -
+          Date.now()) /
+          60000,
       );
       return NextResponse.json(
-        { error: `Please wait ${minutesLeft} minutes before requesting another email.` },
-        { status: 429 }
+        {
+          error: `Please wait ${minutesLeft} minutes before requesting another email.`,
+        },
+        { status: 429 },
       );
     }
 
@@ -81,7 +97,7 @@ export async function POST() {
     console.error("[Resend Verification] Error:", error);
     return NextResponse.json(
       { error: "Failed to send verification email" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

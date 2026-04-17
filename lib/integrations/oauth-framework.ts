@@ -8,7 +8,12 @@ import { integrations } from "@/lib/db/schema";
 import { eq, and } from "drizzle-orm";
 import { v4 as uuidv4 } from "uuid";
 
-export type IntegrationProvider = "slack" | "google_drive" | "gmail" | "notion" | "microsoft_teams";
+export type IntegrationProvider =
+  | "slack"
+  | "google_drive"
+  | "gmail"
+  | "notion"
+  | "microsoft_teams";
 
 interface OAuthConfig {
   clientId: string;
@@ -62,9 +67,12 @@ const OAUTH_CONFIGS: Record<IntegrationProvider, OAuthConfig> = {
   },
 };
 
-export function getOAuthUrl(provider: IntegrationProvider, state: string): string {
+export function getOAuthUrl(
+  provider: IntegrationProvider,
+  state: string,
+): string {
   const config = OAUTH_CONFIGS[provider];
-  
+
   const params = new URLSearchParams({
     client_id: config.clientId,
     redirect_uri: config.redirectUri,
@@ -88,7 +96,7 @@ export function getOAuthUrl(provider: IntegrationProvider, state: string): strin
 
 export async function exchangeCodeForTokens(
   provider: IntegrationProvider,
-  code: string
+  code: string,
 ): Promise<{
   accessToken: string;
   refreshToken?: string;
@@ -154,8 +162,8 @@ export async function createIntegration({
     .where(
       and(
         eq(integrations.tenantId, tenantId),
-        eq(integrations.provider, provider)
-      )
+        eq(integrations.provider, provider),
+      ),
     )
     .limit(1);
 
@@ -194,7 +202,7 @@ export async function createIntegration({
 
 export async function revokeIntegration(
   tenantId: string,
-  provider: IntegrationProvider
+  provider: IntegrationProvider,
 ) {
   const [integration] = await db
     .select({ id: integrations.id, accessToken: integrations.accessToken })
@@ -203,8 +211,8 @@ export async function revokeIntegration(
       and(
         eq(integrations.tenantId, tenantId),
         eq(integrations.provider, provider),
-        eq(integrations.status, "active")
-      )
+        eq(integrations.status, "active"),
+      ),
     )
     .limit(1);
 
@@ -235,7 +243,7 @@ export async function revokeIntegration(
 
 async function revokeTokenWithProvider(
   provider: IntegrationProvider,
-  token: string
+  token: string,
 ) {
   const revokeUrls: Record<IntegrationProvider, string | null> = {
     slack: "https://slack.com/api/auth.revoke",
@@ -256,7 +264,7 @@ async function revokeTokenWithProvider(
 }
 
 export async function refreshAccessToken(
-  integrationId: string
+  integrationId: string,
 ): Promise<string> {
   const [integration] = await db
     .select({

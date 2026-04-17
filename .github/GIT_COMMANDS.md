@@ -4,15 +4,15 @@
 
 ## Quick Reference
 
-| Command | Purpose | When to Use |
-|---------|---------|-------------|
-| `git status` | Check current state | Before any operation |
-| `git add <file>` | Stage specific file | When ready to commit specific changes |
-| `git add .` | Stage all changes | When ready to commit all changes |
-| `git commit -m "message"` | Save changes | After staging, before push |
-| `git push` | Upload to remote | After successful commit |
-| `git pull` | Download updates | Before starting new work |
-| `git log --oneline` | View history | Check recent commits |
+| Command                   | Purpose             | When to Use                           |
+| ------------------------- | ------------------- | ------------------------------------- |
+| `git status`              | Check current state | Before any operation                  |
+| `git add <file>`          | Stage specific file | When ready to commit specific changes |
+| `git add .`               | Stage all changes   | When ready to commit all changes      |
+| `git commit -m "message"` | Save changes        | After staging, before push            |
+| `git push`                | Upload to remote    | After successful commit               |
+| `git pull`                | Download updates    | Before starting new work              |
+| `git log --oneline`       | View history        | Check recent commits                  |
 
 ## Daily Workflow (With Memory Bank)
 
@@ -23,6 +23,7 @@ git status
 ```
 
 **Output you'll see:**
+
 ```
 On branch main
 Changes not staged for commit:
@@ -38,17 +39,20 @@ Untracked files:
 ### Step 2: Stage Changes
 
 **Option A: Stage everything**
+
 ```bash
 git add .
 ```
 
 **Option B: Stage specific files**
+
 ```bash
 git add src/app/page.tsx
 git add package.json
 ```
 
 **Option C: Stage by pattern**
+
 ```bash
 git add *.tsx
 git add src/app/
@@ -61,6 +65,7 @@ git status
 ```
 
 **Output:**
+
 ```
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
@@ -71,11 +76,13 @@ Changes to be committed:
 ### Step 4: Commit (Triggers Auto Memory Update)
 
 **Simple commit:**
+
 ```bash
 git commit -m "feat: add user authentication"
 ```
 
 **Detailed commit (recommended):**
+
 ```bash
 git commit -m "feat: add user authentication
 
@@ -95,6 +102,7 @@ Impact: UI - Added auth flow, API - New endpoints"
 ```
 
 **What happens automatically after commit:**
+
 ```
 [main abc1234] feat: add user authentication
 📚 Updating memory bank...
@@ -110,6 +118,7 @@ git push
 ```
 
 **Or if pushing new branch:**
+
 ```bash
 git push -u origin feature-name
 ```
@@ -123,6 +132,7 @@ git pull
 ```
 
 **If you have local changes:**
+
 ```bash
 git stash          # Save local changes temporarily
 git pull           # Get latest
@@ -136,6 +146,7 @@ git branch
 ```
 
 **Output:**
+
 ```
 * main
   feature-auth
@@ -150,6 +161,7 @@ git checkout -b feature-name
 ```
 
 **Example:**
+
 ```bash
 git checkout -b feat/user-authentication
 ```
@@ -183,6 +195,7 @@ git log --oneline -10
 ```
 
 **Output:**
+
 ```
 abc1234 feat: add user authentication
 def5678 fix: button styling
@@ -210,6 +223,7 @@ git restore --staged src/app/page.tsx
 ```
 
 **Unstage all:**
+
 ```bash
 git restore --staged .
 ```
@@ -221,6 +235,7 @@ git restore src/app/page.tsx
 ```
 
 **Discard all changes:**
+
 ```bash
 git restore .
 ```
@@ -234,6 +249,7 @@ git commit --amend -m "new message"
 ```
 
 **Add forgotten file to last commit:**
+
 ```bash
 git add forgotten-file.ts
 git commit --amend --no-edit
@@ -286,6 +302,7 @@ git checkout -b branch-name
 ```
 
 **Examples:**
+
 ```bash
 git checkout -b feat/user-authentication
 git checkout -b fix/login-bug
@@ -310,6 +327,7 @@ git branch
 ```
 
 **Output:**
+
 ```
 * feat/add-navbar    <-- * shows current branch
   main
@@ -317,6 +335,7 @@ git branch
 ```
 
 **Quick check:**
+
 ```bash
 git branch --show-current
 # Output: feat/add-navbar
@@ -359,25 +378,27 @@ git merge feat/user-authentication
 
 ### Branch Naming Conventions
 
-| Prefix | Use For | Example |
-|--------|---------|---------|
-| `feat/` | New features | `feat/dark-mode` |
-| `fix/` | Bug fixes | `fix/login-redirect` |
-| `docs/` | Documentation | `docs/readme-update` |
+| Prefix      | Use For            | Example                |
+| ----------- | ------------------ | ---------------------- |
+| `feat/`     | New features       | `feat/dark-mode`       |
+| `fix/`      | Bug fixes          | `fix/login-redirect`   |
+| `docs/`     | Documentation      | `docs/readme-update`   |
 | `refactor/` | Code restructuring | `refactor/api-cleanup` |
-| `test/` | Test additions | `test/auth-unit-tests` |
-| `chore/` | Maintenance | `chore/update-deps` |
+| `test/`     | Test additions     | `test/auth-unit-tests` |
+| `chore/`    | Maintenance        | `chore/update-deps`    |
 
 ## Git Reset Commands
 
 ### Soft Reset (Keep Changes)
 
 **Undo last commit, keep changes staged:**
+
 ```bash
 git reset --soft HEAD~1
 ```
 
 **What happens:**
+
 - Commit removed from history
 - Changes remain in staging area
 - Ready to re-commit
@@ -385,6 +406,7 @@ git reset --soft HEAD~1
 ### Mixed Reset (Default - Keep Changes Unstaged)
 
 **Undo last commit, unstage changes:**
+
 ```bash
 git reset HEAD~1
 # or
@@ -392,6 +414,7 @@ git reset --mixed HEAD~1
 ```
 
 **What happens:**
+
 - Commit removed from history
 - Changes preserved but unstaged
 - Need to `git add` again to re-commit
@@ -399,6 +422,7 @@ git reset --mixed HEAD~1
 ### Hard Reset (⚠️ DESTROY CHANGES)
 
 **Undo last commit, DELETE all changes:**
+
 ```bash
 git reset --hard HEAD~1
 ```
@@ -406,6 +430,7 @@ git reset --hard HEAD~1
 ⚠️ **WARNING**: This permanently deletes your changes!
 
 **What happens:**
+
 - Commit removed from history
 - All changes permanently deleted
 - Files restored to previous commit state
@@ -443,9 +468,9 @@ git restore .
 
 ### Reset vs Revert
 
-| Command | Effect | Use When |
-|---------|--------|----------|
-| `git reset` | Removes commits from history | Local changes not pushed |
+| Command      | Effect                                 | Use When                         |
+| ------------ | -------------------------------------- | -------------------------------- |
+| `git reset`  | Removes commits from history           | Local changes not pushed         |
 | `git revert` | Creates new commit that undoes changes | Changes already pushed to remote |
 
 ### Revert (Safe Alternative to Reset)
@@ -471,6 +496,7 @@ git checkout -b recovery-branch abc1234
 ```
 
 **Example reflog output:**
+
 ```
 abc1234 HEAD@{0}: reset: moving to HEAD~1
 def5678 HEAD@{1}: commit: feat: add authentication
@@ -479,13 +505,13 @@ ghi9012 HEAD@{2}: checkout: moving from main to feat/auth
 
 ### When to Use Each Reset Type
 
-| Scenario | Command |
-|----------|---------|
-| Fix commit message | `git commit --amend` |
+| Scenario                             | Command                   |
+| ------------------------------------ | ------------------------- |
+| Fix commit message                   | `git commit --amend`      |
 | Undo last commit, re-commit properly | `git reset --soft HEAD~1` |
-| Undo last commit, reorganize changes | `git reset HEAD~1` |
-| Completely abandon last commit | `git reset --hard HEAD~1` |
-| Changes already pushed to remote | `git revert abc1234` |
+| Undo last commit, reorganize changes | `git reset HEAD~1`        |
+| Completely abandon last commit       | `git reset --hard HEAD~1` |
+| Changes already pushed to remote     | `git revert abc1234`      |
 
 ## Removing/Uninstalling Git (Starting Fresh)
 
@@ -506,6 +532,7 @@ git commit -m "Initial commit"
 ```
 
 **Effect:**
+
 - All commit history: **GONE**
 - All branches: **GONE**
 - All tags: **GONE**
@@ -539,6 +566,7 @@ git push origin main --force
 ```
 
 **Effect:**
+
 - Files: **PRESERVED**
 - History: **REPLACED** with single "Initial commit"
 - Remote: **OVERWRITTEN** (collaborators must re-clone)
@@ -560,6 +588,7 @@ git filter-branch --force --index-filter \
 ```
 
 **Effect:**
+
 - Specific files: **PERMANENTLY REMOVED** from all commits
 - Other history: **PRESERVED**
 - Commit hashes: **CHANGED** (history rewritten)
@@ -568,15 +597,15 @@ git filter-branch --force --index-filter \
 
 ### Aftermath: What Breaks and How to Fix
 
-| What | Status | Fix Required |
-|------|--------|--------------|
-| **GitHub Repo** | Old history still exists | Delete & recreate repo, or force push |
-| **Collaborators** | Their clones invalid | Must delete local repo and re-clone |
-| **GitHub Issues/PRs** | Preserved | None (but disconnected from commits) |
-| **CI/CD Secrets** | Preserved | Re-verify in GitHub settings |
-| **Branch Protection** | Preserved | Re-enable rules after reset |
-| **Custom Hooks** | **DELETED** | Re-run `node scripts/install-hooks.js` |
-| **Memory Bank** | Git-linked data stale | Run `npm run memory:update` |
+| What                  | Status                   | Fix Required                           |
+| --------------------- | ------------------------ | -------------------------------------- |
+| **GitHub Repo**       | Old history still exists | Delete & recreate repo, or force push  |
+| **Collaborators**     | Their clones invalid     | Must delete local repo and re-clone    |
+| **GitHub Issues/PRs** | Preserved                | None (but disconnected from commits)   |
+| **CI/CD Secrets**     | Preserved                | Re-verify in GitHub settings           |
+| **Branch Protection** | Preserved                | Re-enable rules after reset            |
+| **Custom Hooks**      | **DELETED**              | Re-run `node scripts/install-hooks.js` |
+| **Memory Bank**       | Git-linked data stale    | Run `npm run memory:update`            |
 
 ---
 
@@ -605,13 +634,13 @@ npm run context:check
 
 ### When to Use Each Approach
 
-| Scenario | Recommended Approach |
-|----------|---------------------|
-| Commit history is messy, want clean slate | Option 2 (Orphan branch) |
-| Committed secrets/passwords | Option 3 (Filter-repo) |
-| Repo corrupted, weird git errors | Option 1 (Delete .git) |
-| Moving to new Git host | Option 1 or 2 |
-| Just want to undo last commit | `git reset --soft HEAD~1` |
+| Scenario                                  | Recommended Approach      |
+| ----------------------------------------- | ------------------------- |
+| Commit history is messy, want clean slate | Option 2 (Orphan branch)  |
+| Committed secrets/passwords               | Option 3 (Filter-repo)    |
+| Repo corrupted, weird git errors          | Option 1 (Delete .git)    |
+| Moving to new Git host                    | Option 1 or 2             |
+| Just want to undo last commit             | `git reset --soft HEAD~1` |
 
 ---
 
@@ -620,17 +649,20 @@ npm run context:check
 ### Merge Conflicts
 
 When you see:
+
 ```
 CONFLICT (content): Merge conflict in src/app/page.tsx
 Automatic merge failed; fix conflicts and commit the result.
 ```
 
 **Fix:**
+
 1. Open the conflicted file
 2. Look for `<<<<<<< HEAD` markers
 3. Edit to keep correct code
 4. Remove conflict markers
 5. Stage and commit:
+
 ```bash
 git add src/app/page.tsx
 git commit -m "fix: resolve merge conflict"
@@ -639,11 +671,13 @@ git commit -m "fix: resolve merge conflict"
 ### Push Rejected (Remote has new commits)
 
 **Error:**
+
 ```
 ! [rejected]        main -> main (fetch first)
 ```
 
 **Fix:**
+
 ```bash
 git pull --rebase
 git push
@@ -652,6 +686,7 @@ git push
 ### Forgot to Run Quality Gates
 
 If you committed but didn't run checks:
+
 ```bash
 npm run context:check    # Run checks
 # If errors, fix them
@@ -664,6 +699,7 @@ git commit --amend --no-edit   # Update commit with fixes
 ### What Happens Automatically
 
 After every `git commit`:
+
 1. ✅ Commit hash logged in `changelog-YYYY-MM-DD.md`
 2. ✅ Files changed logged with stats
 3. ✅ `active-context.md` updated
@@ -734,15 +770,15 @@ git push -u origin feat/add-navbar
 
 ### Types
 
-| Type | Use For | Example |
-|------|---------|---------|
-| `feat` | New features | `feat: add dark mode` |
-| `fix` | Bug fixes | `fix: button click handler` |
-| `docs` | Documentation | `docs: update API reference` |
-| `style` | Formatting | `style: fix indentation` |
+| Type       | Use For            | Example                              |
+| ---------- | ------------------ | ------------------------------------ |
+| `feat`     | New features       | `feat: add dark mode`                |
+| `fix`      | Bug fixes          | `fix: button click handler`          |
+| `docs`     | Documentation      | `docs: update API reference`         |
+| `style`    | Formatting         | `style: fix indentation`             |
 | `refactor` | Code restructuring | `refactor: extract helper functions` |
-| `test` | Tests | `test: add unit tests for auth` |
-| `chore` | Maintenance | `chore: update dependencies` |
+| `test`     | Tests              | `test: add unit tests for auth`      |
+| `chore`    | Maintenance        | `chore: update dependencies`         |
 
 ### Structure
 
@@ -776,6 +812,7 @@ Add to `~/.gitconfig`:
 ```
 
 Then use:
+
 ```bash
 git st      # instead of git status
 git co main # instead of git checkout main

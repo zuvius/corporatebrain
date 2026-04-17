@@ -39,9 +39,9 @@ Build/Deploy Process:
 
 **Format**: `seed-{plural-noun}.ts`
 
-| Pattern | Example | Purpose |
-|---------|---------|---------|
-| `seed-{entity}.ts` | `seed-users.ts` | Seeds a specific entity |
+| Pattern             | Example             | Purpose                    |
+| ------------------- | ------------------- | -------------------------- |
+| `seed-{entity}.ts`  | `seed-users.ts`     | Seeds a specific entity    |
 | `seed-{context}.ts` | `seed-materials.ts` | Seeds domain-specific data |
 
 **New seed files MUST follow this pattern** to be recognized by the system.
@@ -66,6 +66,7 @@ const [user] = await db.insert(users).values(userData).returning();
 ```
 
 **Rules:**
+
 - ✅ Check existence before insert
 - ✅ Skip if data exists (don't crash)
 - ✅ Return existing data for dependent seeds
@@ -100,6 +101,7 @@ npm run build         # 4. Build app
 ```
 
 **Package.json scripts:**
+
 ```json
 {
   "db:generate": "drizzle-kit generate:pg",
@@ -150,26 +152,36 @@ export async function seedMaterials(tenantId: string) {
       });
 
       if (existing) {
-        console.log(`  ⏭️  Material '${materialData.name}' already exists, skipping`);
+        console.log(
+          `  ⏭️  Material '${materialData.name}' already exists, skipping`,
+        );
         createdMaterials.push(existing);
         continue;
       }
 
       // Insert new
-      const [material] = await db.insert(materials).values({
-        tenantId,
-        ...materialData,
-      }).returning();
+      const [material] = await db
+        .insert(materials)
+        .values({
+          tenantId,
+          ...materialData,
+        })
+        .returning();
 
       console.log(`  ✅ Created material: ${material.name}`);
       createdMaterials.push(material);
     } catch (error) {
-      console.error(`  ❌ Failed to seed material ${materialData.name}:`, error);
+      console.error(
+        `  ❌ Failed to seed material ${materialData.name}:`,
+        error,
+      );
       // Continue with others - never crash
     }
   }
 
-  console.log(`🌱 [seed-materials] Completed: ${createdMaterials.length} materials ready`);
+  console.log(
+    `🌱 [seed-materials] Completed: ${createdMaterials.length} materials ready`,
+  );
   return createdMaterials;
 }
 
@@ -190,7 +202,11 @@ try {
   await seedMaterials(tenantId);
   results.push({ name: "seed-materials", success: true });
 } catch (error) {
-  results.push({ name: "seed-materials", success: false, error: String(error) });
+  results.push({
+    name: "seed-materials",
+    success: false,
+    error: String(error),
+  });
   console.error("❌ Failed to seed materials:", error);
 }
 ```
@@ -275,6 +291,7 @@ RUN npm run db:migrate && npm run db:seed
 **Problem**: Insert fails due to unique constraint
 
 **Solution**: Ensure idempotent check is working:
+
 ```typescript
 const existing = await db.query.table.findFirst({
   where: eq(table.uniqueField, value),
@@ -286,13 +303,14 @@ const existing = await db.query.table.findFirst({
 **Problem**: Seed runs before its dependency
 
 **Solution**: Check order in `seed-runner.ts`:
+
 ```typescript
 // Wrong: users before tenants
-await seedUsers();      // ❌ tenantId undefined
+await seedUsers(); // ❌ tenantId undefined
 await seedTenants();
 
 // Correct: tenants before users
-await seedTenants();    // ✅ tenant available
+await seedTenants(); // ✅ tenant available
 await seedUsers(tenantId);
 ```
 
@@ -301,6 +319,7 @@ await seedUsers(tenantId);
 **Problem**: Trying to seed before migrations run
 
 **Solution**: Always run migrations first:
+
 ```bash
 npm run db:migrate    # Creates tables
 npm run db:seed       # Then inserts data
@@ -313,6 +332,7 @@ npm run db:seed       # Then inserts data
 **Expected behavior**: Seed runner continues with remaining seeds and prints summary at end.
 
 Check output:
+
 ```
 📊 Results:
   ✅ Successful: 4/5
@@ -352,17 +372,18 @@ NODE_ENV=development npm run db:seed
 
 ## Commands Reference
 
-| Command | Purpose |
-|---------|---------|
-| `npm run db:generate` | Generate migration files |
-| `npm run db:migrate` | Apply migrations (required before seeds) |
-| `npm run db:seed` | Run all seeds |
-| `npm run db:reset` | Wipe DB, migrate, seed |
-| `npm run db:studio` | Open Drizzle Studio |
+| Command               | Purpose                                  |
+| --------------------- | ---------------------------------------- |
+| `npm run db:generate` | Generate migration files                 |
+| `npm run db:migrate`  | Apply migrations (required before seeds) |
+| `npm run db:seed`     | Run all seeds                            |
+| `npm run db:reset`    | Wipe DB, migrate, seed                   |
+| `npm run db:studio`   | Open Drizzle Studio                      |
 
 ---
 
-**Remember**: 
+**Remember**:
+
 - Migrations FIRST (creates tables)
 - Seeds SECOND (inserts data)
 - Seeds are idempotent - safe to run on every deployment!
@@ -389,6 +410,7 @@ const [user] = await db.insert(users).values(userData).returning();
 ```
 
 **Rules:**
+
 - ✅ Check existence before insert
 - ✅ Skip if data exists (don't crash)
 - ✅ Return existing data for dependent seeds
@@ -419,6 +441,7 @@ Seeds run automatically during deployment:
 ```
 
 **Package.json scripts:**
+
 ```json
 {
   "db:seed": "tsx db/seeds/seed-runner.ts",
@@ -466,26 +489,36 @@ export async function seedMaterials(tenantId: string) {
       });
 
       if (existing) {
-        console.log(`  ⏭️  Material '${materialData.name}' already exists, skipping`);
+        console.log(
+          `  ⏭️  Material '${materialData.name}' already exists, skipping`,
+        );
         createdMaterials.push(existing);
         continue;
       }
 
       // Insert new
-      const [material] = await db.insert(materials).values({
-        tenantId,
-        ...materialData,
-      }).returning();
+      const [material] = await db
+        .insert(materials)
+        .values({
+          tenantId,
+          ...materialData,
+        })
+        .returning();
 
       console.log(`  ✅ Created material: ${material.name}`);
       createdMaterials.push(material);
     } catch (error) {
-      console.error(`  ❌ Failed to seed material ${materialData.name}:`, error);
+      console.error(
+        `  ❌ Failed to seed material ${materialData.name}:`,
+        error,
+      );
       // Continue with others - never crash
     }
   }
 
-  console.log(`🌱 [seed-materials] Completed: ${createdMaterials.length} materials ready`);
+  console.log(
+    `🌱 [seed-materials] Completed: ${createdMaterials.length} materials ready`,
+  );
   return createdMaterials;
 }
 
@@ -506,7 +539,11 @@ try {
   await seedMaterials(tenantId);
   results.push({ name: "seed-materials", success: true });
 } catch (error) {
-  results.push({ name: "seed-materials", success: false, error: String(error) });
+  results.push({
+    name: "seed-materials",
+    success: false,
+    error: String(error),
+  });
   console.error("❌ Failed to seed materials:", error);
 }
 ```
@@ -586,6 +623,7 @@ RUN npm run db:migrate && npm run db:seed
 **Problem**: Insert fails due to unique constraint
 
 **Solution**: Ensure idempotent check is working:
+
 ```typescript
 const existing = await db.query.table.findFirst({
   where: eq(table.uniqueField, value),
@@ -597,13 +635,14 @@ const existing = await db.query.table.findFirst({
 **Problem**: Seed runs before its dependency
 
 **Solution**: Check order in `seed-runner.ts`:
+
 ```typescript
 // Wrong: users before tenants
-await seedUsers();      // ❌ tenantId undefined
+await seedUsers(); // ❌ tenantId undefined
 await seedTenants();
 
 // Correct: tenants before users
-await seedTenants();    // ✅ tenant available
+await seedTenants(); // ✅ tenant available
 await seedUsers(tenantId);
 ```
 
@@ -614,6 +653,7 @@ await seedUsers(tenantId);
 **Expected behavior**: Seed runner continues with remaining seeds and prints summary at end.
 
 Check output:
+
 ```
 📊 Results:
   ✅ Successful: 4/5
@@ -647,13 +687,13 @@ NODE_ENV=development npm run db:seed
 
 ## Commands Reference
 
-| Command | Purpose |
-|---------|---------|
-| `npm run db:seed` | Run all seeds |
-| `npm run db:reset` | Wipe DB, migrate, seed |
-| `npx tsx db/seeds/seed-X.ts` | Run single seed |
-| `npm run db:migrate` | Run migrations only |
-| `npm run db:studio` | Open Drizzle Studio |
+| Command                      | Purpose                |
+| ---------------------------- | ---------------------- |
+| `npm run db:seed`            | Run all seeds          |
+| `npm run db:reset`           | Wipe DB, migrate, seed |
+| `npx tsx db/seeds/seed-X.ts` | Run single seed        |
+| `npm run db:migrate`         | Run migrations only    |
+| `npm run db:studio`          | Open Drizzle Studio    |
 
 ---
 

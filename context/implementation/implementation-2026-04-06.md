@@ -9,33 +9,41 @@
 ## Technical Decisions Made
 
 ### 1. Memory Bank Location
+
 **Decision**: Use `.windsurf/` directory  
-**Rationale**: 
+**Rationale**:
+
 - Windsurf-specific directory won't interfere with application code
 - Hidden from standard directory listings
 - Clear separation of concerns
 - Follows Windsurf IDE conventions
 
 ### 2. File Path Format
+
 **Decision**: Absolute Windows paths with line numbers  
 **Format**: `@c:\Users\seoho\Documents\Corporate Brain\path\file.ts:10-25`  
 **Rationale**:
+
 - Eliminates ambiguity
 - Matches user's OS environment
 - Enables precise change tracking
 - Compatible with Windsurf's file linking
 
 ### 3. Documentation Format
+
 **Decision**: Markdown with YAML frontmatter for workflows  
 **Rationale**:
+
 - Human-readable
 - Machine-parseable
 - Git-friendly
 - Standard format
 
 ### 4. Automation Strategy
+
 **Decision**: Node.js scripts + npm commands + git hooks  
 **Rationale**:
+
 - Cross-platform compatible (Windows)
 - Integrates with existing Node.js project
 - Can be called from various triggers
@@ -46,6 +54,7 @@
 ## Implementation Steps
 
 ### Phase 1: Directory Structure ✅
+
 ```
 .windsurf/
 ├── rules.md                    # Global rules
@@ -65,11 +74,13 @@
 ```
 
 ### Phase 2: Automation Scripts (Next)
+
 - `scripts/memory-tracker.js` - Core tracking logic
 - `scripts/update-changelog.js` - Changelog automation
 - `scripts/verify-context.js` - Integrity checks
 
 ### Phase 3: Git Integration (Next)
+
 - `post-commit` hook - Auto-update on commit
 - `pre-push` hook - Verify context before push
 - `prepare-commit-msg` hook - Suggest commit format

@@ -17,7 +17,9 @@ export interface SyncResult {
   errors: string[];
 }
 
-export async function syncAllIntegrations(tenantId: string): Promise<SyncResult[]> {
+export async function syncAllIntegrations(
+  tenantId: string,
+): Promise<SyncResult[]> {
   const activeIntegrations = await db
     .select({
       id: integrations.id,
@@ -27,15 +29,18 @@ export async function syncAllIntegrations(tenantId: string): Promise<SyncResult[
     .where(
       and(
         eq(integrations.tenantId, tenantId),
-        eq(integrations.status, "active")
-      )
+        eq(integrations.status, "active"),
+      ),
     );
 
   const results: SyncResult[] = [];
 
   for (const integration of activeIntegrations) {
     try {
-      const result = await syncIntegration(integration.id, integration.provider as IntegrationProvider);
+      const result = await syncIntegration(
+        integration.id,
+        integration.provider as IntegrationProvider,
+      );
       results.push(result);
     } catch (error) {
       results.push({
@@ -52,7 +57,7 @@ export async function syncAllIntegrations(tenantId: string): Promise<SyncResult[
 
 export async function syncIntegration(
   integrationId: string,
-  provider: IntegrationProvider
+  provider: IntegrationProvider,
 ): Promise<SyncResult> {
   const result: SyncResult = {
     integrationId,
@@ -98,7 +103,7 @@ export async function syncIntegration(
 async function syncSlack(
   integrationId: string,
   accessToken: string,
-  result: SyncResult
+  result: SyncResult,
 ) {
   // Fetch channels
   const channelsRes = await fetch("https://slack.com/api/conversations.list", {
@@ -113,20 +118,30 @@ async function syncSlack(
   // Fetch messages from each channel (last 7 days)
   const sevenDaysAgo = Math.floor(Date.now() / 1000) - 7 * 24 * 60 * 60;
 
-  for (const channel of channelsData.channels.slice(0, 5)) { // Limit to 5 channels for now
+  for (const channel of channelsData.channels.slice(0, 5)) {
+    // Limit to 5 channels for now
     try {
       const messagesRes = await fetch(
         `https://slack.com/api/conversations.history?channel=${channel.id}&oldest=${sevenDaysAgo}`,
-        { headers: { Authorization: `Bearer ${accessToken}` } }
+        { headers: { Authorization: `Bearer ${accessToken}` } },
       );
       const messagesData = await messagesRes.json();
 
       if (messagesData.messages && messagesData.messages.length > 0) {
-        const content = formatSlackMessages(channel.name, messagesData.messages);
-        await ingestIntegrationContent(integrationId, "slack", channel.name, content, {
-          channelId: channel.id,
-          messageCount: messagesData.messages.length,
-        });
+        const content = formatSlackMessages(
+          channel.name,
+          messagesData.messages,
+        );
+        await ingestIntegrationContent(
+          integrationId,
+          "slack",
+          channel.name,
+          content,
+          {
+            channelId: channel.id,
+            messageCount: messagesData.messages.length,
+          },
+        );
         result.itemsSynced++;
       }
     } catch (error) {
@@ -138,16 +153,17 @@ async function syncSlack(
 async function syncGoogleDrive(
   integrationId: string,
   accessToken: string,
-  result: SyncResult
+  result: SyncResult,
 ) {
   // Search for supported files (docs, pdfs, txt)
-  const query = "mimeType='application/pdf' or mimeType='application/vnd.google-apps.document' or mimeType='text/plain'";
-  
+  const query =
+    "mimeType='application/pdf' or mimeType='application/vnd.google-apps.document' or mimeType='text/plain'";
+
   const filesRes = await fetch(
     `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(query)}&pageSize=50`,
-    { headers: { Authorization: `Bearer ${accessToken}` } }
+    { headers: { Authorization: `Bearer ${accessToken}` } },
   );
-  
+
   const filesData = await filesRes.json();
 
   for (const file of filesData.files || []) {
@@ -158,22 +174,28 @@ async function syncGoogleDrive(
         // Export Google Doc as plain text
         const exportRes = await fetch(
           `https://www.googleapis.com/drive/v3/files/${file.id}/export?mimeType=text/plain`,
-          { headers: { Authorization: `Bearer ${accessToken}` } }
+          { headers: { Authorization: `Bearer ${accessToken}` } },
         );
         content = await exportRes.text();
       } else {
         // Download file content
         const downloadRes = await fetch(
           `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media`,
-          { headers: { Authorization: `Bearer ${accessToken}` } }
+          { headers: { Authorization: `Bearer ${accessToken}` } },
         );
         content = await downloadRes.text();
       }
 
-      await ingestIntegrationContent(integrationId, "google_drive", file.name, content, {
-        fileId: file.id,
-        mimeType: file.mimeType,
-      });
+      await ingestIntegrationContent(
+        integrationId,
+        "google_drive",
+        file.name,
+        content,
+        {
+          fileId: file.id,
+          mimeType: file.mimeType,
+        },
+      );
       result.itemsSynced++;
     } catch (error) {
       result.errors.push(`File ${file.name}: ${error}`);
@@ -184,7 +206,7 @@ async function syncGoogleDrive(
 async function syncNotion(
   integrationId: string,
   accessToken: string,
-  result: SyncResult
+  result: SyncResult,
 ) {
   // Search for pages
   const searchRes = await fetch("https://api.notion.com/v1/search", {
@@ -196,7 +218,7 @@ async function syncNotion(
     },
     body: JSON.stringify({ page_size: 50 }),
   });
-  
+
   const searchData = await searchRes.json();
 
   for (const page of searchData.results || []) {
@@ -209,18 +231,18 @@ async function syncNotion(
             Authorization: `Bearer ${accessToken}`,
             "Notion-Version": "2022-06-28",
           },
-        }
+        },
       );
       const blocksData = await blocksRes.json();
 
       const content = formatNotionBlocks(blocksData.results);
-      
+
       await ingestIntegrationContent(
         integrationId,
         "notion",
         page.properties?.title?.title?.[0]?.plain_text || "Untitled",
         content,
-        { pageId: page.id }
+        { pageId: page.id },
       );
       result.itemsSynced++;
     } catch (error) {
@@ -232,12 +254,15 @@ async function syncNotion(
 async function syncMicrosoftTeams(
   integrationId: string,
   accessToken: string,
-  result: SyncResult
+  result: SyncResult,
 ) {
   // Get teams
-  const teamsRes = await fetch("https://graph.microsoft.com/v1.0/me/joinedTeams", {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
+  const teamsRes = await fetch(
+    "https://graph.microsoft.com/v1.0/me/joinedTeams",
+    {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    },
+  );
   const teamsData = await teamsRes.json();
 
   for (const team of teamsData.value || []) {
@@ -245,7 +270,7 @@ async function syncMicrosoftTeams(
       // Get channels
       const channelsRes = await fetch(
         `https://graph.microsoft.com/v1.0/teams/${team.id}/channels`,
-        { headers: { Authorization: `Bearer ${accessToken}` } }
+        { headers: { Authorization: `Bearer ${accessToken}` } },
       );
       const channelsData = await channelsRes.json();
 
@@ -253,18 +278,22 @@ async function syncMicrosoftTeams(
         // Get messages (last 7 days)
         const messagesRes = await fetch(
           `https://graph.microsoft.com/v1.0/teams/${team.id}/channels/${channel.id}/messages?$filter=createdDateTime gt ${new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()}`,
-          { headers: { Authorization: `Bearer ${accessToken}` } }
+          { headers: { Authorization: `Bearer ${accessToken}` } },
         );
         const messagesData = await messagesRes.json();
 
         if (messagesData.value && messagesData.value.length > 0) {
-          const content = formatTeamsMessages(team.displayName, channel.displayName, messagesData.value);
+          const content = formatTeamsMessages(
+            team.displayName,
+            channel.displayName,
+            messagesData.value,
+          );
           await ingestIntegrationContent(
             integrationId,
             "microsoft_teams",
             `${team.displayName} - ${channel.displayName}`,
             content,
-            { teamId: team.id, channelId: channel.id }
+            { teamId: team.id, channelId: channel.id },
           );
           result.itemsSynced++;
         }
@@ -280,7 +309,7 @@ async function ingestIntegrationContent(
   source: string,
   title: string,
   content: string,
-  metadata: Record<string, any>
+  metadata: Record<string, any>,
 ) {
   // Get integration details for tenantId
   const [integration] = await db
@@ -292,7 +321,7 @@ async function ingestIntegrationContent(
   if (!integration) throw new Error("Integration not found");
 
   const sourceId = uuidv4();
-  
+
   // Create knowledge source
   await db.insert(knowledgeSources).values({
     id: sourceId,
@@ -328,7 +357,9 @@ function formatNotionBlocks(blocks: any[]): string {
     .map((block) => {
       switch (block.type) {
         case "paragraph":
-          return block.paragraph.rich_text.map((t: any) => t.plain_text).join("");
+          return block.paragraph.rich_text
+            .map((t: any) => t.plain_text)
+            .join("");
         case "heading_1":
           return `# ${block.heading_1.rich_text.map((t: any) => t.plain_text).join("")}`;
         case "heading_2":
@@ -342,10 +373,17 @@ function formatNotionBlocks(blocks: any[]): string {
     .join("\n\n");
 }
 
-function formatTeamsMessages(teamName: string, channelName: string, messages: any[]): string {
+function formatTeamsMessages(
+  teamName: string,
+  channelName: string,
+  messages: any[],
+): string {
   const header = `# Microsoft Teams: ${teamName} - ${channelName}\n\n`;
   const formatted = messages
-    .map((m) => `**${m.from?.user?.displayName || "Unknown"}**: ${m.body?.content || ""}`)
+    .map(
+      (m) =>
+        `**${m.from?.user?.displayName || "Unknown"}**: ${m.body?.content || ""}`,
+    )
     .join("\n\n");
   return header + formatted;
 }
@@ -353,7 +391,7 @@ function formatTeamsMessages(teamName: string, channelName: string, messages: an
 async function syncGmail(
   integrationId: string,
   accessToken: string,
-  result: SyncResult
+  result: SyncResult,
 ) {
   // Fetch recent emails (last 30 days)
   const thirtyDaysAgo = new Date();
@@ -364,7 +402,7 @@ async function syncGmail(
 
   const messagesRes = await fetch(
     `https://gmail.googleapis.com/gmail/v1/users/me/messages?q=${encodeURIComponent(searchQuery)}&maxResults=50`,
-    { headers: { Authorization: `Bearer ${accessToken}` } }
+    { headers: { Authorization: `Bearer ${accessToken}` } },
   );
 
   const messagesData = await messagesRes.json();
@@ -374,11 +412,12 @@ async function syncGmail(
   }
 
   // Fetch details for each message
-  for (const messageRef of messagesData.messages.slice(0, 20)) { // Limit to 20 emails
+  for (const messageRef of messagesData.messages.slice(0, 20)) {
+    // Limit to 20 emails
     try {
       const emailRes = await fetch(
         `https://gmail.googleapis.com/gmail/v1/users/me/messages/${messageRef.id}?format=full`,
-        { headers: { Authorization: `Bearer ${accessToken}` } }
+        { headers: { Authorization: `Bearer ${accessToken}` } },
       );
 
       const email = await emailRes.json();
@@ -386,12 +425,18 @@ async function syncGmail(
 
       if (body) {
         const content = formatGmailEmail(subject, from, date, body);
-        await ingestIntegrationContent(integrationId, "gmail", subject, content, {
-          messageId: messageRef.id,
-          from,
-          date,
-          threadId: email.threadId,
-        });
+        await ingestIntegrationContent(
+          integrationId,
+          "gmail",
+          subject,
+          content,
+          {
+            messageId: messageRef.id,
+            from,
+            date,
+            threadId: email.threadId,
+          },
+        );
         result.itemsSynced++;
       }
 
@@ -402,7 +447,7 @@ async function syncGmail(
             try {
               const attachmentRes = await fetch(
                 `https://gmail.googleapis.com/gmail/v1/users/me/messages/${messageRef.id}/attachments/${part.body.attachmentId}`,
-                { headers: { Authorization: `Bearer ${accessToken}` } }
+                { headers: { Authorization: `Bearer ${accessToken}` } },
               );
               const attachmentData = await attachmentRes.json();
 
@@ -434,12 +479,17 @@ async function syncGmail(
                   });
 
                   // Process document for extraction
-                  processDocument(attachmentSourceId, buffer, part.mimeType || "application/octet-stream")
-                    .catch(console.error);
+                  processDocument(
+                    attachmentSourceId,
+                    buffer,
+                    part.mimeType || "application/octet-stream",
+                  ).catch(console.error);
                 }
               }
             } catch (attachmentError) {
-              result.errors.push(`Attachment ${part.filename}: ${attachmentError}`);
+              result.errors.push(
+                `Attachment ${part.filename}: ${attachmentError}`,
+              );
             }
           }
         }
@@ -450,16 +500,24 @@ async function syncGmail(
   }
 }
 
-function extractEmailData(email: any): { subject: string; from: string; date: string; body: string } {
+function extractEmailData(email: any): {
+  subject: string;
+  from: string;
+  date: string;
+  body: string;
+} {
   const headers = email.payload?.headers || [];
-  const subject = headers.find((h: any) => h.name === "Subject")?.value || "No Subject";
+  const subject =
+    headers.find((h: any) => h.name === "Subject")?.value || "No Subject";
   const from = headers.find((h: any) => h.name === "From")?.value || "Unknown";
   const date = headers.find((h: any) => h.name === "Date")?.value || "";
 
   // Extract body from parts
   let body = "";
   if (email.payload?.parts) {
-    const textPart = email.payload.parts.find((p: any) => p.mimeType === "text/plain");
+    const textPart = email.payload.parts.find(
+      (p: any) => p.mimeType === "text/plain",
+    );
     if (textPart?.body?.data) {
       body = Buffer.from(textPart.body.data, "base64").toString("utf-8");
     }
@@ -470,6 +528,11 @@ function extractEmailData(email: any): { subject: string; from: string; date: st
   return { subject, from, date, body };
 }
 
-function formatGmailEmail(subject: string, from: string, date: string, body: string): string {
+function formatGmailEmail(
+  subject: string,
+  from: string,
+  date: string,
+  body: string,
+): string {
   return `# Email: ${subject}\n\n**From:** ${from}\n**Date:** ${date}\n\n${body}`;
 }

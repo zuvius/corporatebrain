@@ -11,7 +11,13 @@ interface UploadModalProps {
   tenantId: string;
 }
 
-type UploadStatus = "pending" | "uploading" | "processing" | "complete" | "error" | "cancelled";
+type UploadStatus =
+  | "pending"
+  | "uploading"
+  | "processing"
+  | "complete"
+  | "error"
+  | "cancelled";
 
 interface UploadFile {
   id: string;
@@ -53,23 +59,28 @@ const ALLOWED_TYPES = [
 
 const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
 
-export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: UploadModalProps) {
+export function UploadModal({
+  isOpen,
+  onClose,
+  onUploadComplete,
+  tenantId,
+}: UploadModalProps) {
   const [files, setFiles] = useState<UploadFile[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const { toasts, addToast, removeToast } = useToast();
-  
+
   // Refs to track active operations for cancellation
   const abortControllers = useRef<Map<string, AbortController>>(new Map());
   const pollingTimeouts = useRef<Map<string, NodeJS.Timeout>>(new Map());
   const progressIntervals = useRef<Map<string, NodeJS.Timeout>>(new Map());
-  
+
   // Clear files when modal opens (fresh start)
   useEffect(() => {
     if (isOpen) {
       setFiles([]);
     }
   }, [isOpen]);
-  
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
@@ -89,7 +100,11 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
   };
 
   const validateFile = (file: File): string | null => {
-    if (!ALLOWED_TYPES.includes(file.type) && !file.name.endsWith('.md') && !file.name.endsWith('.txt')) {
+    if (
+      !ALLOWED_TYPES.includes(file.type) &&
+      !file.name.endsWith(".md") &&
+      !file.name.endsWith(".txt")
+    ) {
       return "File type not supported. Please upload PDF, Word, Excel, PowerPoint, Text, Markdown, CSV, or Image files.";
     }
     if (file.size > MAX_FILE_SIZE) {
@@ -101,90 +116,101 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
   // Calculate file hash for content-based duplicate detection
   const calculateFileHash = useCallback(async (file: File): Promise<string> => {
     const buffer = await file.arrayBuffer();
-    const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
   }, []);
 
   // Check server for existing document with same hash
-  const checkExistingDocument = useCallback(async (hash: string): Promise<boolean> => {
-    try {
-      const response = await fetch(`/api/knowledge-sources/check-hash?hash=${hash}`);
-      if (response.ok) {
-        const data = await response.json();
-        return data.exists;
-      }
-    } catch {
-      // API check failed, allow upload
-    }
-    return false;
-  }, []);
-
-  const addFiles = useCallback(async (newFiles: FileList | null) => {
-    if (!newFiles) return;
-
-    const fileList = Array.from(newFiles);
-    const existingNames = new Set(files.map(f => f.name.toLowerCase()));
-    const processedHashes = new Set<string>();
-    const duplicates: string[] = [];
-    const addedFiles: UploadFile[] = [];
-
-    for (const file of fileList) {
-      // Check 1: Exact filename duplicate
-      if (existingNames.has(file.name.toLowerCase())) {
-        duplicates.push(file.name);
-        continue;
-      }
-
-      // Check 2: Content hash duplicate
+  const checkExistingDocument = useCallback(
+    async (hash: string): Promise<boolean> => {
       try {
-        const hash = await calculateFileHash(file);
-        
-        // Check against files being added in this batch
-        if (processedHashes.has(hash)) {
-          duplicates.push(`${file.name} (same content)`);
-          continue;
+        const response = await fetch(
+          `/api/knowledge-sources/check-hash?hash=${hash}`,
+        );
+        if (response.ok) {
+          const data = await response.json();
+          return data.exists;
         }
-        
-        // Check against server (existing knowledge sources)
-        const existsOnServer = await checkExistingDocument(hash);
-        if (existsOnServer) {
-          duplicates.push(`${file.name} (already exists in knowledge base)`);
-          continue;
-        }
-        
-        processedHashes.add(hash);
       } catch {
-        // Hash calculation failed, continue with upload
+        // API check failed, allow upload
+      }
+      return false;
+    },
+    [],
+  );
+
+  const addFiles = useCallback(
+    async (newFiles: FileList | null) => {
+      if (!newFiles) return;
+
+      const fileList = Array.from(newFiles);
+      const existingNames = new Set(files.map((f) => f.name.toLowerCase()));
+      const processedHashes = new Set<string>();
+      const duplicates: string[] = [];
+      const addedFiles: UploadFile[] = [];
+
+      for (const file of fileList) {
+        // Check 1: Exact filename duplicate
+        if (existingNames.has(file.name.toLowerCase())) {
+          duplicates.push(file.name);
+          continue;
+        }
+
+        // Check 2: Content hash duplicate
+        try {
+          const hash = await calculateFileHash(file);
+
+          // Check against files being added in this batch
+          if (processedHashes.has(hash)) {
+            duplicates.push(`${file.name} (same content)`);
+            continue;
+          }
+
+          // Check against server (existing knowledge sources)
+          const existsOnServer = await checkExistingDocument(hash);
+          if (existsOnServer) {
+            duplicates.push(`${file.name} (already exists in knowledge base)`);
+            continue;
+          }
+
+          processedHashes.add(hash);
+        } catch {
+          // Hash calculation failed, continue with upload
+        }
+
+        const error = validateFile(file);
+        addedFiles.push({
+          id: Math.random().toString(36).substring(7),
+          file,
+          name: file.name,
+          size: file.size,
+          status: error ? "error" : "pending",
+          progress: 0,
+          error: error || undefined,
+        });
+        existingNames.add(file.name.toLowerCase());
       }
 
-      const error = validateFile(file);
-      addedFiles.push({
-        id: Math.random().toString(36).substring(7),
-        file,
-        name: file.name,
-        size: file.size,
-        status: error ? "error" : "pending",
-        progress: 0,
-        error: error || undefined,
-      });
-      existingNames.add(file.name.toLowerCase());
-    }
+      // Show warning toast for duplicates
+      if (duplicates.length > 0) {
+        addToast({
+          type: "warning",
+          title:
+            duplicates.length === 1
+              ? "Duplicate file skipped"
+              : `${duplicates.length} duplicate files skipped`,
+          message: duplicates.join(", "),
+          duration: 5000,
+        });
+      }
 
-    // Show warning toast for duplicates
-    if (duplicates.length > 0) {
-      addToast({
-        type: 'warning',
-        title: duplicates.length === 1 ? 'Duplicate file skipped' : `${duplicates.length} duplicate files skipped`,
-        message: duplicates.join(', '),
-        duration: 5000,
-      });
-    }
-
-    if (addedFiles.length > 0) {
-      setFiles(prev => [...prev, ...addedFiles]);
-    }
-  }, [files, addToast, calculateFileHash, checkExistingDocument]);
+      if (addedFiles.length > 0) {
+        setFiles((prev) => [...prev, ...addedFiles]);
+      }
+    },
+    [files, addToast, calculateFileHash, checkExistingDocument],
+  );
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -196,11 +222,14 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
     setIsDragging(false);
   }, []);
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    addFiles(e.dataTransfer.files);
-  }, [addFiles]);
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      setIsDragging(false);
+      addFiles(e.dataTransfer.files);
+    },
+    [addFiles],
+  );
 
   const removeFile = (id: string) => {
     // Cancel any ongoing operations for this file
@@ -209,27 +238,30 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
       controller.abort();
       abortControllers.current.delete(id);
     }
-    
+
     const timeout = pollingTimeouts.current.get(id);
     if (timeout) {
       clearTimeout(timeout);
       pollingTimeouts.current.delete(id);
     }
-    
+
     const interval = progressIntervals.current.get(id);
     if (interval) {
       clearInterval(interval);
       progressIntervals.current.delete(id);
     }
-    
+
     setFiles((prev) => prev.filter((f) => f.id !== id));
   };
 
   const uploadFile = async (uploadFile: UploadFile) => {
-    if (uploadFile.status === "error" || uploadFile.status === "cancelled") return;
+    if (uploadFile.status === "error" || uploadFile.status === "cancelled")
+      return;
 
     setFiles((prev) =>
-      prev.map((f) => (f.id === uploadFile.id ? { ...f, status: "uploading", progress: 0 } : f))
+      prev.map((f) =>
+        f.id === uploadFile.id ? { ...f, status: "uploading", progress: 0 } : f,
+      ),
     );
 
     // Create abort controller for this upload
@@ -252,7 +284,7 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
           return prev.map((f) =>
             f.id === uploadFile.id && f.progress < 90
               ? { ...f, progress: f.progress + 10 }
-              : f
+              : f,
           );
         });
       }, 200);
@@ -273,26 +305,30 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        
+
         // Handle duplicate content (409 Conflict)
         if (response.status === 409 && errorData.existingSourceName) {
           addToast({
-            type: 'warning',
-            title: 'Duplicate file detected',
+            type: "warning",
+            title: "Duplicate file detected",
             message: `This file has already been uploaded as "${errorData.existingSourceName}"`,
             duration: 5000,
           });
-          
+
           setFiles((prev) =>
             prev.map((f) =>
               f.id === uploadFile.id
-                ? { ...f, status: "error", error: `Duplicate: ${errorData.existingSourceName}` }
-                : f
-            )
+                ? {
+                    ...f,
+                    status: "error",
+                    error: `Duplicate: ${errorData.existingSourceName}`,
+                  }
+                : f,
+            ),
           );
           return;
         }
-        
+
         throw new Error(errorData.error || "Upload failed");
       }
 
@@ -302,9 +338,14 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
       setFiles((prev) =>
         prev.map((f) =>
           f.id === uploadFile.id
-            ? { ...f, status: "processing", progress: 100, sourceId: result.sourceId }
-            : f
-        )
+            ? {
+                ...f,
+                status: "processing",
+                progress: 100,
+                sourceId: result.sourceId,
+              }
+            : f,
+        ),
       );
 
       // Poll for processing completion
@@ -315,7 +356,7 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
         removeFile(uploadFile.id);
         return;
       }
-      
+
       setFiles((prev) =>
         prev.map((f) =>
           f.id === uploadFile.id
@@ -324,8 +365,8 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
                 status: "error",
                 error: error instanceof Error ? error.message : "Upload failed",
               }
-            : f
-        )
+            : f,
+        ),
       );
     } finally {
       abortControllers.current.delete(uploadFile.id);
@@ -345,13 +386,17 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
       }
 
       try {
-        const response = await fetch(`/api/knowledge-sources/${sourceId}/status`);
+        const response = await fetch(
+          `/api/knowledge-sources/${sourceId}/status`,
+        );
         if (response.ok) {
           const data = await response.json();
-          
+
           if (data.status === "indexed") {
             setFiles((prev) =>
-              prev.map((f) => (f.id === fileId ? { ...f, status: "complete" } : f))
+              prev.map((f) =>
+                f.id === fileId ? { ...f, status: "complete" } : f,
+              ),
             );
             pollingTimeouts.current.delete(fileId);
             return;
@@ -359,9 +404,13 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
             setFiles((prev) =>
               prev.map((f) =>
                 f.id === fileId
-                  ? { ...f, status: "error", error: data.errorMessage || "Processing failed" }
-                  : f
-              )
+                  ? {
+                      ...f,
+                      status: "error",
+                      error: data.errorMessage || "Processing failed",
+                    }
+                  : f,
+              ),
             );
             pollingTimeouts.current.delete(fileId);
             return;
@@ -377,8 +426,8 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
             prev.map((f) =>
               f.id === fileId
                 ? { ...f, status: "error", error: "Processing timeout" }
-                : f
-            )
+                : f,
+            ),
           );
           pollingTimeouts.current.delete(fileId);
         }
@@ -400,7 +449,7 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
 
   const handleUploadAll = async () => {
     const pendingFiles = files.filter((f) => f.status === "pending");
-    
+
     // Upload files sequentially to avoid overwhelming the server
     for (const file of pendingFiles) {
       await uploadFile(file);
@@ -445,8 +494,12 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
   if (!isOpen) return null;
 
   const hasPendingFiles = files.some((f) => f.status === "pending");
-  const hasProcessingFiles = files.some((f) => f.status === "uploading" || f.status === "processing");
-  const allComplete = files.length > 0 && files.every((f) => f.status === "complete" || f.status === "error");
+  const hasProcessingFiles = files.some(
+    (f) => f.status === "uploading" || f.status === "processing",
+  );
+  const allComplete =
+    files.length > 0 &&
+    files.every((f) => f.status === "complete" || f.status === "error");
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
@@ -481,7 +534,8 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
               Drop files here or click to browse
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-              Supports PDF, DOCX, XLSX, PPTX, TXT, MD, CSV, HTML, JPEG, PNG, TIFF, BMP, JSON, XML (up to 100MB each)
+              Supports PDF, DOCX, XLSX, PPTX, TXT, MD, CSV, HTML, JPEG, PNG,
+              TIFF, BMP, JSON, XML (up to 100MB each)
             </p>
             <input
               type="file"
@@ -510,12 +564,12 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
                     file.status === "error"
                       ? "border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20"
                       : file.status === "complete"
-                      ? "border-emerald-200 bg-emerald-50 dark:border-emerald-800 dark:bg-emerald-900/20"
-                      : "border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-700/50"
+                        ? "border-emerald-200 bg-emerald-50 dark:border-emerald-800 dark:bg-emerald-900/20"
+                        : "border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-700/50"
                   }`}
                 >
                   {getStatusIcon(file.status)}
-                  
+
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
                       {file.name}
@@ -530,16 +584,17 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
                           file.status === "error"
                             ? "text-red-600 dark:text-red-400"
                             : file.status === "complete"
-                            ? "text-emerald-600 dark:text-emerald-400"
-                            : "text-violet-600 dark:text-violet-400"
+                              ? "text-emerald-600 dark:text-emerald-400"
+                              : "text-violet-600 dark:text-violet-400"
                         }`}
                       >
                         {file.error || getStatusText(file.status)}
                       </span>
                     </div>
-                    
+
                     {/* Progress bar */}
-                    {(file.status === "uploading" || file.status === "processing") && (
+                    {(file.status === "uploading" ||
+                      file.status === "processing") && (
                       <div className="mt-2 h-1.5 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
                         <div
                           className="h-full bg-violet-500 rounded-full transition-all duration-300"
@@ -551,7 +606,12 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
 
                   <button
                     onClick={() => removeFile(file.id)}
-                    title={file.status === "uploading" || file.status === "processing" ? "Cancel upload" : "Remove file"}
+                    title={
+                      file.status === "uploading" ||
+                      file.status === "processing"
+                        ? "Cancel upload"
+                        : "Remove file"
+                    }
                     className="p-1.5 text-gray-400 hover:text-red-500 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                   >
                     <X className="h-4 w-4" />
@@ -569,7 +629,8 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
               "No files selected"
             ) : (
               <>
-                {files.filter((f) => f.status === "complete").length} of {files.length} complete
+                {files.filter((f) => f.status === "complete").length} of{" "}
+                {files.length} complete
                 {files.filter((f) => f.status === "error").length > 0 && (
                   <span className="text-red-500 ml-2">
                     ({files.filter((f) => f.status === "error").length} failed)
@@ -578,7 +639,7 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
               </>
             )}
           </div>
-          
+
           <div className="flex items-center gap-3">
             {allComplete && (
               <button
@@ -591,7 +652,7 @@ export function UploadModal({ isOpen, onClose, onUploadComplete, tenantId }: Upl
                 Done
               </button>
             )}
-            
+
             <button
               onClick={handleUploadAll}
               disabled={!hasPendingFiles || hasProcessingFiles}

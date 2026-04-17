@@ -11,11 +11,19 @@ export default async function SignInPage() {
             <span className="text-white font-bold text-lg">CB</span>
           </div>
           <h1 className="text-2xl font-bold text-white">Welcome back</h1>
-          <p className="text-white/50 mt-2">Sign in to access your knowledge base</p>
+          <p className="text-white/50 mt-2">
+            Sign in to access your knowledge base
+          </p>
         </div>
 
         {/* Sign In Form */}
-        <Suspense fallback={<div className="h-64 flex items-center justify-center text-white/50">Loading...</div>}>
+        <Suspense
+          fallback={
+            <div className="h-64 flex items-center justify-center text-white/50">
+              Loading...
+            </div>
+          }
+        >
           <SignInForm />
         </Suspense>
 
@@ -23,7 +31,10 @@ export default async function SignInPage() {
         <div className="mt-6 text-center space-y-2">
           <p className="text-sm text-white/40">
             Don&apos;t have an account?{" "}
-            <a href="/auth/signup" className="text-violet-400 hover:text-violet-300 transition-colors">
+            <a
+              href="/auth/signup"
+              className="text-violet-400 hover:text-violet-300 transition-colors"
+            >
               Sign up
             </a>
           </p>

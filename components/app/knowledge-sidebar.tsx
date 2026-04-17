@@ -1,9 +1,29 @@
 "use client";
 
 import { useState } from "react";
-import { Database, MessageSquare, ChevronDown, Plus, FileText, Link2, Globe, LayoutDashboard, Settings, Trash2, RefreshCw, Puzzle, Network, HelpCircle, User } from "lucide-react";
+import {
+  Database,
+  MessageSquare,
+  ChevronDown,
+  Plus,
+  FileText,
+  Link2,
+  Globe,
+  LayoutDashboard,
+  Settings,
+  Trash2,
+  RefreshCw,
+  Puzzle,
+  Network,
+  HelpCircle,
+  User,
+} from "lucide-react";
 import Link from "next/link";
-import { ConfirmDialog, ToastContainer, useToast } from "@/components/ui/premium-dialog";
+import {
+  ConfirmDialog,
+  ToastContainer,
+  useToast,
+} from "@/components/ui/premium-dialog";
 
 interface KnowledgeSource {
   id: string;
@@ -39,16 +59,16 @@ interface KnowledgeSidebarProps {
   activeConversationId?: string;
 }
 
-export function KnowledgeSidebar({ 
-  sources, 
-  conversations, 
-  user, 
-  currentPath = "/app", 
+export function KnowledgeSidebar({
+  sources,
+  conversations,
+  user,
+  currentPath = "/app",
   onAddSourceClick,
   onConversationClick,
   onNewChat,
   onSourceDeleted,
-  activeConversationId
+  activeConversationId,
 }: KnowledgeSidebarProps) {
   const isAdmin = user.role === "admin";
   const [activeTab, setActiveTab] = useState<"sources" | "chat">("sources");
@@ -56,7 +76,7 @@ export function KnowledgeSidebar({
     sources: true,
     recent: true,
   });
-  
+
   // Premium dialog state
   const { toasts, addToast, removeToast } = useToast();
   const [confirmDialog, setConfirmDialog] = useState<{
@@ -68,7 +88,7 @@ export function KnowledgeSidebar({
   const [, setIsReindexing] = useState<string | null>(null);
 
   const toggleSection = (section: keyof typeof expandedSections) => {
-    setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
+    setExpandedSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
   return (
@@ -81,7 +101,7 @@ export function KnowledgeSidebar({
           </div>
           <span className="font-semibold text-gray-900">Corporate Brain</span>
         </div>
-        
+
         {/* User info */}
         <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-100">
           <div className="h-6 w-6 rounded-full bg-violet-100 flex items-center justify-center">
@@ -89,7 +109,9 @@ export function KnowledgeSidebar({
               {user.name?.[0] || user.email[0].toUpperCase()}
             </span>
           </div>
-          <span className="text-sm text-gray-700 truncate">{user.name || user.email}</span>
+          <span className="text-sm text-gray-700 truncate">
+            {user.name || user.email}
+          </span>
         </div>
       </div>
 
@@ -98,8 +120,8 @@ export function KnowledgeSidebar({
         <button
           onClick={() => setActiveTab("sources")}
           className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-medium transition-colors ${
-            activeTab === "sources" 
-              ? "text-violet-600 border-b-2 border-violet-600 bg-violet-50" 
+            activeTab === "sources"
+              ? "text-violet-600 border-b-2 border-violet-600 bg-violet-50"
               : "text-gray-600 hover:text-gray-900"
           }`}
         >
@@ -109,8 +131,8 @@ export function KnowledgeSidebar({
         <button
           onClick={() => setActiveTab("chat")}
           className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-medium transition-colors ${
-            activeTab === "chat" 
-              ? "text-violet-600 border-b-2 border-violet-600 bg-violet-50" 
+            activeTab === "chat"
+              ? "text-violet-600 border-b-2 border-violet-600 bg-violet-50"
               : "text-gray-600 hover:text-gray-900"
           }`}
         >
@@ -130,18 +152,20 @@ export function KnowledgeSidebar({
                 className="flex items-center justify-between w-full text-sm font-medium text-gray-700 mb-2"
               >
                 <span>Knowledge Sources ({sources.length})</span>
-                <ChevronDown 
+                <ChevronDown
                   className={`h-4 w-4 transition-transform ${expandedSections.sources ? "" : "-rotate-90"}`}
                 />
               </button>
-              
+
               {expandedSections.sources && (
                 <div className="space-y-2">
                   {sources.length === 0 ? (
                     <div className="text-center py-6 px-4 bg-gray-100 rounded-lg">
                       <Database className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                      <p className="text-sm text-gray-500">No knowledge sources yet</p>
-                      <button 
+                      <p className="text-sm text-gray-500">
+                        No knowledge sources yet
+                      </p>
+                      <button
                         onClick={onAddSourceClick}
                         className="mt-3 flex items-center gap-1 text-sm text-violet-600 hover:text-violet-700 mx-auto"
                       >
@@ -150,10 +174,10 @@ export function KnowledgeSidebar({
                       </button>
                     </div>
                   ) : (
-                    sources.map(source => (
-                      <SourceItem 
-                        key={source.id} 
-                        source={source} 
+                    sources.map((source) => (
+                      <SourceItem
+                        key={source.id}
+                        source={source}
                         onDelete={() => {
                           setConfirmDialog({
                             isOpen: true,
@@ -164,26 +188,29 @@ export function KnowledgeSidebar({
                         onReindex={async () => {
                           setIsReindexing(source.id);
                           try {
-                            const res = await fetch(`/api/knowledge-sources/${source.id}`, { 
-                              method: 'PATCH',
-                              headers: { 'Content-Type': 'application/json' },
-                              body: JSON.stringify({ action: 'reindex' })
-                            });
+                            const res = await fetch(
+                              `/api/knowledge-sources/${source.id}`,
+                              {
+                                method: "PATCH",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ action: "reindex" }),
+                              },
+                            );
                             if (res.ok) {
                               addToast({
-                                type: 'success',
-                                title: 'Reindexing started',
+                                type: "success",
+                                title: "Reindexing started",
                                 message: `"${source.name}" is being reindexed.`,
                                 duration: 4000,
                               });
                               // Don't reload - let the status update via polling
                             } else {
-                              throw new Error('Failed to reindex');
+                              throw new Error("Failed to reindex");
                             }
-                          } catch (e) {
+                          } catch {
                             addToast({
-                              type: 'error',
-                              title: 'Reindex failed',
+                              type: "error",
+                              title: "Reindex failed",
                               message: `Could not reindex "${source.name}". Please try again.`,
                               duration: 5000,
                             });
@@ -207,23 +234,27 @@ export function KnowledgeSidebar({
                 className="flex items-center justify-between w-full text-sm font-medium text-gray-700 mb-2"
               >
                 <span>Recent Conversations ({conversations.length})</span>
-                <ChevronDown 
+                <ChevronDown
                   className={`h-4 w-4 transition-transform ${expandedSections.recent ? "" : "-rotate-90"}`}
                 />
               </button>
-              
+
               {expandedSections.recent && (
                 <div className="space-y-1">
                   {conversations.length === 0 ? (
                     <div className="text-center py-6 px-4 bg-gray-100 rounded-lg">
                       <MessageSquare className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                      <p className="text-sm text-gray-500">No conversations yet</p>
-                      <p className="text-xs text-gray-400 mt-1">Start chatting to see history</p>
+                      <p className="text-sm text-gray-500">
+                        No conversations yet
+                      </p>
+                      <p className="text-xs text-gray-400 mt-1">
+                        Start chatting to see history
+                      </p>
                     </div>
                   ) : (
-                    conversations.map(conversation => (
-                      <div 
-                        key={conversation.id} 
+                    conversations.map((conversation) => (
+                      <div
+                        key={conversation.id}
                         onClick={() => onConversationClick?.(conversation.id)}
                         className={`flex items-center gap-2 p-2 rounded-lg cursor-pointer transition-colors ${
                           activeConversationId === conversation.id
@@ -231,13 +262,19 @@ export function KnowledgeSidebar({
                             : "hover:bg-gray-100"
                         }`}
                       >
-                        <MessageSquare className={`h-4 w-4 ${activeConversationId === conversation.id ? "text-violet-600" : "text-gray-400"}`} />
+                        <MessageSquare
+                          className={`h-4 w-4 ${activeConversationId === conversation.id ? "text-violet-600" : "text-gray-400"}`}
+                        />
                         <div className="flex-1 min-w-0">
-                          <p className={`text-sm font-medium truncate ${activeConversationId === conversation.id ? "text-violet-900" : "text-gray-900"}`}>
+                          <p
+                            className={`text-sm font-medium truncate ${activeConversationId === conversation.id ? "text-violet-900" : "text-gray-900"}`}
+                          >
                             {conversation.title}
                           </p>
                           <p className="text-xs text-gray-500">
-                            {new Date(conversation.updatedAt).toLocaleDateString()}
+                            {new Date(
+                              conversation.updatedAt,
+                            ).toLocaleDateString()}
                           </p>
                         </div>
                       </div>
@@ -252,7 +289,9 @@ export function KnowledgeSidebar({
 
       {/* Member Navigation - Available to all users */}
       <div className="p-4 border-t border-gray-200 bg-white">
-        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Tools</p>
+        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+          Tools
+        </p>
         <nav className="space-y-1">
           <Link
             href="/app/integrations"
@@ -304,7 +343,9 @@ export function KnowledgeSidebar({
       {/* Admin Navigation - Only for admins */}
       {isAdmin && (
         <div className="p-4 border-t border-gray-200 bg-gray-100">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Admin</p>
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+            Admin
+          </p>
           <nav className="space-y-1">
             <Link
               href="/admin"
@@ -334,7 +375,7 @@ export function KnowledgeSidebar({
 
       {/* New Chat Button */}
       <div className="p-4 border-t border-gray-200 bg-white">
-        <button 
+        <button
           onClick={onNewChat}
           className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition-colors"
         >
@@ -356,13 +397,16 @@ export function KnowledgeSidebar({
           if (!confirmDialog.sourceId) return;
           setIsDeleting(true);
           try {
-            const res = await fetch(`/api/knowledge-sources/${confirmDialog.sourceId}`, { 
-              method: 'DELETE' 
-            });
+            const res = await fetch(
+              `/api/knowledge-sources/${confirmDialog.sourceId}`,
+              {
+                method: "DELETE",
+              },
+            );
             if (res.ok) {
               addToast({
-                type: 'success',
-                title: 'Source deleted',
+                type: "success",
+                title: "Source deleted",
                 message: `"${confirmDialog.sourceName}" has been removed.`,
                 duration: 4000,
               });
@@ -371,12 +415,12 @@ export function KnowledgeSidebar({
                 onSourceDeleted?.(confirmDialog.sourceId);
               }
             } else {
-              throw new Error('Failed to delete');
+              throw new Error("Failed to delete");
             }
-          } catch (e) {
+          } catch {
             addToast({
-              type: 'error',
-              title: 'Delete failed',
+              type: "error",
+              title: "Delete failed",
               message: `Could not delete "${confirmDialog.sourceName}". Please try again.`,
               duration: 5000,
             });
@@ -385,7 +429,9 @@ export function KnowledgeSidebar({
             setConfirmDialog({ isOpen: false, sourceId: null, sourceName: "" });
           }
         }}
-        onCancel={() => setConfirmDialog({ isOpen: false, sourceId: null, sourceName: "" })}
+        onCancel={() =>
+          setConfirmDialog({ isOpen: false, sourceId: null, sourceName: "" })
+        }
       />
 
       {/* Toast Notifications */}
@@ -407,36 +453,48 @@ function SourceItem({ source, onDelete, onReindex }: SourceItemProps) {
 
   const getSourceIcon = (type: string) => {
     switch (type) {
-      case "file": return <FileText className="h-4 w-4" />;
-      case "url": return <Link2 className="h-4 w-4" />;
-      case "crawl": return <Globe className="h-4 w-4" />;
-      default: return <FileText className="h-4 w-4" />;
+      case "file":
+        return <FileText className="h-4 w-4" />;
+      case "url":
+        return <Link2 className="h-4 w-4" />;
+      case "crawl":
+        return <Globe className="h-4 w-4" />;
+      default:
+        return <FileText className="h-4 w-4" />;
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "ready": return "bg-emerald-500";
-      case "processing": return "bg-amber-500 animate-pulse";
-      case "error": return "bg-red-500";
-      default: return "bg-gray-500";
+      case "ready":
+        return "bg-emerald-500";
+      case "processing":
+        return "bg-amber-500 animate-pulse";
+      case "error":
+        return "bg-red-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
   return (
-    <div 
+    <div
       className="group flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 transition-colors"
       onMouseEnter={() => setShowActions(true)}
       onMouseLeave={() => setShowActions(false)}
     >
       <div className="text-gray-500">{getSourceIcon(source.type)}</div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-gray-900 truncate">{source.name}</p>
+        <p className="text-sm font-medium text-gray-900 truncate">
+          {source.name}
+        </p>
         <p className="text-xs text-gray-500">{source.type}</p>
       </div>
       <div className="flex items-center gap-1">
-        <div className={`h-2 w-2 rounded-full ${getStatusColor(source.status)}`} />
-        
+        <div
+          className={`h-2 w-2 rounded-full ${getStatusColor(source.status)}`}
+        />
+
         {/* Action Menu with Premium Tooltips */}
         {showActions && source.status !== "processing" && (
           <div className="flex items-center gap-1">
@@ -444,13 +502,13 @@ function SourceItem({ source, onDelete, onReindex }: SourceItemProps) {
             <div className="relative">
               <button
                 onClick={onReindex}
-                onMouseEnter={() => setActiveTooltip('reindex')}
+                onMouseEnter={() => setActiveTooltip("reindex")}
                 onMouseLeave={() => setActiveTooltip(null)}
                 className="p-1.5 text-gray-400 hover:text-violet-600 hover:bg-violet-100 dark:hover:bg-violet-900/30 rounded-lg transition-all duration-200 hover:scale-110"
               >
                 <RefreshCw className="h-3.5 w-3.5" />
               </button>
-              {activeTooltip === 'reindex' && (
+              {activeTooltip === "reindex" && (
                 <div className="absolute right-full top-1/2 -translate-y-1/2 mr-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-800 text-white text-xs font-medium rounded-lg shadow-xl whitespace-nowrap z-50 animate-in fade-in zoom-in-95 duration-200">
                   <div className="flex items-center gap-1.5">
                     <RefreshCw className="h-3 w-3" />
@@ -465,13 +523,13 @@ function SourceItem({ source, onDelete, onReindex }: SourceItemProps) {
             <div className="relative">
               <button
                 onClick={onDelete}
-                onMouseEnter={() => setActiveTooltip('delete')}
+                onMouseEnter={() => setActiveTooltip("delete")}
                 onMouseLeave={() => setActiveTooltip(null)}
                 className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-lg transition-all duration-200 hover:scale-110"
               >
                 <Trash2 className="h-3.5 w-3.5" />
               </button>
-              {activeTooltip === 'delete' && (
+              {activeTooltip === "delete" && (
                 <div className="absolute right-full top-1/2 -translate-y-1/2 mr-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-800 text-white text-xs font-medium rounded-lg shadow-xl whitespace-nowrap z-50 animate-in fade-in zoom-in-95 duration-200">
                   <div className="flex items-center gap-1.5">
                     <Trash2 className="h-3 w-3" />

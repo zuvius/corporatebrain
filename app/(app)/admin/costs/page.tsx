@@ -210,7 +210,10 @@ export default function CostCommandCenter() {
                     </td>
                     <td className="py-3 px-4 text-right">
                       <span className="inline-block px-2 py-1 text-xs rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                        {((model.totalCost / summary.totalCost) * 100).toFixed(1)}%
+                        {((model.totalCost / summary.totalCost) * 100).toFixed(
+                          1,
+                        )}
+                        %
                       </span>
                     </td>
                   </tr>
@@ -226,10 +229,14 @@ export default function CostCommandCenter() {
             💡 Cost Optimization Tips
           </h3>
           <ul className="space-y-2 text-sm text-blue-700 dark:text-blue-300">
-            <li>• Use "Fast" model for simple queries to reduce costs by ~80%</li>
+            <li>
+              • Use "Fast" model for simple queries to reduce costs by ~80%
+            </li>
             <li>• Enable caching for frequently asked questions</li>
             <li>• Review expensive queries in the Model Breakdown above</li>
-            <li>• Consider batching multiple questions in single conversations</li>
+            <li>
+              • Consider batching multiple questions in single conversations
+            </li>
           </ul>
         </div>
 
@@ -266,16 +273,24 @@ function CostCard({
 }) {
   const colorClasses = {
     red: "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800",
-    orange: "bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800",
+    orange:
+      "bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800",
     blue: "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800",
-    green: "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800",
+    green:
+      "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800",
   };
 
   return (
     <div className={`p-6 rounded-lg border ${colorClasses[color]}`}>
-      <p className="text-sm font-medium text-gray-600 dark:text-gray-400">{title}</p>
-      <p className="text-2xl font-bold text-gray-900 dark:text-white mt-2">{value}</p>
-      <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">{subtitle}</p>
+      <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+        {title}
+      </p>
+      <p className="text-2xl font-bold text-gray-900 dark:text-white mt-2">
+        {value}
+      </p>
+      <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+        {subtitle}
+      </p>
     </div>
   );
 }

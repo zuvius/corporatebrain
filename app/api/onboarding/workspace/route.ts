@@ -14,19 +14,19 @@ const workspaceSchema = z.object({
 export async function POST(req: NextRequest) {
   try {
     const session = await auth();
-    
+
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const user = session.user as { id: string; tenantId: string };
     const body = await req.json();
-    
+
     const result = workspaceSchema.safeParse(body);
     if (!result.success) {
       return NextResponse.json(
         { error: "Invalid input", details: result.error.flatten() },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
     console.error("[Onboarding Workspace] Error:", error);
     return NextResponse.json(
       { error: "Failed to save workspace settings" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

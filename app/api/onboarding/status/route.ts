@@ -7,13 +7,13 @@ import { eq } from "drizzle-orm";
 export async function GET() {
   try {
     const session = await auth();
-    
+
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const user = session.user as { id: string; tenantId: string };
-    
+
     const tenant = await db.query.tenants.findFirst({
       where: eq(tenants.id, user.tenantId),
       columns: {
@@ -43,7 +43,7 @@ export async function GET() {
     console.error("[Onboarding Status] Error:", error);
     return NextResponse.json(
       { error: "Failed to get onboarding status" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -24,13 +24,13 @@ const signupSchema = z.object({
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    
+
     // Validate input
     const result = signupSchema.safeParse(body);
     if (!result.success) {
       return NextResponse.json(
         { error: "Invalid input", details: result.error.flatten() },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -48,7 +48,7 @@ export async function POST(request: Request) {
     if (existingUser) {
       return NextResponse.json(
         { error: "An account with this email already exists" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -123,13 +123,13 @@ export async function POST(request: Request) {
           tenantId: tenant.id,
         },
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("[Signup] Error:", error);
     return NextResponse.json(
       { error: "Failed to create account" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

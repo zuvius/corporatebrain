@@ -39,7 +39,9 @@ export function CitationSidebar({ citations }: CitationSidebarProps) {
             className="p-3 rounded-lg bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors cursor-pointer"
           >
             <div className="flex items-start space-x-2">
-              <span className="text-lg">{getSourceIcon(citation.sourceType)}</span>
+              <span className="text-lg">
+                {getSourceIcon(citation.sourceType)}
+              </span>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
                   {citation.title}

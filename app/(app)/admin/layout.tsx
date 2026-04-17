@@ -14,14 +14,12 @@ export default async function AdminLayout({
   }
 
   // Check if user is admin
-  const role = (session.user as any).role;
+  const role = session.user.role;
   if (role !== "admin") {
     redirect("/app");
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {children}
-    </div>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">{children}</div>
   );
 }

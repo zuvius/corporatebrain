@@ -23,8 +23,14 @@ declare module "pdf2json" {
 
   export default class PDFParser {
     constructor();
-    on(event: "pdfParser_dataReady", callback: (data: PDFParserData) => void): void;
-    on(event: "pdfParser_dataError", callback: (error: PDFParserError) => void): void;
+    on(
+      event: "pdfParser_dataReady",
+      callback: (data: PDFParserData) => void,
+    ): void;
+    on(
+      event: "pdfParser_dataError",
+      callback: (error: PDFParserError) => void,
+    ): void;
     parseBuffer(buffer: Buffer): void;
   }
 }

@@ -39,14 +39,14 @@ export interface UnstructuredResult {
 export async function extractWithUnstructured(
   buffer: Buffer,
   filename: string,
-  contentType: string
+  contentType: string,
 ): Promise<UnstructuredResult> {
   const apiKey = process.env.UNSTRUCTURED_API_KEY;
 
   if (!apiKey) {
     throw new Error(
       "UNSTRUCTURED_API_KEY not configured. " +
-      "Get your API key from https://platform.unstructured.io"
+        "Get your API key from https://platform.unstructured.io",
     );
   }
 
@@ -78,7 +78,9 @@ export async function extractWithUnstructured(
       },
     });
 
-    const responseData = response as unknown as { elements?: UnstructuredElement[] };
+    const responseData = response as unknown as {
+      elements?: UnstructuredElement[];
+    };
     const elements = (responseData.elements || []) as UnstructuredElement[];
 
     if (elements.length === 0) {
@@ -95,7 +97,7 @@ export async function extractWithUnstructured(
     const firstMeta = elements[0]?.metadata || {};
     const pages = Math.max(
       ...elements.map((el) => el.metadata?.page_number || 1),
-      1
+      1,
     );
 
     return {
@@ -111,7 +113,7 @@ export async function extractWithUnstructured(
   } catch (error) {
     console.error("Unstructured.io extraction failed:", error);
     throw new Error(
-      `Document extraction failed: ${error instanceof Error ? error.message : "Unknown error"}`
+      `Document extraction failed: ${error instanceof Error ? error.message : "Unknown error"}`,
     );
   }
 }
@@ -142,7 +144,10 @@ export function extractImages(elements: UnstructuredElement[]): Array<{
   type: string;
 }> {
   return elements
-    .filter((el) => el.type === "Image" || el.type === "image" || el.type === "Figure")
+    .filter(
+      (el) =>
+        el.type === "Image" || el.type === "image" || el.type === "Figure",
+    )
     .map((img) => ({
       page: img.metadata?.page_number || 1,
       caption: img.text,
@@ -153,9 +158,7 @@ export function extractImages(elements: UnstructuredElement[]): Array<{
 /**
  * Get structured chunks suitable for RAG
  */
-export function getStructuredChunks(
-  elements: UnstructuredElement[]
-): Array<{
+export function getStructuredChunks(elements: UnstructuredElement[]): Array<{
   text: string;
   type: string;
   page: number;
@@ -174,11 +177,14 @@ export function getStructuredChunks(
 function getFileExtension(contentType: string, filename: string): string {
   const mimeToExt: Record<string, string> = {
     "application/pdf": ".pdf",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": ".docx",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+      ".docx",
     "application/msword": ".doc",
-    "application/vnd.openxmlformats-officedocument.presentationml.presentation": ".pptx",
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+      ".pptx",
     "application/vnd.ms-powerpoint": ".ppt",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": ".xlsx",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+      ".xlsx",
     "application/vnd.ms-excel": ".xls",
     "text/plain": ".txt",
     "text/markdown": ".md",
@@ -190,14 +196,21 @@ function getFileExtension(contentType: string, filename: string): string {
     "application/xml": ".xml",
   };
 
-  return mimeToExt[contentType] || filename.substring(filename.lastIndexOf(".")) || ".bin";
+  return (
+    mimeToExt[contentType] ||
+    filename.substring(filename.lastIndexOf(".")) ||
+    ".bin"
+  );
 }
 
 /**
  * Check if Unstructured.io should be used for a file type
  * Falls back to local parsers for simple text files
  */
-export function shouldUseUnstructured(contentType: string, fileSize: number): boolean {
+export function shouldUseUnstructured(
+  contentType: string,
+  fileSize: number,
+): boolean {
   // Always use Unstructured for complex formats
   const complexTypes = [
     "application/pdf",

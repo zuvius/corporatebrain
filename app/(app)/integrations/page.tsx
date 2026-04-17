@@ -39,7 +39,10 @@ const INTEGRATION_CONFIGS: Record<
 export default function IntegrationsPage() {
   const [integrations, setIntegrations] = useState<Integration[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [message, setMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
 
   useEffect(() => {
     fetchIntegrations();
@@ -68,12 +71,15 @@ export default function IntegrationsPage() {
         method: "DELETE",
       });
       if (response.ok) {
-        setMessage({ type: "success", text: `${provider} disconnected successfully` });
+        setMessage({
+          type: "success",
+          text: `${provider} disconnected successfully`,
+        });
         fetchIntegrations();
       } else {
         throw new Error("Failed to disconnect");
       }
-    } catch (error) {
+    } catch {
       setMessage({ type: "error", text: `Failed to disconnect ${provider}` });
     }
   };
@@ -91,7 +97,7 @@ export default function IntegrationsPage() {
       } else {
         throw new Error("Failed to sync");
       }
-    } catch (error) {
+    } catch {
       setMessage({ type: "error", text: `Failed to sync ${provider}` });
     }
   };
@@ -106,7 +112,11 @@ export default function IntegrationsPage() {
             : undefined,
           id: integration.id,
         }
-      : { status: "disconnected" as const, lastSyncedAt: undefined, id: undefined };
+      : {
+          status: "disconnected" as const,
+          lastSyncedAt: undefined,
+          id: undefined,
+        };
   };
 
   if (isLoading) {

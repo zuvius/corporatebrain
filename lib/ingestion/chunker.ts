@@ -8,10 +8,7 @@ export interface ChunkOptions {
   separator?: string;
 }
 
-export function chunkText(
-  text: string,
-  options: ChunkOptions = {}
-): string[] {
+export function chunkText(text: string, options: ChunkOptions = {}): string[] {
   const { chunkSize = 1000, overlap = 200, separator = "\n" } = options;
 
   // Handle empty or invalid text
@@ -69,7 +66,12 @@ export function chunkBySentences(text: string, maxSentences = 5): string[] {
   const chunks: string[] = [];
 
   for (let i = 0; i < sentences.length; i += maxSentences) {
-    chunks.push(sentences.slice(i, i + maxSentences).join(" ").trim());
+    chunks.push(
+      sentences
+        .slice(i, i + maxSentences)
+        .join(" ")
+        .trim(),
+    );
   }
 
   return chunks;
@@ -88,12 +90,12 @@ export interface ChunkedDocument {
 
 export function chunkDocument(
   text: string,
-  options: ChunkOptions = {}
+  options: ChunkOptions = {},
 ): ChunkedDocument[] {
   const { chunkSize = 1000, overlap = 200 } = options;
-  
+
   const chunks = chunkText(text, { chunkSize, overlap });
-  
+
   return chunks.map((text, index) => ({
     text,
     index,

@@ -15,9 +15,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const user = session.user as { 
-      id: string; 
-      tenantId: string; 
+    const user = session.user as {
+      id: string;
+      tenantId: string;
       emailVerified: string | null;
       email: string;
     };
@@ -37,9 +37,9 @@ export async function POST(req: NextRequest) {
         .select({ count: sql<number>`count(*)` })
         .from(conversations)
         .where(eq(conversations.userId, userId));
-      
+
       const conversationCount = userConversations[0]?.count || 0;
-      
+
       // If they already have conversations, they've used their free question
       if (conversationCount >= TEASER_LIMITS.maxAIQuestions) {
         return NextResponse.json(
@@ -50,10 +50,10 @@ export async function POST(req: NextRequest) {
             previewMessage: "Verify your email to ask unlimited questions.",
             verifyUrl: "/auth/resend-verification",
           },
-          { status: 403 }
+          { status: 403 },
         );
       }
-      
+
       teaserModeUsed = true;
     }
 
@@ -103,8 +103,8 @@ export async function POST(req: NextRequest) {
         and(
           eq(knowledgeSources.tenantId, effectiveTenantId),
           eq(knowledgeSources.status, "indexed"),
-          sql`embedding <-> ${queryEmbedding} < 0.3`
-        )
+          sql`embedding <-> ${queryEmbedding} < 0.3`,
+        ),
       )
       .orderBy(sql`embedding <-> ${queryEmbedding}`)
       .limit(5);
@@ -131,7 +131,7 @@ export async function POST(req: NextRequest) {
     const result = await routeAndGenerate(
       chatMessages,
       { tier: modelTier, task: "chat", requiresCitations: true },
-      effectiveTenantId
+      effectiveTenantId,
     );
 
     // Store assistant response
@@ -158,7 +158,8 @@ export async function POST(req: NextRequest) {
       })),
       teaser: teaserModeUsed,
       ...(teaserModeUsed && {
-        teaserMessage: "✨ You just experienced AI-powered search! Verify your email to ask unlimited questions and unlock all features.",
+        teaserMessage:
+          "✨ You just experienced AI-powered search! Verify your email to ask unlimited questions and unlock all features.",
         remainingQuestions: 0,
         verifyUrl: "/auth/resend-verification",
       }),
@@ -167,7 +168,7 @@ export async function POST(req: NextRequest) {
     console.error("Chat error:", error);
     return NextResponse.json(
       { error: "Failed to generate response" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -217,7 +218,7 @@ export async function GET(req: NextRequest) {
     console.error("Get conversation error:", error);
     return NextResponse.json(
       { error: "Failed to retrieve conversation" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

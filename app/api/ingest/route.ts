@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     if (!parsed.success) {
       return NextResponse.json(
         { error: "Invalid request", details: parsed.error.flatten() },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -35,21 +35,24 @@ export async function POST(request: Request) {
 
     // Chunk the content
     const chunks = chunkText(content);
-    
+
     // Process each chunk
     const knowledgeSources = [];
     for (let i = 0; i < chunks.length; i++) {
       const chunk = chunks[i];
-      
+
       // Generate embeddings
       const embedding = await generateEmbeddings(chunk);
-      
+
       // Create knowledge source
       const source_record = await createKnowledgeSource({
         tenantId,
         type,
         source,
-        title: chunks.length > 1 ? `${title} (Part ${i + 1}/${chunks.length})` : title,
+        title:
+          chunks.length > 1
+            ? `${title} (Part ${i + 1}/${chunks.length})`
+            : title,
         content: chunk,
         metadata: metadata || {},
         status: "processed",
@@ -59,7 +62,7 @@ export async function POST(request: Request) {
         embedding,
         processedAt: new Date(),
       });
-      
+
       knowledgeSources.push(source_record);
     }
 
@@ -74,7 +77,7 @@ export async function POST(request: Request) {
     console.error("Ingest error:", error);
     return NextResponse.json(
       { error: "Failed to ingest content" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -4,10 +4,14 @@ interface MagicLinkEmailParams {
   tenantSlug: string;
 }
 
-export async function sendMagicLinkEmail({ to, code, tenantSlug }: MagicLinkEmailParams) {
+export async function sendMagicLinkEmail({
+  to,
+  code,
+  tenantSlug,
+}: MagicLinkEmailParams) {
   // For development, log to console
   // In production, integrate with SendGrid, Resend, or AWS SES
-  
+
   console.log("=".repeat(50));
   console.log("MAGIC LINK EMAIL");
   console.log("=".repeat(50));
@@ -21,7 +25,7 @@ export async function sendMagicLinkEmail({ to, code, tenantSlug }: MagicLinkEmai
   console.log("");
   console.log("This code will expire in 15 minutes.");
   console.log("=".repeat(50));
-  
+
   // TODO: Integrate with email provider
   // Example with Resend:
   // const resend = new Resend(process.env.RESEND_API_KEY);
@@ -31,7 +35,7 @@ export async function sendMagicLinkEmail({ to, code, tenantSlug }: MagicLinkEmai
   //   subject: `Your Corporate Brain verification code: ${code}`,
   //   html: generateMagicLinkEmailHTML(code),
   // });
-  
+
   return { success: true };
 }
 

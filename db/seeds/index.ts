@@ -6,12 +6,21 @@ config();
 if (process.env.NODE_ENV === "production") {
   console.error("❌ ERROR: Database seeding is disabled in production!");
   console.error("   Seeding would create test data and hardcoded credentials.");
-  console.error("   Use 'npm run db:migrate' instead for production deployments.");
+  console.error(
+    "   Use 'npm run db:migrate' instead for production deployments.",
+  );
   process.exit(1);
 }
 
 import { db } from "../../lib/db/client";
-import { tenants, users, knowledgeSources, conversations, messages, integrations } from "../../lib/db/schema";
+import {
+  tenants,
+  users,
+  knowledgeSources,
+  conversations,
+  messages,
+  integrations,
+} from "../../lib/db/schema";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 
@@ -22,7 +31,7 @@ import bcrypt from "bcryptjs";
 
 async function seedTenants() {
   console.log("🌱 Seeding tenants...");
-  
+
   const defaultTenant = {
     name: "Acme Corporation",
     slug: "acme",
@@ -101,7 +110,8 @@ async function seedKnowledgeSources(tenantId: string) {
       type: "pdf",
       source: "upload",
       title: "Employee Handbook 2024",
-      content: "Welcome to Acme Corporation. This handbook outlines our policies, benefits, and procedures...",
+      content:
+        "Welcome to Acme Corporation. This handbook outlines our policies, benefits, and procedures...",
       metadata: JSON.stringify({
         fileName: "handbook.pdf",
         fileSize: 2457600,
@@ -118,7 +128,8 @@ async function seedKnowledgeSources(tenantId: string) {
       type: "docx",
       source: "upload",
       title: "Q1 Sales Report",
-      content: "Q1 2024 Sales Performance: Revenue increased by 23% compared to Q1 2023...",
+      content:
+        "Q1 2024 Sales Performance: Revenue increased by 23% compared to Q1 2023...",
       metadata: JSON.stringify({
         fileName: "q1-sales.docx",
         fileSize: 1024000,
@@ -134,7 +145,8 @@ async function seedKnowledgeSources(tenantId: string) {
       type: "txt",
       source: "slack",
       title: "Project Phoenix Discussion",
-      content: "John: When is the Project Phoenix deadline?\nSarah: The deadline is March 15th...",
+      content:
+        "John: When is the Project Phoenix deadline?\nSarah: The deadline is March 15th...",
       metadata: JSON.stringify({
         channel: "#project-phoenix",
         date: "2024-01-15",
@@ -187,7 +199,9 @@ async function seedConversations(tenantId: string, userId: string) {
   });
 
   if (existing) {
-    console.log(`  ⏭️  Conversation '${sampleConversation.title}' already exists, skipping`);
+    console.log(
+      `  ⏭️  Conversation '${sampleConversation.title}' already exists, skipping`,
+    );
     return existing;
   }
 
@@ -214,7 +228,8 @@ async function seedConversations(tenantId: string, userId: string) {
     {
       conversationId: conversation.id,
       role: "assistant",
-      content: "According to the Employee Handbook 2024, Acme Corporation offers:\n\n- 15 days of paid time off per year for full-time employees\n- 10 days of sick leave\n- 11 paid holidays\n- Unlimited mental health days (with manager approval)\n\nPTO accrues monthly and can be rolled over up to 5 days per year.",
+      content:
+        "According to the Employee Handbook 2024, Acme Corporation offers:\n\n- 15 days of paid time off per year for full-time employees\n- 10 days of sick leave\n- 11 paid holidays\n- Unlimited mental health days (with manager approval)\n\nPTO accrues monthly and can be rolled over up to 5 days per year.",
       model: "gpt-4",
       promptTokens: 12,
       completionTokens: 78,
@@ -226,7 +241,9 @@ async function seedConversations(tenantId: string, userId: string) {
 
   for (const messageData of messagesToSeed) {
     const [message] = await db.insert(messages).values(messageData).returning();
-    console.log(`    ✅ Added message: ${message.role} (${message.totalTokens} tokens)`);
+    console.log(
+      `    ✅ Added message: ${message.role} (${message.totalTokens} tokens)`,
+    );
   }
 
   return conversation;
@@ -262,7 +279,9 @@ async function seedIntegrations(tenantId: string) {
     });
 
     if (existing) {
-      console.log(`  ⏭️  Integration '${integrationData.provider}' already exists, skipping`);
+      console.log(
+        `  ⏭️  Integration '${integrationData.provider}' already exists, skipping`,
+      );
       continue;
     }
 

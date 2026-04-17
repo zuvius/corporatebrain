@@ -5,6 +5,7 @@
 ## Why Chunking?
 
 As the project grows, daily changelog and implementation files can become excessively long due to cumulative editing. This causes:
+
 - AI hallucination from context overflow
 - Degraded response quality
 - Lost information in long documents
@@ -14,6 +15,7 @@ As the project grows, daily changelog and implementation files can become excess
 ### Trigger Conditions
 
 A file MUST be chunked when it exceeds:
+
 - **500 lines** OR
 - **20,000 characters** OR
 - **Becomes difficult to navigate**
@@ -23,6 +25,7 @@ A file MUST be chunked when it exceeds:
 **File**: `changelog/changelog-YYYY-MM-DD.md`
 
 When limit reached:
+
 1. Rename current file with chunk suffix: `changelog-YYYY-MM-DD-chunk1.md`
 2. Create new file: `changelog-YYYY-MM-DD-chunk2.md`
 3. Add reference link at top of new file:
@@ -42,6 +45,7 @@ When limit reached:
 **File**: `implementation/implementation-YYYY-MM-DD.md`
 
 When limit reached:
+
 1. Rename current file: `implementation-YYYY-MM-DD-chunk1.md`
 2. Create new file: `implementation-YYYY-MM-DD-chunk2.md`
 3. Add cross-reference at top
@@ -51,6 +55,7 @@ When limit reached:
 **File**: `analysis/YYYY-MM-DD-HHMM-topic.md`
 
 Analysis docs usually don't need chunking (one topic per file). If they exceed limits:
+
 1. Split into sub-topic files: `YYYY-MM-DD-HHMM-topic-part1.md`
 2. Create index file linking all parts
 
@@ -76,6 +81,7 @@ wc -l .windsurf/context/changelog/changelog-2026-04-06.md
 Future enhancement: `memory-tracker.js --chunk-check`
 
 Would:
+
 1. Scan all daily files
 2. Check line counts
 3. Auto-split if limit exceeded
@@ -93,9 +99,9 @@ Always maintain bidirectional links:
 
 ## Current Chunk Status
 
-| Date | Changelog | Implementation | Analysis |
-|------|-----------|----------------|----------|
-| 2026-04-06 | Single file | Single file | None yet |
+| Date       | Changelog   | Implementation | Analysis |
+| ---------- | ----------- | -------------- | -------- |
+| 2026-04-06 | Single file | Single file    | None yet |
 
 ## Active-Context Updates
 
@@ -105,7 +111,9 @@ When chunking occurs, update `active-context.md`:
 ## Recent Changes
 
 ### Changelog
+
 <!-- Check changelog/changelog-2026-04-06-chunk2.md for latest -->
+
 [Link to current chunk]
 ```
 

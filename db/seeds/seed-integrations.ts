@@ -46,27 +46,37 @@ export async function seedIntegrations(tenantId: string) {
       });
 
       if (existing) {
-        console.log(`  ⏭️  Integration '${integrationData.provider}' already exists, skipping`);
+        console.log(
+          `  ⏭️  Integration '${integrationData.provider}' already exists, skipping`,
+        );
         createdIntegrations.push(existing);
         continue;
       }
 
-      const [integration] = await db.insert(integrations).values({
-        tenantId,
-        provider: integrationData.provider,
-        status: integrationData.status,
-        settings: JSON.stringify(integrationData.settings),
-      }).returning();
+      const [integration] = await db
+        .insert(integrations)
+        .values({
+          tenantId,
+          provider: integrationData.provider,
+          status: integrationData.status,
+          settings: JSON.stringify(integrationData.settings),
+        })
+        .returning();
 
       console.log(`  ✅ Created integration: ${integration.provider}`);
       createdIntegrations.push(integration);
     } catch (error) {
-      console.error(`  ❌ Failed to seed integration ${integrationData.provider}:`, error);
+      console.error(
+        `  ❌ Failed to seed integration ${integrationData.provider}:`,
+        error,
+      );
       // Continue with other integrations - never crash
     }
   }
 
-  console.log(`🌱 [seed-integrations] Completed: ${createdIntegrations.length} integrations ready`);
+  console.log(
+    `🌱 [seed-integrations] Completed: ${createdIntegrations.length} integrations ready`,
+  );
   return createdIntegrations;
 }
 

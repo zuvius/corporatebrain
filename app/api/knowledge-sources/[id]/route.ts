@@ -8,7 +8,7 @@ import { deleteFromStorage } from "@/lib/storage/upload";
 // DELETE - Remove a knowledge source
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await auth();
@@ -21,7 +21,7 @@ export async function DELETE(
 
     // Verify the source belongs to this tenant and get file details
     const [source] = await db
-      .select({ 
+      .select({
         id: knowledgeSources.id,
         title: knowledgeSources.title,
       })
@@ -29,16 +29,13 @@ export async function DELETE(
       .where(
         and(
           eq(knowledgeSources.id, id),
-          eq(knowledgeSources.tenantId, tenantId)
-        )
+          eq(knowledgeSources.tenantId, tenantId),
+        ),
       )
       .limit(1);
 
     if (!source) {
-      return NextResponse.json(
-        { error: "Source not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Source not found" }, { status: 404 });
     }
 
     // Delete file from storage first (if it exists)
@@ -50,19 +47,17 @@ export async function DELETE(
     }
 
     // Delete the database record
-    await db
-      .delete(knowledgeSources)
-      .where(eq(knowledgeSources.id, id));
+    await db.delete(knowledgeSources).where(eq(knowledgeSources.id, id));
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
-      message: "Knowledge source and associated file deleted successfully"
+      message: "Knowledge source and associated file deleted successfully",
     });
   } catch (error) {
     console.error("Delete knowledge source error:", error);
     return NextResponse.json(
       { error: "Failed to delete source" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -70,7 +65,7 @@ export async function DELETE(
 // GET - Get knowledge source details
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await auth();
@@ -99,16 +94,13 @@ export async function GET(
       .where(
         and(
           eq(knowledgeSources.id, id),
-          eq(knowledgeSources.tenantId, tenantId)
-        )
+          eq(knowledgeSources.tenantId, tenantId),
+        ),
       )
       .limit(1);
 
     if (!source) {
-      return NextResponse.json(
-        { error: "Source not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Source not found" }, { status: 404 });
     }
 
     return NextResponse.json(source);
@@ -116,7 +108,7 @@ export async function GET(
     console.error("Get knowledge source error:", error);
     return NextResponse.json(
       { error: "Failed to get source" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -124,7 +116,7 @@ export async function GET(
 // PATCH - Reindex (re-trigger processing)
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await auth();
@@ -139,10 +131,7 @@ export async function PATCH(
     const { action } = body;
 
     if (action !== "reindex") {
-      return NextResponse.json(
-        { error: "Invalid action" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Invalid action" }, { status: 400 });
     }
 
     // Verify the source belongs to this tenant
@@ -152,16 +141,13 @@ export async function PATCH(
       .where(
         and(
           eq(knowledgeSources.id, id),
-          eq(knowledgeSources.tenantId, tenantId)
-        )
+          eq(knowledgeSources.tenantId, tenantId),
+        ),
       )
       .limit(1);
 
     if (!source) {
-      return NextResponse.json(
-        { error: "Source not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Source not found" }, { status: 404 });
     }
 
     // Reset status to trigger reprocessing
@@ -177,15 +163,15 @@ export async function PATCH(
     // TODO: Trigger reprocessing in background
     // For now, just return success
 
-    return NextResponse.json({ 
-      success: true, 
-      message: "Reindexing queued" 
+    return NextResponse.json({
+      success: true,
+      message: "Reindexing queued",
     });
   } catch (error) {
     console.error("Reindex knowledge source error:", error);
     return NextResponse.json(
       { error: "Failed to reindex source" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

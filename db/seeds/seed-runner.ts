@@ -6,12 +6,12 @@ import seedIntegrations from "./seed-integrations";
 
 /**
  * Master Seed Runner
- * 
+ *
  * Automatically discovers and runs all seed scripts in order.
  * Each seed is idempotent - safe to run multiple times.
- * 
+ *
  * Order matters: Seeds with foreign key dependencies run after their dependencies.
- * 
+ *
  * Execution Order:
  * 1. seed-tenants (no dependencies)
  * 2. seed-users (depends on tenant)
@@ -45,10 +45,10 @@ async function runSeeds() {
       results.push({ name: "seed-tenants", success: true });
       console.log("✅ Tenants seeded successfully\n");
     } catch (error) {
-      results.push({ 
-        name: "seed-tenants", 
-        success: false, 
-        error: error instanceof Error ? error.message : String(error) 
+      results.push({
+        name: "seed-tenants",
+        success: false,
+        error: error instanceof Error ? error.message : String(error),
       });
       console.error("❌ Failed to seed tenants:", error);
       throw new Error("Cannot continue without tenant - aborting seed");
@@ -67,10 +67,10 @@ async function runSeeds() {
       results.push({ name: "seed-users", success: true });
       console.log("✅ Users seeded successfully\n");
     } catch (error) {
-      results.push({ 
-        name: "seed-users", 
-        success: false, 
-        error: error instanceof Error ? error.message : String(error) 
+      results.push({
+        name: "seed-users",
+        success: false,
+        error: error instanceof Error ? error.message : String(error),
       });
       console.error("❌ Failed to seed users:", error);
       // Continue with other seeds - users are not critical for all features
@@ -84,10 +84,10 @@ async function runSeeds() {
       results.push({ name: "seed-knowledge-sources", success: true });
       console.log("✅ Knowledge sources seeded successfully\n");
     } catch (error) {
-      results.push({ 
-        name: "seed-knowledge-sources", 
-        success: false, 
-        error: error instanceof Error ? error.message : String(error) 
+      results.push({
+        name: "seed-knowledge-sources",
+        success: false,
+        error: error instanceof Error ? error.message : String(error),
       });
       console.error("❌ Failed to seed knowledge sources:", error);
       // Continue
@@ -102,16 +102,18 @@ async function runSeeds() {
         results.push({ name: "seed-conversations", success: true });
         console.log("✅ Conversations seeded successfully\n");
       } catch (error) {
-        results.push({ 
-          name: "seed-conversations", 
-          success: false, 
-          error: error instanceof Error ? error.message : String(error) 
+        results.push({
+          name: "seed-conversations",
+          success: false,
+          error: error instanceof Error ? error.message : String(error),
         });
         console.error("❌ Failed to seed conversations:", error);
         // Continue
       }
     } else {
-      console.log("⏭️  Step 4/5: Conversations - SKIPPED (no user available)\n");
+      console.log(
+        "⏭️  Step 4/5: Conversations - SKIPPED (no user available)\n",
+      );
       results.push({ name: "seed-conversations", success: true }); // Not a failure
     }
 
@@ -123,10 +125,10 @@ async function runSeeds() {
       results.push({ name: "seed-integrations", success: true });
       console.log("✅ Integrations seeded successfully\n");
     } catch (error) {
-      results.push({ 
-        name: "seed-integrations", 
-        success: false, 
-        error: error instanceof Error ? error.message : String(error) 
+      results.push({
+        name: "seed-integrations",
+        success: false,
+        error: error instanceof Error ? error.message : String(error),
       });
       console.error("❌ Failed to seed integrations:", error);
       // Continue
@@ -136,19 +138,21 @@ async function runSeeds() {
     console.log("🚀 ===========================================");
     console.log("🚀 DATABASE SEED - Summary");
     console.log("🚀 ===========================================");
-    
-    const successful = results.filter(r => r.success).length;
-    const failed = results.filter(r => !r.success).length;
-    
-    results.forEach(result => {
+
+    const successful = results.filter((r) => r.success).length;
+    const failed = results.filter((r) => !r.success).length;
+
+    results.forEach((result) => {
       const icon = result.success ? "✅" : "❌";
-      console.log(`${icon} ${result.name}${result.error ? ` - ${result.error}` : ""}`);
+      console.log(
+        `${icon} ${result.name}${result.error ? ` - ${result.error}` : ""}`,
+      );
     });
 
     console.log("\n📊 Results:");
     console.log(`  ✅ Successful: ${successful}/${results.length}`);
     console.log(`  ❌ Failed: ${failed}/${results.length}`);
-    
+
     if (failed === 0) {
       console.log("\n✨ All seeds completed successfully!");
       console.log("\n📋 Default credentials:");
@@ -156,14 +160,15 @@ async function runSeeds() {
       console.log("  Member: member@acme.com / password123");
       console.log("  Tenant: acme");
     } else if (successful > 0) {
-      console.log("\n⚠️  Partial success - some seeds failed but core data is ready");
+      console.log(
+        "\n⚠️  Partial success - some seeds failed but core data is ready",
+      );
     } else {
       console.log("\n💥 Critical failure - no seeds completed");
       process.exit(1);
     }
 
     console.log("\n");
-
   } catch (error) {
     console.error("\n💥 Seed runner failed:", error);
     process.exit(1);

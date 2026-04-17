@@ -68,7 +68,9 @@ export default function ContextMapPage() {
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <Info className="h-4 w-4" />
-              <span>{nodes.length} sources • {connections.length} connections</span>
+              <span>
+                {nodes.length} sources • {connections.length} connections
+              </span>
             </div>
           </div>
         </div>
@@ -94,7 +96,9 @@ export default function ContextMapPage() {
           <div className="flex h-full items-center justify-center text-gray-400">
             <div className="text-center">
               <p className="text-lg font-medium">No knowledge sources yet</p>
-              <p className="text-sm mt-2">Upload documents or connect integrations to see your context map</p>
+              <p className="text-sm mt-2">
+                Upload documents or connect integrations to see your context map
+              </p>
             </div>
           </div>
         ) : (
@@ -108,8 +112,8 @@ export default function ContextMapPage() {
 function LegendItem({ color, label }: { color: string; label: string }) {
   return (
     <div className="flex items-center gap-2">
-      <div 
-        className="w-3 h-3 rounded-full" 
+      <div
+        className="w-3 h-3 rounded-full"
         style={{ backgroundColor: color }}
       />
       <span className="text-gray-600 dark:text-gray-400">{label}</span>

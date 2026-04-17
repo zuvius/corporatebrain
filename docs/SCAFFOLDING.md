@@ -133,6 +133,7 @@ corporate-brain/
 #### Week 1: Project Setup
 
 **Files to Create:**
+
 1. `package.json` - All dependencies and scripts
 2. `tsconfig.json` - Strict TypeScript config
 3. `tailwind.config.ts` - Custom theme colors
@@ -141,6 +142,7 @@ corporate-brain/
 6. `docker-compose.yml` - PostgreSQL + Redis
 
 **Key Decisions:**
+
 - Use Next.js 15 with App Router
 - PostgreSQL 15 + pgvector
 - Drizzle ORM for type-safe queries
@@ -149,12 +151,14 @@ corporate-brain/
 #### Week 2: Database & Auth
 
 **Files to Create:**
+
 1. `lib/db/schema.ts` - Core database schema
 2. `lib/db/client.ts` - Database connection
 3. `app/api/auth/[...nextauth]/route.ts` - Auth.js setup
 4. `middleware.ts` - Multi-tenancy middleware
 
 **Schema Tables (Non-Future):**
+
 - `tenants` - Multi-tenancy
 - `users` - User accounts
 - `knowledge_sources` - Documents/chunks
@@ -163,6 +167,7 @@ corporate-brain/
 - `verification_tokens` - Email verification
 
 **Excluded (Future):**
+
 - notifications
 - webhooks
 - document_versions
@@ -175,12 +180,14 @@ corporate-brain/
 #### Week 3: File Ingestion
 
 **Files to Create:**
+
 1. `app/api/ingest/upload/route.ts` - File upload handler
 2. `lib/ingestion/chunker.ts` - Text chunking logic
 3. `lib/ingestion/parser.ts` - Document parsing (Unstructured.io)
 4. `lib/utils/embeddings.ts` - OpenAI embeddings
 
 **Features:**
+
 - PDF, DOCX, TXT upload
 - Chunking: 1000 chars, 200 overlap
 - Vector storage: 1536 dimensions
@@ -189,6 +196,7 @@ corporate-brain/
 #### Week 4: URL Crawling
 
 **Files to Create:**
+
 1. `app/api/crawl/route.ts` - Crawl endpoint
 2. `lib/integrations/firecrawl.ts` - Firecrawl client
 3. Components for crawl progress UI
@@ -200,23 +208,27 @@ corporate-brain/
 #### Week 5: Model Router
 
 **Files to Create:**
+
 1. `lib/ai/router.ts` - Model selection logic
 2. `lib/ai/models.ts` - Model configurations
 3. `lib/ai/client.ts` - API clients
 
 **Routing Rules:**
+
 - Context > 100k chars → Gemini 3 Pro
 - Complexity > 0.8 → GPT-5.4
 - Complexity > 0.5 → Claude 4.6 Opus
 - Default → Gemini 2.5 Flash
 
 **Excluded:**
+
 - GPT-5 Nano (Future)
 - Advanced caching strategies (Future)
 
 #### Week 6: Chat Interface
 
 **Files to Create:**
+
 1. `app/(app)/app/chat/page.tsx` - Chat page
 2. `components/app/chat-interface.tsx` - Chat UI
 3. `app/api/query/route.ts` - Chat API
@@ -225,6 +237,7 @@ corporate-brain/
 #### Week 7: Hybrid RAG
 
 **Files to Create:**
+
 1. `lib/search/vector.ts` - Vector similarity search
 2. `lib/search/hybrid.ts` - Combined search
 3. Citation tracking in responses
@@ -232,6 +245,7 @@ corporate-brain/
 #### Week 8: UI Polish
 
 **Files to Create:**
+
 1. Theme configuration (dark/light)
 2. Responsive layouts
 3. Animation components
@@ -241,6 +255,7 @@ corporate-brain/
 ### Phase 3: Integrations (Weeks 9-12)
 
 **Integrations to Implement:**
+
 1. Slack (OAuth + Events API)
 2. Google Drive (OAuth + file sync)
 3. Notion (OAuth + page crawl)
@@ -251,6 +266,7 @@ corporate-brain/
 8. Salesforce (OAuth + CRM data)
 
 **Files to Create:**
+
 1. `lib/integrations/slack.ts`
 2. `lib/integrations/google-drive.ts`
 3. `lib/integrations/notion.ts`
@@ -261,6 +277,7 @@ corporate-brain/
 8. `lib/integrations/salesforce.ts`
 
 **OAuth Handlers:**
+
 1. `app/api/auth/[provider]/route.ts` for each
 
 ---
@@ -268,6 +285,7 @@ corporate-brain/
 ### Phase 4: Scale & Admin (Weeks 13-16)
 
 **Files to Create:**
+
 1. `app/(app)/dashboard/page.tsx` - Admin dashboard
 2. `components/dashboard/tenant-grid.tsx`
 3. `components/dashboard/cost-chart.tsx`
@@ -276,6 +294,7 @@ corporate-brain/
 6. `app/(app)/app/settings/page.tsx` - Settings
 
 **Features:**
+
 - Tenant management
 - Cost tracking
 - ROI calculator
@@ -287,12 +306,14 @@ corporate-brain/
 ### Phase 5: Launch (Weeks 17-20)
 
 **Files to Create:**
+
 1. `app/(marketing)/page.tsx` - Landing page
 2. `app/(marketing)/pricing/page.tsx`
 3. Onboarding flow components
 4. `app/(app)/app/onboarding/page.tsx`
 
 **Features:**
+
 - Public marketing site
 - 4-stage onboarding
 - Progress tracking
@@ -310,20 +331,20 @@ corporate-brain/
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    
+
     "db:generate": "drizzle-kit generate:pg",
     "db:migrate": "drizzle-kit push:pg",
     "db:studio": "drizzle-kit studio",
     "db:seed": "tsx db/seeds/index.ts",
     "db:reset": "tsx scripts/db-reset.ts && npm run db:migrate && npm run db:seed",
-    
+
     "test": "vitest",
     "test:e2e": "playwright test",
     "test:ci": "vitest run && playwright test",
-    
+
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    
+
     "prebuild": "npm run db:migrate && npm run type-check"
   }
 }
@@ -338,7 +359,7 @@ All seed files follow this pattern:
 ```typescript
 // Check if data exists before inserting
 const existing = await db.query.table.findFirst({
-  where: eq(table.identifier, value)
+  where: eq(table.identifier, value),
 });
 
 if (existing) {
@@ -351,6 +372,7 @@ await db.insert(table).values(data);
 ```
 
 **Seed Order:**
+
 1. `001-tenants.ts` - Core tenants
 2. `002-users.ts` - Users with auth
 3. `003-knowledge-sources.ts` - Sample documents
@@ -406,6 +428,7 @@ npm run build  # Runs: type-check → db:migrate → next build
 - **E2E:** Playwright for critical flows
 
 **Critical Test Paths:**
+
 1. Signup → Onboarding → First query
 2. File upload → Processing → Search
 3. OAuth connection → Data sync → Query

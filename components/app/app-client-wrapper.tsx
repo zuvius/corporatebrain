@@ -40,14 +40,23 @@ interface AppClientWrapperProps {
   children: React.ReactNode;
 }
 
-export function AppClientWrapper({ sources, conversations, user, tenantId, isVerified, children }: AppClientWrapperProps) {
+export function AppClientWrapper({
+  sources,
+  conversations,
+  user,
+  tenantId,
+  isVerified,
+  children,
+}: AppClientWrapperProps) {
   // isVerified available for future verification-based UI restrictions
   void isVerified;
-  
+
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isUrlModalOpen, setIsUrlModalOpen] = useState(false);
   const [showAddMenu, setShowAddMenu] = useState(false);
-  const [activeConversationId, setActiveConversationId] = useState<string | undefined>(undefined);
+  const [activeConversationId, setActiveConversationId] = useState<
+    string | undefined
+  >(undefined);
   const [localSources, setLocalSources] = useState(sources);
   const pathname = usePathname();
   const router = useRouter();
@@ -61,7 +70,7 @@ export function AppClientWrapper({ sources, conversations, user, tenantId, isVer
   };
 
   const handleSourceDeleted = (sourceId: string) => {
-    setLocalSources(prev => prev.filter(s => s.id !== sourceId));
+    setLocalSources((prev) => prev.filter((s) => s.id !== sourceId));
     router.refresh();
   };
 
@@ -83,8 +92,8 @@ export function AppClientWrapper({ sources, conversations, user, tenantId, isVer
 
   return (
     <div className="flex h-screen">
-      <KnowledgeSidebar 
-        sources={localSources} 
+      <KnowledgeSidebar
+        sources={localSources}
         conversations={conversations}
         user={user}
         currentPath={pathname}
@@ -97,11 +106,11 @@ export function AppClientWrapper({ sources, conversations, user, tenantId, isVer
 
       {/* Add Source Menu */}
       {showAddMenu && (
-        <div 
+        <div
           className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
           onClick={() => setShowAddMenu(false)}
         >
-          <div 
+          <div
             className="absolute top-20 left-4 w-56 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 p-2 animate-in fade-in zoom-in-95"
             onClick={(e) => e.stopPropagation()}
           >
@@ -119,7 +128,9 @@ export function AppClientWrapper({ sources, conversations, user, tenantId, isVer
                 <Upload className="h-4 w-4 text-blue-600 dark:text-blue-400" />
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-900 dark:text-white">Upload Files</p>
+                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                  Upload Files
+                </p>
                 <p className="text-xs text-gray-500">PDF, DOCX, TXT</p>
               </div>
             </button>
@@ -134,8 +145,12 @@ export function AppClientWrapper({ sources, conversations, user, tenantId, isVer
                 <Link2 className="h-4 w-4 text-violet-600 dark:text-violet-400" />
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-900 dark:text-white">Add URL</p>
-                <p className="text-xs text-gray-500">Scrape website via Firecrawl</p>
+                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                  Add URL
+                </p>
+                <p className="text-xs text-gray-500">
+                  Scrape website via Firecrawl
+                </p>
               </div>
             </button>
           </div>
@@ -144,17 +159,15 @@ export function AppClientWrapper({ sources, conversations, user, tenantId, isVer
 
       <main className="flex-1 overflow-hidden">
         {isChatPage ? (
-          <ChatInterface 
-            tenantId={tenantId} 
+          <ChatInterface
+            tenantId={tenantId}
             initialConversationId={activeConversationId}
           />
         ) : (
-          <div className="h-full overflow-auto">
-            {children}
-          </div>
+          <div className="h-full overflow-auto">{children}</div>
         )}
       </main>
-      
+
       <UploadModal
         isOpen={isUploadModalOpen}
         onClose={() => setIsUploadModalOpen(false)}

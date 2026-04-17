@@ -61,18 +61,18 @@ export function VerificationBanner({ email }: VerificationBannerProps) {
             <AlertCircle className="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5 sm:mt-0" />
             <div className="flex-1 min-w-0">
               <p className="text-sm text-yellow-800 dark:text-yellow-200">
-                <span className="font-semibold">Verify your email</span> to unlock full access. 
-                We sent a verification link to{" "}
+                <span className="font-semibold">Verify your email</span> to
+                unlock full access. We sent a verification link to{" "}
                 <span className="font-medium">{email}</span>
               </p>
-              
+
               {message && (
                 <div className="mt-2 flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
                   <CheckCircle className="w-4 h-4" />
                   {message}
                 </div>
               )}
-              
+
               {error && (
                 <div className="mt-2 text-sm text-red-600 dark:text-red-400">
                   {error}
@@ -97,7 +97,7 @@ export function VerificationBanner({ email }: VerificationBannerProps) {
               </div>
             </div>
           </div>
-          
+
           <button
             onClick={handleDismiss}
             className="flex-shrink-0 text-yellow-600 dark:text-yellow-400 hover:text-yellow-700 dark:hover:text-yellow-300"

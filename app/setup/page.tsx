@@ -81,9 +81,7 @@ export default async function SetupPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow">
         <div>
-          <h1 className="text-3xl font-bold text-center">
-            🧠 Corporate Brain
-          </h1>
+          <h1 className="text-3xl font-bold text-center">🧠 Corporate Brain</h1>
           <h2 className="mt-6 text-center text-xl font-semibold text-gray-900">
             Initial Setup
           </h2>
@@ -174,8 +172,8 @@ export default async function SetupPage() {
 
         <div className="mt-6 text-center text-xs text-gray-500">
           <p>
-            This page is only accessible when no users exist.
-            After setup, it will redirect to the main application.
+            This page is only accessible when no users exist. After setup, it
+            will redirect to the main application.
           </p>
         </div>
       </div>

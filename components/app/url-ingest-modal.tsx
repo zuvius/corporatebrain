@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { X, Globe, Loader2, Link2, AlertCircle, CheckCircle } from "lucide-react";
+import {
+  X,
+  Globe,
+  Loader2,
+  Link2,
+  AlertCircle,
+  CheckCircle,
+} from "lucide-react";
 
 interface UrlIngestModalProps {
   isOpen: boolean;
@@ -9,7 +16,11 @@ interface UrlIngestModalProps {
   onSuccess?: () => void;
 }
 
-export function UrlIngestModal({ isOpen, onClose, onSuccess }: UrlIngestModalProps) {
+export function UrlIngestModal({
+  isOpen,
+  onClose,
+  onSuccess,
+}: UrlIngestModalProps) {
   const [url, setUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -43,9 +54,11 @@ export function UrlIngestModal({ isOpen, onClose, onSuccess }: UrlIngestModalPro
         throw new Error(data.error || "Failed to ingest URL");
       }
 
-      setSuccess(`URL ingestion started! Source ID: ${data.sourceId.slice(0, 8)}...`);
+      setSuccess(
+        `URL ingestion started! Source ID: ${data.sourceId.slice(0, 8)}...`,
+      );
       setUrl("");
-      
+
       setTimeout(() => {
         onSuccess?.();
         onClose();
@@ -106,7 +119,9 @@ export function UrlIngestModal({ isOpen, onClose, onSuccess }: UrlIngestModalPro
         {success && (
           <div className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg flex items-start gap-2 animate-in slide-in-from-top-2">
             <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 shrink-0 mt-0.5" />
-            <p className="text-sm text-green-700 dark:text-green-300">{success}</p>
+            <p className="text-sm text-green-700 dark:text-green-300">
+              {success}
+            </p>
           </div>
         )}
 
@@ -142,29 +157,44 @@ export function UrlIngestModal({ isOpen, onClose, onSuccess }: UrlIngestModalPro
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
               Scraping Options
             </label>
-            
+
             <label className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer transition-colors">
               <input
                 type="checkbox"
                 checked={options.onlyMainContent}
-                onChange={(e) => setOptions({ ...options, onlyMainContent: e.target.checked })}
+                onChange={(e) =>
+                  setOptions({ ...options, onlyMainContent: e.target.checked })
+                }
                 className="h-4 w-4 text-violet-600 rounded border-gray-300 focus:ring-violet-500"
               />
               <div>
-                <p className="text-sm font-medium text-gray-900 dark:text-white">Only Main Content</p>
-                <p className="text-xs text-gray-500">Remove navigation, headers, footers</p>
+                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                  Only Main Content
+                </p>
+                <p className="text-xs text-gray-500">
+                  Remove navigation, headers, footers
+                </p>
               </div>
             </label>
 
             <div className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 dark:border-gray-700">
               <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900 dark:text-white">Wait Time</p>
-                <p className="text-xs text-gray-500">Milliseconds to wait for dynamic content</p>
+                <p className="text-sm font-medium text-gray-900 dark:text-white">
+                  Wait Time
+                </p>
+                <p className="text-xs text-gray-500">
+                  Milliseconds to wait for dynamic content
+                </p>
               </div>
               <input
                 type="number"
                 value={options.waitFor}
-                onChange={(e) => setOptions({ ...options, waitFor: parseInt(e.target.value) || 0 })}
+                onChange={(e) =>
+                  setOptions({
+                    ...options,
+                    waitFor: parseInt(e.target.value) || 0,
+                  })
+                }
                 className="w-20 px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
                 min="0"
                 max="10000"
@@ -176,8 +206,8 @@ export function UrlIngestModal({ isOpen, onClose, onSuccess }: UrlIngestModalPro
           {/* Info Box */}
           <div className="p-4 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl border border-blue-100 dark:border-blue-800">
             <p className="text-sm text-blue-700 dark:text-blue-300">
-              <strong>Powered by Firecrawl</strong> - Converts any website into LLM-ready markdown.
-              JavaScript-rendered sites are supported.
+              <strong>Powered by Firecrawl</strong> - Converts any website into
+              LLM-ready markdown. JavaScript-rendered sites are supported.
             </p>
           </div>
 

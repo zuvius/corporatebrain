@@ -14,6 +14,7 @@ description: Global rules for AI agent context and memory management
 ## File Tracking Requirements
 
 ### Edited Files (MUST)
+
 - Full absolute file path
 - Line numbers of changes (start-end)
 - Type of change (create/modify/delete)
@@ -21,11 +22,13 @@ description: Global rules for AI agent context and memory management
 - Expected outcome
 
 ### Touched Files (MUST)
+
 - Full absolute file path
 - Why file was accessed (read/analysis/reference)
 - Determination: edited vs. read-only
 
 ### Untracked Files (MUST NOT)
+
 - Never leave files untracked
 - All file interactions logged
 
@@ -63,17 +66,20 @@ description: Global rules for AI agent context and memory management
 ## Automatic Triggers
 
 ### On Code Edit
+
 1. Record file path and line numbers
 2. Update active-context.md
 3. Append to today's changelog
 4. Document expected outcome
 
 ### On Analysis/Brainstorm
+
 1. Create context-file-name.md in context/
 2. Add to changelog under "Analysis" section
 3. Cross-reference related files
 
 ### On Commit/Push
+
 1. Extract commit hash and timestamp
 2. Update decision-log.md if architectural
 3. Update progress.md with completion status
@@ -81,16 +87,19 @@ description: Global rules for AI agent context and memory management
 ## Stability Guarantees
 
 ### UI Stability
+
 - Visual regressions: PROHIBITED
 - Layout shifts: PROHIBITED
 - Style changes: Must be intentional and documented
 
 ### API Stability
+
 - Endpoint changes: Documented in decision-log.md
 - Response format: Backward compatible or versioned
 - Breaking changes: Explicit approval required
 
 ### Runtime Behavior
+
 - No console errors post-change
 - No performance regressions
 - No memory leaks
@@ -117,6 +126,7 @@ Types: feat, fix, docs, refactor, test, chore, perf, security
 ## Daily Maintenance
 
 ### Changelog (YYYY-MM-DD.md)
+
 - Date and session ID
 - All files touched (full paths)
 - All files edited (full paths with line numbers)
@@ -124,6 +134,7 @@ Types: feat, fix, docs, refactor, test, chore, perf, security
 - Commits made (hash + message summary)
 
 ### Implementation Log (YYYY-MM-DD.md)
+
 - Technical decisions made
 - Blockers encountered and resolved
 - Performance optimizations
@@ -140,18 +151,21 @@ Types: feat, fix, docs, refactor, test, chore, perf, security
 ## Documentation Requirements
 
 ### For Every Component
+
 - Purpose and responsibility
 - Props/Inputs with types
 - Side effects
 - Dependencies
 
 ### For Every Function
+
 - Description
 - Parameters with types
 - Return type
 - Example usage
 
 ### Architecture Diagrams
+
 - System overview (Mermaid)
 - Data flow diagrams
 - Component hierarchies
@@ -173,6 +187,7 @@ Types: feat, fix, docs, refactor, test, chore, perf, security
 ## Emergency Protocols
 
 If context/memory update fails:
+
 1. Halt all operations
 2. Diagnose root cause
 3. Fix update mechanism before proceeding

@@ -75,11 +75,13 @@ npm run db:generate
 ```
 
 **What happens:**
+
 - Drizzle Kit compares current schema with database
 - Generates SQL migration file in `db/migrations/` folder
 - File named: `0001_add_user_role.sql`
 
 **Generated SQL example:**
+
 ```sql
 -- db/migrations/0001_add_user_role.sql
 ALTER TABLE "users" ADD COLUMN "role" varchar(50) DEFAULT 'member' NOT NULL;
@@ -99,6 +101,7 @@ ls db/migrations/
 ```
 
 **Review the SQL:**
+
 ```bash
 cat db/migrations/0001_add_user_role.sql
 ```
@@ -110,6 +113,7 @@ npm run db:migrate
 ```
 
 **Output:**
+
 ```
 Applying migration: 0001_add_user_role.sql
 ✓ Migration applied successfully
@@ -147,6 +151,7 @@ db/migrations/
 ### 1. One Change Per Migration
 
 ❌ **Bad**: Multiple unrelated changes in one migration
+
 ```typescript
 // Don't do this - combine many changes
 // - Add user role
@@ -156,6 +161,7 @@ db/migrations/
 ```
 
 ✅ **Good**: Separate commits/migrations for each change
+
 ```typescript
 // Commit 1: Add user role
 // Commit 2: Create materials table
@@ -167,6 +173,7 @@ db/migrations/
 ❌ **Bad**: Manually editing `0001_xxx.sql`
 
 ✅ **Good**: If migration is wrong:
+
 1. Revert schema change
 2. Delete migration file
 3. Regenerate with `npm run db:generate`
@@ -200,18 +207,20 @@ default value 'member' for existing records."
 ### 5. Handle Breaking Changes Carefully
 
 **Renaming column:**
+
 ```typescript
 // Instead of renaming (breaking change):
 // name → fullName
 
 // Add new, migrate data, remove old:
 export const users = pgTable("users", {
-  name: varchar("name", { length: 255 }),     // Keep temporarily
+  name: varchar("name", { length: 255 }), // Keep temporarily
   fullName: varchar("full_name", { length: 255 }), // New
 });
 ```
 
 **Then in migration or seed:**
+
 ```sql
 -- Copy data from old to new
 UPDATE "users" SET "full_name" = "name";
@@ -224,6 +233,7 @@ UPDATE "users" SET "full_name" = "name";
 **Cause**: Migration trying to add column that already exists
 
 **Fix**:
+
 ```bash
 # Check current database state
 npm run db:studio
@@ -239,6 +249,7 @@ drizzle-kit push:pg --skip-generate
 **Cause**: Migration conflicts with existing table
 
 **Fix**:
+
 ```bash
 # Reset database (DELETES ALL DATA)
 npm run db:reset
@@ -252,6 +263,7 @@ drizzle-kit push:pg --skip-generate
 **Cause**: Schema and database out of sync
 
 **Fix**:
+
 ```bash
 # 1. Delete incorrect migration
 rm db/migrations/000X_wrong.sql
@@ -270,6 +282,7 @@ npm run db:generate
 **Scenario**: Two developers create migrations
 
 **Developer A:**
+
 ```bash
 # Created 0002_add_indexes.sql
 git add db/migrations/
@@ -278,6 +291,7 @@ git push
 ```
 
 **Developer B:**
+
 ```bash
 # Created 0002_create_materials.sql (same number!)
 git pull origin main
@@ -294,6 +308,7 @@ npm run db:generate  # Regenerate to fix meta/
 ### Vercel
 
 `vercel.json`:
+
 ```json
 {
   "buildCommand": "npm run build",
@@ -306,6 +321,7 @@ Migrations run automatically via `prebuild`.
 ### Docker
 
 `Dockerfile`:
+
 ```dockerfile
 # Build stage
 RUN npm run db:generate
@@ -319,6 +335,7 @@ CMD ["npm", "start"]
 ### CI/CD Pipeline
 
 `.github/workflows/deploy.yml`:
+
 ```yaml
 - name: Database Migration
   run: |
@@ -333,14 +350,14 @@ CMD ["npm", "start"]
 
 ## Commands Reference
 
-| Command | Purpose | When to Run |
-|---------|---------|-------------|
-| `db:generate` | Create migration from schema changes | After editing schema.ts |
-| `db:migrate` | Apply pending migrations | During deploy, or locally |
-| `db:studio` | Open Drizzle Studio | Verify schema changes |
-| `db:reset` | Wipe DB + migrate + seed | Development only |
-| `prebuild` | Generate + migrate + type-check | Auto-runs before build |
-| `postinstall` | Generate migrations | Auto-runs after npm install |
+| Command       | Purpose                              | When to Run                 |
+| ------------- | ------------------------------------ | --------------------------- |
+| `db:generate` | Create migration from schema changes | After editing schema.ts     |
+| `db:migrate`  | Apply pending migrations             | During deploy, or locally   |
+| `db:studio`   | Open Drizzle Studio                  | Verify schema changes       |
+| `db:reset`    | Wipe DB + migrate + seed             | Development only            |
+| `prebuild`    | Generate + migrate + type-check      | Auto-runs before build      |
+| `postinstall` | Generate migrations                  | Auto-runs after npm install |
 
 ## Migration Safety Rules
 
@@ -362,6 +379,7 @@ DATABASE_URL="postgresql://user:pass@localhost:5432/dbname"
 ```
 
 For deployment:
+
 ```bash
 # Vercel/Production
 DATABASE_URL="postgresql://..."

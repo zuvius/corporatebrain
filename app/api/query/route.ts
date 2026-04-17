@@ -1,6 +1,12 @@
 import { auth } from "@/lib/auth/auth";
 import { generateEmbeddings, selectModel, buildSystemPrompt } from "@/lib/ai";
-import { searchSimilarDocuments, createMessage, createConversation, updateConversation, createCitation } from "@/lib/db/queries";
+import {
+  searchSimilarDocuments,
+  createMessage,
+  createConversation,
+  updateConversation,
+  createCitation,
+} from "@/lib/db/queries";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import { z } from "zod";
@@ -25,7 +31,7 @@ export async function POST(request: Request) {
     if (!parsed.success) {
       return NextResponse.json(
         { error: "Invalid request", details: parsed.error.flatten() },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -41,7 +47,7 @@ export async function POST(request: Request) {
         conversation = existing;
       }
     }
-    
+
     if (!conversation) {
       conversation = await createConversation({
         tenantId,
@@ -60,7 +66,11 @@ export async function POST(request: Request) {
 
     // Search for relevant context
     const queryEmbedding = await generateEmbeddings(message);
-    const relevantDocs = await searchSimilarDocuments(tenantId, queryEmbedding, 5);
+    const relevantDocs = await searchSimilarDocuments(
+      tenantId,
+      queryEmbedding,
+      5,
+    );
 
     // Build context from relevant documents
     const context = relevantDocs
@@ -87,7 +97,11 @@ export async function POST(request: Request) {
     const latency = Date.now() - startTime;
 
     const aiContent = response.choices[0]?.message?.content || "No response";
-    const tokens = response.usage || { prompt_tokens: 0, completion_tokens: 0, total_tokens: 0 };
+    const tokens = response.usage || {
+      prompt_tokens: 0,
+      completion_tokens: 0,
+      total_tokens: 0,
+    };
 
     // Save AI response
     const aiMessage = await createMessage({
@@ -102,7 +116,11 @@ export async function POST(request: Request) {
     });
 
     // Create citations for sources
-    for (const doc of relevantDocs as Array<{id: string; distance: number; content: string}>) {
+    for (const doc of relevantDocs as Array<{
+      id: string;
+      distance: number;
+      content: string;
+    }>) {
       await createCitation({
         messageId: aiMessage.id,
         sourceId: doc.id,
@@ -132,7 +150,7 @@ export async function POST(request: Request) {
     console.error("Query error:", error);
     return NextResponse.json(
       { error: "Failed to process query" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

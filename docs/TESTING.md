@@ -53,13 +53,13 @@ npm run dev
 
 ## Test Commands
 
-| Command | Description | Use Case |
-|---------|-------------|----------|
-| `npm run test` | Runs Vitest in watch mode | Development, TDD |
-| `npm run test:ci` | Runs Vitest + Playwright once | CI/CD pipelines |
-| `npm run test:e2e` | Runs Playwright E2E tests | Full integration testing |
-| `npm run type-check` | TypeScript type validation | Pre-commit validation |
-| `npm run lint` | ESLint code quality check | Code style enforcement |
+| Command              | Description                   | Use Case                 |
+| -------------------- | ----------------------------- | ------------------------ |
+| `npm run test`       | Runs Vitest in watch mode     | Development, TDD         |
+| `npm run test:ci`    | Runs Vitest + Playwright once | CI/CD pipelines          |
+| `npm run test:e2e`   | Runs Playwright E2E tests     | Full integration testing |
+| `npm run type-check` | TypeScript type validation    | Pre-commit validation    |
+| `npm run lint`       | ESLint code quality check     | Code style enforcement   |
 
 ---
 
@@ -93,7 +93,7 @@ Test Files  2 passed (2)
    ✕ calculateCost > handles invalid model name
      → Expected: "Error: Model not found"
      → Received: "Error: Invalid model"
-     
+
      at cost-tracker.test.ts:15:20
 ```
 
@@ -125,15 +125,15 @@ Watch Mode: press `h` for help
 
 ## Watch Mode Features
 
-| Key | Action | Description |
-|-----|--------|-------------|
-| `h` | Show help | Display all available commands |
-| `r` | Rerun all | Execute all test files again |
-| `f` | Rerun failed | Only run tests that failed |
-| `p` | Filter by file | Pattern match test filenames |
-| `t` | Filter by test | Pattern match test names |
-| `a` | Run all | Switch back to running all tests |
-| `q` | Quit | Exit watch mode |
+| Key | Action         | Description                      |
+| --- | -------------- | -------------------------------- |
+| `h` | Show help      | Display all available commands   |
+| `r` | Rerun all      | Execute all test files again     |
+| `f` | Rerun failed   | Only run tests that failed       |
+| `p` | Filter by file | Pattern match test filenames     |
+| `t` | Filter by test | Pattern match test names         |
+| `a` | Run all        | Switch back to running all tests |
+| `q` | Quit           | Exit watch mode                  |
 
 ---
 
@@ -175,29 +175,29 @@ c:\Users\seoho\Documents\Corporate Brain\
 
 ```typescript
 // lib/utils.test.ts
-import { describe, it, expect } from 'vitest';
-import { formatDate, truncateText } from './utils';
+import { describe, it, expect } from "vitest";
+import { formatDate, truncateText } from "./utils";
 
-describe('formatDate', () => {
-  it('returns correct string for valid date', () => {
-    const date = new Date('2024-01-15');
-    expect(formatDate(date)).toBe('January 15, 2024');
+describe("formatDate", () => {
+  it("returns correct string for valid date", () => {
+    const date = new Date("2024-01-15");
+    expect(formatDate(date)).toBe("January 15, 2024");
   });
 
-  it('handles invalid date gracefully', () => {
-    expect(formatDate(null)).toBe('Invalid date');
+  it("handles invalid date gracefully", () => {
+    expect(formatDate(null)).toBe("Invalid date");
   });
 });
 
-describe('truncateText', () => {
-  it('cuts at limit', () => {
-    const text = 'This is a very long text';
-    expect(truncateText(text, 10)).toBe('This is...');
+describe("truncateText", () => {
+  it("cuts at limit", () => {
+    const text = "This is a very long text";
+    expect(truncateText(text, 10)).toBe("This is...");
   });
 
-  it('does not truncate short text', () => {
-    const text = 'Short';
-    expect(truncateText(text, 10)).toBe('Short');
+  it("does not truncate short text", () => {
+    const text = "Short";
+    expect(truncateText(text, 10)).toBe("Short");
   });
 });
 ```
@@ -214,17 +214,17 @@ describe('truncateText', () => {
 
 ```typescript
 // vitest.setup.ts
-import '@testing-library/jest-dom';
-import { vi } from 'vitest';
+import "@testing-library/jest-dom";
+import { vi } from "vitest";
 
 // Mock Next.js router
-vi.mock('next/navigation', () => ({
+vi.mock("next/navigation", () => ({
   useRouter: () => ({
     push: vi.fn(),
     replace: vi.fn(),
     refresh: vi.fn(),
   }),
-  usePathname: () => '/',
+  usePathname: () => "/",
   useSearchParams: () => new URLSearchParams(),
 }));
 ```
@@ -246,7 +246,7 @@ describe('ChatMessage', () => {
         timestamp={new Date()}
       />
     );
-    
+
     expect(screen.getByText('Hello AI')).toBeInTheDocument();
     expect(screen.getByText('You')).toBeInTheDocument();
   });
@@ -262,7 +262,7 @@ describe('ChatMessage', () => {
         timestamp={new Date()}
       />
     );
-    
+
     expect(screen.getByText('Based on the document...')).toBeInTheDocument();
     expect(screen.getByText('Q4 Report')).toBeInTheDocument();
   });
@@ -277,32 +277,32 @@ describe('ChatMessage', () => {
 
 ```typescript
 // playwright.config.ts
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
-  testDir: './tests/e2e',
+  testDir: "./tests/e2e",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  reporter: "html",
   use: {
-    baseURL: 'http://localhost:3004',
-    trace: 'on-first-retry',
+    baseURL: "http://localhost:3004",
+    trace: "on-first-retry",
   },
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      name: "firefox",
+      use: { ...devices["Desktop Firefox"] },
     },
   ],
   webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:3004',
+    command: "npm run dev",
+    url: "http://localhost:3004",
     reuseExistingServer: !process.env.CI,
   },
 });
@@ -312,34 +312,36 @@ export default defineConfig({
 
 ```typescript
 // tests/e2e/auth.spec.ts
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test.describe('Authentication', () => {
-  test('user can sign in with magic link', async ({ page }) => {
-    await page.goto('/auth/signin');
-    await page.fill('input[name="email"]', 'test@example.com');
+test.describe("Authentication", () => {
+  test("user can sign in with magic link", async ({ page }) => {
+    await page.goto("/auth/signin");
+    await page.fill('input[name="email"]', "test@example.com");
     await page.click('button[type="submit"]');
-    
-    await expect(page.getByText('Check your email')).toBeVisible();
+
+    await expect(page.getByText("Check your email")).toBeVisible();
   });
 
-  test('user can sign in with Google OAuth', async ({ page }) => {
-    await page.goto('/auth/signin');
+  test("user can sign in with Google OAuth", async ({ page }) => {
+    await page.goto("/auth/signin");
     await page.click('button:has-text("Sign in with Google")');
-    
+
     // Note: Actual OAuth flow requires test credentials
     await expect(page).toHaveURL(/accounts.google.com/);
   });
 });
 
-test.describe('Chat', () => {
-  test('user can send a message', async ({ page }) => {
-    await page.goto('/app');
-    await page.fill('textarea[placeholder="Ask anything..."]', 'What is AI?');
-    await page.keyboard.press('Enter');
-    
-    await expect(page.getByText('What is AI?')).toBeVisible();
-    await expect(page.getByTestId('ai-response')).toBeVisible({ timeout: 10000 });
+test.describe("Chat", () => {
+  test("user can send a message", async ({ page }) => {
+    await page.goto("/app");
+    await page.fill('textarea[placeholder="Ask anything..."]', "What is AI?");
+    await page.keyboard.press("Enter");
+
+    await expect(page.getByText("What is AI?")).toBeVisible();
+    await expect(page.getByTestId("ai-response")).toBeVisible({
+      timeout: 10000,
+    });
   });
 });
 ```
@@ -426,28 +428,28 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
-      
+          node-version: "20"
+          cache: "npm"
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Type check
         run: npm run type-check
-      
+
       - name: Lint
         run: npm run lint
-      
+
       - name: Run unit tests
         run: npm run test:ci
-      
+
       - name: Upload coverage
         uses: codecov/codecov-action@v3
         with:
@@ -460,13 +462,13 @@ jobs:
 
 ### Common Issues
 
-| Issue | Cause | Solution |
-|-------|-------|----------|
-| `No test files found` | No `*.test.ts` files exist | Create test files following naming convention |
-| `Cannot find module` | Missing imports or aliases | Update `vitest.config.ts` path aliases |
-| `JSX element type error` | React types not loaded | Ensure `@types/react` is installed |
-| `Test timeout` | Async test too slow | Increase timeout: `it('test', { timeout: 10000 }, () => {})` |
-| `Mock not working` | Hoisting issue | Use `vi.mock()` at top of file |
+| Issue                    | Cause                      | Solution                                                     |
+| ------------------------ | -------------------------- | ------------------------------------------------------------ |
+| `No test files found`    | No `*.test.ts` files exist | Create test files following naming convention                |
+| `Cannot find module`     | Missing imports or aliases | Update `vitest.config.ts` path aliases                       |
+| `JSX element type error` | React types not loaded     | Ensure `@types/react` is installed                           |
+| `Test timeout`           | Async test too slow        | Increase timeout: `it('test', { timeout: 10000 }, () => {})` |
+| `Mock not working`       | Hoisting issue             | Use `vi.mock()` at top of file                               |
 
 ### Debug Mode
 
@@ -485,9 +487,9 @@ npm run test -- --inspect-brk
 
 ```typescript
 // tests/setup/db.ts
-import { drizzle } from 'drizzle-orm/node-postgres';
-import { migrate } from 'drizzle-orm/node-postgres/migrator';
-import { Client } from 'pg';
+import { drizzle } from "drizzle-orm/node-postgres";
+import { migrate } from "drizzle-orm/node-postgres/migrator";
+import { Client } from "pg";
 
 const testClient = new Client({
   connectionString: process.env.TEST_DATABASE_URL,
@@ -496,7 +498,7 @@ const testClient = new Client({
 export async function setupTestDb() {
   await testClient.connect();
   const db = drizzle(testClient);
-  await migrate(db, { migrationsFolder: './drizzle' });
+  await migrate(db, { migrationsFolder: "./drizzle" });
   return db;
 }
 

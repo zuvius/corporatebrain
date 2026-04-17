@@ -30,7 +30,7 @@ export function PricingCard({
         "relative rounded-2xl p-8 transition-all duration-300",
         highlighted
           ? "bg-gradient-to-b from-violet-600 to-fuchsia-600 text-white border border-violet-500/50"
-          : "bg-white/[0.02] text-white border border-white/10 hover:border-violet-500/30 hover:bg-white/[0.04]"
+          : "bg-white/[0.02] text-white border border-white/10 hover:border-violet-500/30 hover:bg-white/[0.04]",
       )}
     >
       {highlighted && (
@@ -46,7 +46,7 @@ export function PricingCard({
         <p
           className={cn(
             "mt-2 text-sm",
-            highlighted ? "text-white/70" : "text-white/50"
+            highlighted ? "text-white/70" : "text-white/50",
           )}
         >
           {description}
@@ -58,7 +58,7 @@ export function PricingCard({
         <span
           className={cn(
             "text-sm ml-1",
-            highlighted ? "text-white/60" : "text-white/40"
+            highlighted ? "text-white/60" : "text-white/40",
           )}
         >
           /{period}
@@ -71,20 +71,20 @@ export function PricingCard({
             <div
               className={cn(
                 "flex h-5 w-5 items-center justify-center rounded-full mr-3 flex-shrink-0",
-                highlighted ? "bg-white/20" : "bg-violet-500/20"
+                highlighted ? "bg-white/20" : "bg-violet-500/20",
               )}
             >
               <Check
                 className={cn(
                   "h-3 w-3",
-                  highlighted ? "text-white" : "text-violet-400"
+                  highlighted ? "text-white" : "text-violet-400",
                 )}
               />
             </div>
             <span
               className={cn(
                 "text-sm",
-                highlighted ? "text-white/80" : "text-white/60"
+                highlighted ? "text-white/80" : "text-white/60",
               )}
             >
               {feature}
@@ -100,8 +100,8 @@ export function PricingCard({
           highlighted
             ? "bg-white text-violet-600 hover:bg-white/90"
             : disabled
-            ? "bg-white/5 text-white/40 cursor-not-allowed border border-white/10"
-            : "bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white hover:opacity-90"
+              ? "bg-white/5 text-white/40 cursor-not-allowed border border-white/10"
+              : "bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white hover:opacity-90",
         )}
       >
         {cta}

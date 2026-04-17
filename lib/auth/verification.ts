@@ -33,7 +33,14 @@ export const TEASER_LIMITS: TeaserLimits = {
 
 export const FULL_ACCESS_LIMITS: TeaserLimits = {
   maxIntegrations: 10,
-  allowedProviders: ["slack", "gdrive", "notion", "teams", "github", "confluence"],
+  allowedProviders: [
+    "slack",
+    "gdrive",
+    "notion",
+    "teams",
+    "github",
+    "confluence",
+  ],
   maxDocumentsPerIntegration: 1000,
   maxDaysHistory: 365,
   maxAIQuestions: Infinity,
@@ -42,9 +49,11 @@ export const FULL_ACCESS_LIMITS: TeaserLimits = {
   canWrite: true,
 };
 
-export async function requireVerification(requireFullAccess = true): Promise<VerificationResult> {
+export async function requireVerification(
+  requireFullAccess = true,
+): Promise<VerificationResult> {
   const session = await auth();
-  
+
   if (!session?.user) {
     return {
       isVerified: false,
@@ -62,7 +71,9 @@ export async function requireVerification(requireFullAccess = true): Promise<Ver
       isVerified: false,
       isTeaserMode: true,
       email: session.user.email,
-      error: requireFullAccess ? "Email verification required. Please verify your email to access this feature." : undefined,
+      error: requireFullAccess
+        ? "Email verification required. Please verify your email to access this feature."
+        : undefined,
       limits: TEASER_LIMITS,
     };
   }
@@ -77,7 +88,7 @@ export async function requireVerification(requireFullAccess = true): Promise<Ver
 
 export function getVerificationStatus(
   session: { user?: { email?: string; emailVerified?: Date | null } } | null,
-  requireFullAccess = true
+  requireFullAccess = true,
 ): VerificationResult {
   if (!session?.user) {
     return {
@@ -113,7 +124,7 @@ export function getVerificationStatus(
 export function canConnectIntegration(
   isVerified: boolean,
   currentIntegrationCount: number,
-  provider: string
+  provider: string,
 ): { allowed: boolean; reason?: string } {
   if (isVerified) {
     if (currentIntegrationCount >= FULL_ACCESS_LIMITS.maxIntegrations) {

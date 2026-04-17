@@ -3,17 +3,17 @@ import { usageLogs } from "@/lib/db/schema";
 
 // Model pricing in dollars per 1K tokens
 const MODEL_PRICING: Record<string, { prompt: number; completion: number }> = {
-  'gpt-4': { prompt: 0.03, completion: 0.06 },
-  'gpt-4-turbo': { prompt: 0.01, completion: 0.03 },
-  'gpt-3.5-turbo': { prompt: 0.0005, completion: 0.0015 },
-  'claude-3-opus': { prompt: 0.015, completion: 0.075 },
-  'claude-3-sonnet': { prompt: 0.003, completion: 0.015 },
+  "gpt-4": { prompt: 0.03, completion: 0.06 },
+  "gpt-4-turbo": { prompt: 0.01, completion: 0.03 },
+  "gpt-3.5-turbo": { prompt: 0.0005, completion: 0.0015 },
+  "claude-3-opus": { prompt: 0.015, completion: 0.075 },
+  "claude-3-sonnet": { prompt: 0.003, completion: 0.015 },
 };
 
 export function calculateCost(
   model: string,
   promptTokens: number,
-  completionTokens: number
+  completionTokens: number,
 ): number {
   const pricing = MODEL_PRICING[model];
   if (!pricing) {
@@ -54,7 +54,7 @@ export async function trackUsage(event: UsageEvent): Promise<void> {
 
     console.log(
       `[Cost] ${event.model}: $${event.cost.toFixed(4)} | ` +
-        `${event.totalTokens} tokens | Tenant: ${event.tenantId.slice(0, 8)}`
+        `${event.totalTokens} tokens | Tenant: ${event.tenantId.slice(0, 8)}`,
     );
   } catch (error) {
     console.error("Failed to track usage:", error);
@@ -65,7 +65,7 @@ export async function trackUsage(event: UsageEvent): Promise<void> {
 export async function getTenantUsageStats(
   tenantId: string,
   startDate: Date,
-  endDate: Date
+  endDate: Date,
 ) {
   // Aggregate usage by model
   const stats = await db.query.usageLogs.findMany({
@@ -73,7 +73,7 @@ export async function getTenantUsageStats(
       and(
         eq(logs.tenantId, tenantId),
         gte(logs.createdAt, startDate),
-        lte(logs.createdAt, endDate)
+        lte(logs.createdAt, endDate),
       ),
   });
 
@@ -97,24 +97,27 @@ export async function getTenantUsageStats(
     byModel: {},
   };
 
-  const aggregated = stats.reduce((acc: AggregatedStats, log: typeof stats[0]) => {
-    acc.totalCost += log.cost;
-    acc.totalTokens += log.totalTokens;
-    acc.queryCount += 1;
+  const aggregated = stats.reduce(
+    (acc: AggregatedStats, log: (typeof stats)[0]) => {
+      acc.totalCost += log.cost;
+      acc.totalTokens += log.totalTokens;
+      acc.queryCount += 1;
 
-    if (!acc.byModel[log.model]) {
-      acc.byModel[log.model] = {
-        cost: 0,
-        tokens: 0,
-        queries: 0,
-      };
-    }
-    acc.byModel[log.model].cost += log.cost;
-    acc.byModel[log.model].tokens += log.totalTokens;
-    acc.byModel[log.model].queries += 1;
+      if (!acc.byModel[log.model]) {
+        acc.byModel[log.model] = {
+          cost: 0,
+          tokens: 0,
+          queries: 0,
+        };
+      }
+      acc.byModel[log.model].cost += log.cost;
+      acc.byModel[log.model].tokens += log.totalTokens;
+      acc.byModel[log.model].queries += 1;
 
-    return acc;
-  }, initialStats);
+      return acc;
+    },
+    initialStats,
+  );
 
   return aggregated;
 }

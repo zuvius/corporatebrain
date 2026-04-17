@@ -1,7 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { User, Mail, Building2, Key, Bell, Shield, Save, Loader2 } from "lucide-react";
+import {
+  User,
+  Mail,
+  Building2,
+  Key,
+  Bell,
+  Shield,
+  Save,
+  Loader2,
+} from "lucide-react";
 
 interface UserData {
   id: string;
@@ -15,8 +24,11 @@ export default function SettingsPage() {
   const [user, setUser] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
-  const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
-  
+  const [message, setMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -40,7 +52,7 @@ export default function SettingsPage() {
       if (response.ok) {
         const data = await response.json();
         setUser(data);
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           name: data.name || "",
           email: data.email || "",
@@ -73,7 +85,7 @@ export default function SettingsPage() {
       } else {
         throw new Error("Failed to update profile");
       }
-    } catch (error) {
+    } catch {
       setMessage({ type: "error", text: "Failed to update profile" });
     } finally {
       setIsLoading(false);
@@ -102,7 +114,7 @@ export default function SettingsPage() {
 
       if (response.ok) {
         setMessage({ type: "success", text: "Password changed successfully" });
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           currentPassword: "",
           newPassword: "",
@@ -111,7 +123,7 @@ export default function SettingsPage() {
       } else {
         throw new Error("Failed to change password");
       }
-    } catch (error) {
+    } catch {
       setMessage({ type: "error", text: "Failed to change password" });
     } finally {
       setIsLoading(false);
@@ -175,7 +187,9 @@ export default function SettingsPage() {
                   <input
                     type="text"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                     className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-violet-500 focus:border-transparent"
                     placeholder="Your name"
                   />
@@ -195,7 +209,9 @@ export default function SettingsPage() {
                     className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-500 cursor-not-allowed"
                   />
                 </div>
-                <p className="text-xs text-gray-500 mt-1">Email cannot be changed</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  Email cannot be changed
+                </p>
               </div>
             </div>
 
@@ -254,7 +270,9 @@ export default function SettingsPage() {
               <input
                 type="password"
                 value={formData.currentPassword}
-                onChange={(e) => setFormData({ ...formData, currentPassword: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, currentPassword: e.target.value })
+                }
                 className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-violet-500 focus:border-transparent"
                 placeholder="Enter current password"
               />
@@ -268,7 +286,9 @@ export default function SettingsPage() {
                 <input
                   type="password"
                   value={formData.newPassword}
-                  onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, newPassword: e.target.value })
+                  }
                   className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-violet-500 focus:border-transparent"
                   placeholder="Enter new password"
                 />
@@ -281,7 +301,12 @@ export default function SettingsPage() {
                 <input
                   type="password"
                   value={formData.confirmPassword}
-                  onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      confirmPassword: e.target.value,
+                    })
+                  }
                   className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-violet-500 focus:border-transparent"
                   placeholder="Confirm new password"
                 />
@@ -291,7 +316,11 @@ export default function SettingsPage() {
             <div className="flex justify-end pt-4">
               <button
                 type="submit"
-                disabled={isLoading || !formData.currentPassword || !formData.newPassword}
+                disabled={
+                  isLoading ||
+                  !formData.currentPassword ||
+                  !formData.newPassword
+                }
                 className="flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 {isLoading ? (
@@ -340,7 +369,10 @@ export default function SettingsPage() {
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    notifications: { ...formData.notifications, emailDigest: e.target.checked },
+                    notifications: {
+                      ...formData.notifications,
+                      emailDigest: e.target.checked,
+                    },
                   })
                 }
                 className="h-4 w-4 text-violet-600 rounded border-gray-300 focus:ring-violet-500"
@@ -365,7 +397,10 @@ export default function SettingsPage() {
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    notifications: { ...formData.notifications, securityAlerts: e.target.checked },
+                    notifications: {
+                      ...formData.notifications,
+                      securityAlerts: e.target.checked,
+                    },
                   })
                 }
                 className="h-4 w-4 text-violet-600 rounded border-gray-300 focus:ring-violet-500"

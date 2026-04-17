@@ -15,6 +15,7 @@ Database seeding is **blocked in production** for security reasons (creates hard
 A web-based wizard that only appears when no users exist.
 
 ### How it works:
+
 1. Deploy app with empty database
 2. Visit `/setup` in browser
 3. Fill in company name, admin email, password
@@ -23,12 +24,14 @@ A web-based wizard that only appears when no users exist.
 6. `/setup` becomes inaccessible (redirects to home)
 
 ### Security features:
+
 - Only works when **zero users** exist in database
 - After first admin created, route redirects to `/`
 - Password hashed with bcrypt
 - Creates proper tenant with starter plan
 
 ### Usage:
+
 ```bash
 # After production deployment
 # Open browser to: https://yourdomain.com/setup
@@ -44,6 +47,7 @@ A web-based wizard that only appears when no users exist.
 For quick manual setup via database GUI.
 
 ### Steps:
+
 ```bash
 # SSH into production server or run locally with production DB
 npm run db:studio
@@ -62,6 +66,7 @@ npm run db:studio
 ```
 
 ### Generate bcrypt hash locally:
+
 ```bash
 node -e "console.log(require('bcryptjs').hashSync('yourpassword', 10))"
 ```
@@ -73,6 +78,7 @@ node -e "console.log(require('bcryptjs').hashSync('yourpassword', 10))"
 Create first admin via env vars on first deploy.
 
 ### Add to `.env`:
+
 ```bash
 # Initial admin credentials (only used on first run)
 INITIAL_ADMIN_EMAIL=admin@yourcompany.com
@@ -82,7 +88,9 @@ INITIAL_COMPANY_NAME=Your Company
 ```
 
 ### Implementation:
+
 Create `scripts/create-initial-admin.ts`:
+
 ```typescript
 import { db } from "../lib/db/client";
 import { users, tenants } from "../lib/db/schema";
@@ -107,16 +115,19 @@ async function createInitialAdmin() {
   }
 
   // Create tenant
-  const [tenant] = await db.insert(tenants).values({
-    name: company,
-    slug: company.toLowerCase().replace(/\s+/g, "-"),
-    plan: "starter",
-    settings: JSON.stringify({
-      maxUsers: 10,
-      maxStorage: 1073741824,
-      allowedModels: ["gpt-4", "claude-3", "gemini-pro"],
-    }),
-  }).returning();
+  const [tenant] = await db
+    .insert(tenants)
+    .values({
+      name: company,
+      slug: company.toLowerCase().replace(/\s+/g, "-"),
+      plan: "starter",
+      settings: JSON.stringify({
+        maxUsers: 10,
+        maxStorage: 1073741824,
+        allowedModels: ["gpt-4", "claude-3", "gemini-pro"],
+      }),
+    })
+    .returning();
 
   // Create admin
   await db.insert(users).values({
@@ -136,6 +147,7 @@ createInitialAdmin().catch(console.error);
 ```
 
 ### Usage:
+
 ```bash
 # Add to package.json
 "db:init-admin": "tsx scripts/create-initial-admin.ts"
@@ -149,19 +161,20 @@ npm run db:init-admin
 
 ## 📊 Comparison
 
-| Method | Effort | Security | Best For |
-|--------|--------|----------|----------|
-| **Setup Wizard** | Low | High | Most deployments |
-| **Drizzle Studio** | Medium | Medium | Quick fixes, debugging |
-| **Env Vars** | Low | Medium* | Automated CI/CD |
+| Method             | Effort | Security | Best For               |
+| ------------------ | ------ | -------- | ---------------------- |
+| **Setup Wizard**   | Low    | High     | Most deployments       |
+| **Drizzle Studio** | Medium | Medium   | Quick fixes, debugging |
+| **Env Vars**       | Low    | Medium\* | Automated CI/CD        |
 
-*Remove env vars after first run
+\*Remove env vars after first run
 
 ---
 
 ## 🚀 Recommended Production Flow
 
 ### With Setup Wizard:
+
 ```bash
 # 1. Deploy application
 vercel --prod
@@ -177,6 +190,7 @@ npm run db:migrate
 ```
 
 ### With Environment Variables:
+
 ```bash
 # 1. Set env vars (Vercel dashboard or CLI)
 vercel env add INITIAL_ADMIN_EMAIL
@@ -199,6 +213,7 @@ vercel env rm INITIAL_ADMIN_PASSWORD
 ## ⚠️ Security Checklist
 
 After creating first admin:
+
 - [ ] Remove any `INITIAL_ADMIN_*` environment variables
 - [ ] Delete `scripts/create-initial-admin.ts` if using env method
 - [ ] Change default password after first login
@@ -210,14 +225,17 @@ After creating first admin:
 ## 🔧 Troubleshooting
 
 ### "Setup page redirects to home"
+
 - **Cause:** Users already exist in database
 - **Fix:** Check if you have existing data, or run `npm run db:reset` (⚠️ deletes all data)
 
 ### "Cannot access /setup"
+
 - **Cause:** Middleware blocking or route not found
 - **Fix:** Ensure `app/setup/page.tsx` exists and middleware doesn't block `/setup`
 
 ### "Database connection failed"
+
 - **Cause:** `DATABASE_URL` not set or invalid
 - **Fix:** Check environment variables and database is running
 

@@ -42,7 +42,7 @@ export default function AdminDashboard() {
       if (!response.ok) throw new Error("Failed to fetch");
       const data = await response.json();
       setStats(data);
-    } catch (err) {
+    } catch {
       setError("Failed to load dashboard data");
     } finally {
       setIsLoading(false);
@@ -123,7 +123,9 @@ export default function AdminDashboard() {
               <div className="w-10 h-10 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center text-xl">
                 📊
               </div>
-              <h3 className="font-semibold text-gray-900 dark:text-white">ROI Dashboard</h3>
+              <h3 className="font-semibold text-gray-900 dark:text-white">
+                ROI Dashboard
+              </h3>
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400">
               View productivity gains and cost savings from Corporate Brain
@@ -138,7 +140,9 @@ export default function AdminDashboard() {
               <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center text-xl">
                 💰
               </div>
-              <h3 className="font-semibold text-gray-900 dark:text-white">Cost Command Center</h3>
+              <h3 className="font-semibold text-gray-900 dark:text-white">
+                Cost Command Center
+              </h3>
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400">
               Detailed cost breakdown and spending projections
@@ -153,7 +157,9 @@ export default function AdminDashboard() {
               <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center text-xl">
                 🔌
               </div>
-              <h3 className="font-semibold text-gray-900 dark:text-white">Integrations</h3>
+              <h3 className="font-semibold text-gray-900 dark:text-white">
+                Integrations
+              </h3>
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400">
               Manage connected apps and data sources
@@ -226,15 +232,22 @@ function StatCard({
 }) {
   const colorClasses = {
     blue: "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800",
-    green: "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800",
-    purple: "bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800",
-    orange: "bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800",
+    green:
+      "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800",
+    purple:
+      "bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800",
+    orange:
+      "bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800",
   };
 
   return (
     <div className={`p-6 rounded-lg border ${colorClasses[color]}`}>
-      <p className="text-sm font-medium text-gray-600 dark:text-gray-400">{title}</p>
-      <p className="text-2xl font-bold text-gray-900 dark:text-white mt-2">{value}</p>
+      <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+        {title}
+      </p>
+      <p className="text-2xl font-bold text-gray-900 dark:text-white mt-2">
+        {value}
+      </p>
       <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">{trend}</p>
     </div>
   );

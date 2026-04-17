@@ -28,17 +28,14 @@ export function ChatMessage({ message }: ChatMessageProps) {
 
   return (
     <div
-      className={cn(
-        "flex w-full",
-        isUser ? "justify-end" : "justify-start"
-      )}
+      className={cn("flex w-full", isUser ? "justify-end" : "justify-start")}
     >
       <div
         className={cn(
           "max-w-[80%] rounded-lg px-4 py-3",
           isUser
             ? "bg-blue-600 text-white"
-            : "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm border border-gray-200 dark:border-gray-700"
+            : "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm border border-gray-200 dark:border-gray-700",
         )}
       >
         {/* Message Content */}

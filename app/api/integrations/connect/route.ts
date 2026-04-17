@@ -7,7 +7,14 @@ import { z } from "zod";
 import { canConnectIntegration } from "@/lib/auth/verification";
 
 const connectSchema = z.object({
-  provider: z.enum(["slack", "gdrive", "notion", "teams", "github", "confluence"]),
+  provider: z.enum([
+    "slack",
+    "gdrive",
+    "notion",
+    "teams",
+    "github",
+    "confluence",
+  ]),
 });
 
 // OAuth URLs for each provider (placeholder - would be real OAuth endpoints)
@@ -23,21 +30,25 @@ const OAUTH_URLS: Record<string, string> = {
 export async function POST(req: NextRequest) {
   try {
     const session = await auth();
-    
+
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const user = session.user as { id: string; tenantId: string; emailVerified: string | null };
+    const user = session.user as {
+      id: string;
+      tenantId: string;
+      emailVerified: string | null;
+    };
     const isVerified = !!user.emailVerified;
-    
+
     const body = await req.json();
-    
+
     const result = connectSchema.safeParse(body);
     if (!result.success) {
       return NextResponse.json(
         { error: "Invalid provider", details: result.error.flatten() },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -52,17 +63,17 @@ export async function POST(req: NextRequest) {
     const canConnect = canConnectIntegration(
       isVerified,
       existingIntegrations.length,
-      provider
+      provider,
     );
 
     if (!canConnect.allowed) {
       return NextResponse.json(
-        { 
+        {
           error: canConnect.reason,
           code: isVerified ? "LIMIT_REACHED" : "TEASER_LIMIT",
           teaser: !isVerified,
         },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -70,14 +81,14 @@ export async function POST(req: NextRequest) {
     const existing = await db.query.integrations.findFirst({
       where: and(
         eq(integrations.tenantId, user.tenantId),
-        eq(integrations.provider, provider)
+        eq(integrations.provider, provider),
       ),
     });
 
     if (existing?.status === "connected") {
       return NextResponse.json(
         { error: "Integration already connected" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -102,7 +113,7 @@ export async function POST(req: NextRequest) {
     // Return OAuth URL (in production, this would include client_id, redirect_uri, etc.)
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
     const redirectUri = `${baseUrl}/api/integrations/callback/${provider}`;
-    
+
     // For now, return a mock OAuth URL (real implementation would construct proper OAuth URL)
     const oauthUrl = `${OAUTH_URLS[provider]}?client_id=PLACEHOLDER&redirect_uri=${encodeURIComponent(redirectUri)}&state=${user.tenantId}`;
 
@@ -116,7 +127,7 @@ export async function POST(req: NextRequest) {
     console.error("[Integrations Connect] Error:", error);
     return NextResponse.json(
       { error: "Failed to initiate integration connection" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

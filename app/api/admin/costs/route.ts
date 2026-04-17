@@ -11,12 +11,17 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const isAdmin = (session.user as any).role === "admin" || (session.user as any).role === "owner";
+    const isAdmin =
+      session.user.role === "admin" ||
+      session.user.role === "owner";
     if (!isAdmin) {
-      return NextResponse.json({ error: "Admin access required" }, { status: 403 });
+      return NextResponse.json(
+        { error: "Admin access required" },
+        { status: 403 },
+      );
     }
 
-    const tenantId = (session.user as any).tenantId;
+    const tenantId = session.user.tenantId;
     const { searchParams } = new URL(req.url);
     const days = parseInt(searchParams.get("days") || "30");
     const startDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
@@ -37,13 +42,13 @@ export async function GET(req: NextRequest) {
       .where(
         and(
           eq(usageLogs.tenantId, tenantId),
-          gte(usageLogs.createdAt, startDate)
-        )
+          gte(usageLogs.createdAt, startDate),
+        ),
       )
       .groupBy(
         sql`DATE(${usageLogs.createdAt})`,
         usageLogs.model,
-        usageLogs.provider
+        usageLogs.provider,
       )
       .orderBy(desc(sql`DATE(${usageLogs.createdAt})`));
 
@@ -59,8 +64,8 @@ export async function GET(req: NextRequest) {
       .where(
         and(
           eq(usageLogs.tenantId, tenantId),
-          gte(usageLogs.createdAt, startDate)
-        )
+          gte(usageLogs.createdAt, startDate),
+        ),
       )
       .groupBy(usageLogs.provider);
 
@@ -76,8 +81,8 @@ export async function GET(req: NextRequest) {
       .where(
         and(
           eq(usageLogs.tenantId, tenantId),
-          gte(usageLogs.createdAt, startDate)
-        )
+          gte(usageLogs.createdAt, startDate),
+        ),
       )
       .groupBy(usageLogs.model)
       .orderBy(desc(sql`COALESCE(SUM(${usageLogs.cost}), 0)`));
@@ -91,8 +96,8 @@ export async function GET(req: NextRequest) {
       .where(
         and(
           eq(usageLogs.tenantId, tenantId),
-          gte(usageLogs.createdAt, startDate)
-        )
+          gte(usageLogs.createdAt, startDate),
+        ),
       );
 
     const dailyAverage = (currentPeriod?.totalCost || 0) / days;
@@ -110,8 +115,8 @@ export async function GET(req: NextRequest) {
       .where(
         and(
           eq(usageLogs.tenantId, tenantId),
-          gte(usageLogs.createdAt, startDate)
-        )
+          gte(usageLogs.createdAt, startDate),
+        ),
       );
 
     return NextResponse.json({
@@ -127,7 +132,8 @@ export async function GET(req: NextRequest) {
         projectedYearly: Math.round(projectedYearly * 100) / 100,
         queryMetrics: {
           totalQueries: queryMetrics?.totalQueries || 0,
-          avgCostPerQuery: Math.round((queryMetrics?.avgCostPerQuery || 0) * 1000) / 1000,
+          avgCostPerQuery:
+            Math.round((queryMetrics?.avgCostPerQuery || 0) * 1000) / 1000,
           avgTokensPerQuery: Math.round(queryMetrics?.avgTokensPerQuery || 0),
         },
       },
@@ -139,7 +145,7 @@ export async function GET(req: NextRequest) {
     console.error("Cost analysis error:", error);
     return NextResponse.json(
       { error: "Failed to fetch cost data" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

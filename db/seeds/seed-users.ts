@@ -53,14 +53,17 @@ export async function seedUsers(tenantId: string) {
       }
 
       // Insert with tenant association
-      const [user] = await db.insert(users).values({
-        tenantId,
-        email: userData.email,
-        name: userData.name,
-        password: userData.password,
-        role: userData.role,
-        emailVerified: userData.emailVerified,
-      }).returning();
+      const [user] = await db
+        .insert(users)
+        .values({
+          tenantId,
+          email: userData.email,
+          name: userData.name,
+          password: userData.password,
+          role: userData.role,
+          emailVerified: userData.emailVerified,
+        })
+        .returning();
 
       console.log(`  ✅ Created user: ${user.email} (${user.role})`);
       createdUsers.push(user);

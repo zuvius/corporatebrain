@@ -1,46 +1,52 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { 
-  Search, 
-  BookOpen, 
-  MessageCircle, 
-  Video, 
-  Mail, 
-  FileText, 
-  ChevronDown, 
+import {
+  Search,
+  BookOpen,
+  MessageCircle,
+  Video,
+  Mail,
+  FileText,
+  ChevronDown,
   ChevronUp,
   ExternalLink,
   Bug,
   Lightbulb,
   Shield,
-  Check
+  Check,
 } from "lucide-react";
 
 const FAQS = [
   {
     question: "How do I upload documents?",
-    answer: "Click the 'Add your first source' button in the Sources tab, or drag and drop files directly. We support PDF, DOCX, TXT, and MD files up to 50MB each. Once uploaded, documents are automatically processed and indexed for search.",
+    answer:
+      "Click the 'Add your first source' button in the Sources tab, or drag and drop files directly. We support PDF, DOCX, TXT, and MD files up to 50MB each. Once uploaded, documents are automatically processed and indexed for search.",
   },
   {
     question: "What types of questions can I ask?",
-    answer: "You can ask anything related to your uploaded documents and connected integrations. The AI searches through your knowledge base to find relevant information and provides cited answers. Try asking about specific topics, summaries, or comparisons.",
+    answer:
+      "You can ask anything related to your uploaded documents and connected integrations. The AI searches through your knowledge base to find relevant information and provides cited answers. Try asking about specific topics, summaries, or comparisons.",
   },
   {
     question: "How do integrations work?",
-    answer: "Connect Slack, Google Drive, Notion, or Microsoft Teams from the Integrations page. Once connected, we'll automatically sync your content and make it searchable. You can manually trigger syncs anytime or wait for automatic daily updates.",
+    answer:
+      "Connect Slack, Google Drive, Notion, or Microsoft Teams from the Integrations page. Once connected, we'll automatically sync your content and make it searchable. You can manually trigger syncs anytime or wait for automatic daily updates.",
   },
   {
     question: "Is my data secure?",
-    answer: "Yes! Your data is encrypted at rest and in transit. Documents are processed in isolated environments and never used to train AI models. Each tenant's data is completely segregated. See our Security page for more details.",
+    answer:
+      "Yes! Your data is encrypted at rest and in transit. Documents are processed in isolated environments and never used to train AI models. Each tenant's data is completely segregated. See our Security page for more details.",
   },
   {
     question: "How does pricing work?",
-    answer: "You're charged based on AI token usage. Each query shows the cost before you send it. The Admin Dashboard provides detailed cost breakdowns and ROI calculations. Set budget alerts to stay informed.",
+    answer:
+      "You're charged based on AI token usage. Each query shows the cost before you send it. The Admin Dashboard provides detailed cost breakdowns and ROI calculations. Set budget alerts to stay informed.",
   },
   {
     question: "Can I share conversations?",
-    answer: "Currently conversations are private to each user. Shared workspaces and team collaboration features are coming soon. For now, you can export conversation content manually.",
+    answer:
+      "Currently conversations are private to each user. Shared workspaces and team collaboration features are coming soon. For now, you can export conversation content manually.",
   },
 ];
 
@@ -86,7 +92,9 @@ const SUBJECT_OPTIONS = [
 export default function HelpPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedFaq, setExpandedFaq] = useState<number | null>(0);
-  const [activeTab, setActiveTab] = useState<"faq" | "contact" | "guides">("faq");
+  const [activeTab, setActiveTab] = useState<"faq" | "contact" | "guides">(
+    "faq",
+  );
   const [selectedSubject, setSelectedSubject] = useState(SUBJECT_OPTIONS[0]);
   const [isSubjectOpen, setIsSubjectOpen] = useState(false);
   const subjectDropdownRef = useRef<HTMLDivElement>(null);
@@ -94,7 +102,10 @@ export default function HelpPage() {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (subjectDropdownRef.current && !subjectDropdownRef.current.contains(event.target as Node)) {
+      if (
+        subjectDropdownRef.current &&
+        !subjectDropdownRef.current.contains(event.target as Node)
+      ) {
         setIsSubjectOpen(false);
       }
     };
@@ -105,7 +116,7 @@ export default function HelpPage() {
   const filteredFaqs = FAQS.filter(
     (faq) =>
       faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      faq.answer.toLowerCase().includes(searchQuery.toLowerCase())
+      faq.answer.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
@@ -178,7 +189,9 @@ export default function HelpPage() {
           <div className="space-y-4">
             {filteredFaqs.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-gray-500">No results found for "{searchQuery}"</p>
+                <p className="text-gray-500">
+                  No results found for "{searchQuery}"
+                </p>
                 <button
                   onClick={() => setSearchQuery("")}
                   className="mt-2 text-violet-600 hover:text-violet-700"
@@ -193,7 +206,9 @@ export default function HelpPage() {
                   className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden"
                 >
                   <button
-                    onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
+                    onClick={() =>
+                      setExpandedFaq(expandedFaq === index ? null : index)
+                    }
                     className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                   >
                     <span className="font-medium text-gray-900 dark:text-white">
@@ -238,7 +253,9 @@ export default function HelpPage() {
                       </h3>
                       <ExternalLink className="h-3 w-3 text-gray-400" />
                     </div>
-                    <p className="text-sm text-gray-500 mt-1">{link.description}</p>
+                    <p className="text-sm text-gray-500 mt-1">
+                      {link.description}
+                    </p>
                   </div>
                 </a>
               ))}
@@ -287,20 +304,36 @@ export default function HelpPage() {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 <div className="flex justify-between items-center p-2 bg-gray-50 dark:bg-gray-700 rounded">
-                  <span className="text-gray-600 dark:text-gray-400">New Chat</span>
-                  <kbd className="px-2 py-1 bg-white dark:bg-gray-600 rounded border text-gray-700 dark:text-gray-300 font-mono">⌘N</kbd>
+                  <span className="text-gray-600 dark:text-gray-400">
+                    New Chat
+                  </span>
+                  <kbd className="px-2 py-1 bg-white dark:bg-gray-600 rounded border text-gray-700 dark:text-gray-300 font-mono">
+                    ⌘N
+                  </kbd>
                 </div>
                 <div className="flex justify-between items-center p-2 bg-gray-50 dark:bg-gray-700 rounded">
-                  <span className="text-gray-600 dark:text-gray-400">Focus Search</span>
-                  <kbd className="px-2 py-1 bg-white dark:bg-gray-600 rounded border text-gray-700 dark:text-gray-300 font-mono">⌘K</kbd>
+                  <span className="text-gray-600 dark:text-gray-400">
+                    Focus Search
+                  </span>
+                  <kbd className="px-2 py-1 bg-white dark:bg-gray-600 rounded border text-gray-700 dark:text-gray-300 font-mono">
+                    ⌘K
+                  </kbd>
                 </div>
                 <div className="flex justify-between items-center p-2 bg-gray-50 dark:bg-gray-700 rounded">
-                  <span className="text-gray-600 dark:text-gray-400">Send Message</span>
-                  <kbd className="px-2 py-1 bg-white dark:bg-gray-600 rounded border text-gray-700 dark:text-gray-300 font-mono">Enter</kbd>
+                  <span className="text-gray-600 dark:text-gray-400">
+                    Send Message
+                  </span>
+                  <kbd className="px-2 py-1 bg-white dark:bg-gray-600 rounded border text-gray-700 dark:text-gray-300 font-mono">
+                    Enter
+                  </kbd>
                 </div>
                 <div className="flex justify-between items-center p-2 bg-gray-50 dark:bg-gray-700 rounded">
-                  <span className="text-gray-600 dark:text-gray-400">Toggle Sidebar</span>
-                  <kbd className="px-2 py-1 bg-white dark:bg-gray-600 rounded border text-gray-700 dark:text-gray-300 font-mono">⌘B</kbd>
+                  <span className="text-gray-600 dark:text-gray-400">
+                    Toggle Sidebar
+                  </span>
+                  <kbd className="px-2 py-1 bg-white dark:bg-gray-600 rounded border text-gray-700 dark:text-gray-300 font-mono">
+                    ⌘B
+                  </kbd>
                 </div>
               </div>
             </div>
@@ -329,11 +362,15 @@ export default function HelpPage() {
                       <div className="p-1.5 rounded-lg bg-gradient-to-br from-violet-100 to-purple-100 dark:from-violet-900/30 dark:to-purple-900/30">
                         <selectedSubject.icon className="h-4 w-4 text-violet-600 dark:text-violet-400" />
                       </div>
-                      <span className="font-medium">{selectedSubject.label}</span>
+                      <span className="font-medium">
+                        {selectedSubject.label}
+                      </span>
                     </div>
-                    <ChevronDown className={`h-5 w-5 text-gray-400 group-hover:text-violet-500 transition-transform duration-200 ${isSubjectOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown
+                      className={`h-5 w-5 text-gray-400 group-hover:text-violet-500 transition-transform duration-200 ${isSubjectOpen ? "rotate-180" : ""}`}
+                    />
                   </button>
-                  
+
                   {/* Premium Dropdown Menu */}
                   {isSubjectOpen && (
                     <div className="absolute z-50 w-full mt-2 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-2xl shadow-gray-900/10 dark:shadow-black/30 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
@@ -343,7 +380,8 @@ export default function HelpPage() {
                         </div>
                         {SUBJECT_OPTIONS.map((option) => {
                           const Icon = option.icon;
-                          const isSelected = selectedSubject.value === option.value;
+                          const isSelected =
+                            selectedSubject.value === option.value;
                           return (
                             <button
                               key={option.value}
@@ -353,13 +391,21 @@ export default function HelpPage() {
                                 setIsSubjectOpen(false);
                               }}
                               className={`w-full px-4 py-3 flex items-center gap-3 hover:bg-gradient-to-r hover:from-violet-50 hover:to-purple-50 dark:hover:from-violet-900/20 dark:hover:to-purple-900/20 transition-all duration-200 ${
-                                isSelected ? 'bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-900/30 dark:to-purple-900/30' : ''
+                                isSelected
+                                  ? "bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-900/30 dark:to-purple-900/30"
+                                  : ""
                               }`}
                             >
-                              <div className={`p-1.5 rounded-lg ${isSelected ? 'bg-violet-200 dark:bg-violet-800' : 'bg-gray-100 dark:bg-gray-700'}`}>
-                                <Icon className={`h-4 w-4 ${isSelected ? 'text-violet-700 dark:text-violet-300' : 'text-gray-500 dark:text-gray-400'}`} />
+                              <div
+                                className={`p-1.5 rounded-lg ${isSelected ? "bg-violet-200 dark:bg-violet-800" : "bg-gray-100 dark:bg-gray-700"}`}
+                              >
+                                <Icon
+                                  className={`h-4 w-4 ${isSelected ? "text-violet-700 dark:text-violet-300" : "text-gray-500 dark:text-gray-400"}`}
+                                />
                               </div>
-                              <span className={`flex-1 text-left ${isSelected ? 'font-semibold text-violet-900 dark:text-violet-200' : 'text-gray-700 dark:text-gray-300'}`}>
+                              <span
+                                className={`flex-1 text-left ${isSelected ? "font-semibold text-violet-900 dark:text-violet-200" : "text-gray-700 dark:text-gray-300"}`}
+                              >
                                 {option.label}
                               </span>
                               {isSelected && (
@@ -404,7 +450,9 @@ export default function HelpPage() {
                     <Mail className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white">Email Support</h4>
+                    <h4 className="font-medium text-gray-900 dark:text-white">
+                      Email Support
+                    </h4>
                     <p className="text-sm text-gray-500 mt-1">
                       support@corporatebrain.app
                     </p>
@@ -421,7 +469,9 @@ export default function HelpPage() {
                     <Shield className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                   </div>
                   <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white">Security</h4>
+                    <h4 className="font-medium text-gray-900 dark:text-white">
+                      Security
+                    </h4>
                     <p className="text-sm text-gray-500 mt-1">
                       security@corporatebrain.app
                     </p>
@@ -438,7 +488,9 @@ export default function HelpPage() {
                     <FileText className="h-5 w-5 text-amber-600 dark:text-amber-400" />
                   </div>
                   <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white">Documentation</h4>
+                    <h4 className="font-medium text-gray-900 dark:text-white">
+                      Documentation
+                    </h4>
                     <p className="text-sm text-gray-500 mt-1">
                       docs.corporatebrain.app
                     </p>
@@ -451,8 +503,9 @@ export default function HelpPage() {
 
               <div className="bg-violet-50 dark:bg-violet-900/20 rounded-xl border border-violet-200 dark:border-violet-800 p-4">
                 <p className="text-sm text-violet-800 dark:text-violet-200">
-                  <strong>Enterprise Support:</strong> If you have a dedicated account manager, 
-                  please reach out to them directly for priority support.
+                  <strong>Enterprise Support:</strong> If you have a dedicated
+                  account manager, please reach out to them directly for
+                  priority support.
                 </p>
               </div>
             </div>

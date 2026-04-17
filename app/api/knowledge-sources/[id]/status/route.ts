@@ -7,7 +7,7 @@ import { eq, and } from "drizzle-orm";
 // GET - Get knowledge source status
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await auth();
@@ -32,16 +32,13 @@ export async function GET(
       .where(
         and(
           eq(knowledgeSources.id, id),
-          eq(knowledgeSources.tenantId, tenantId)
-        )
+          eq(knowledgeSources.tenantId, tenantId),
+        ),
       )
       .limit(1);
 
     if (!source) {
-      return NextResponse.json(
-        { error: "Source not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Source not found" }, { status: 404 });
     }
 
     return NextResponse.json({
@@ -56,7 +53,7 @@ export async function GET(
     console.error("Get knowledge source status error:", error);
     return NextResponse.json(
       { error: "Failed to get status" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

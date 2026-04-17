@@ -5,11 +5,15 @@ import { extractTextFromDocument } from "./parsers/document";
 import { chunkDocument } from "./chunker";
 import { generateEmbeddings } from "@/lib/ai/client";
 
-export async function processDocument(sourceId: string, buffer: Buffer, contentType: string) {
+export async function processDocument(
+  sourceId: string,
+  buffer: Buffer,
+  contentType: string,
+) {
   try {
     // Step 1: Extract text using Unstructured.io or native parsers
     const extracted = await extractTextFromDocument(buffer, contentType);
-    
+
     // Update status
     await db
       .update(knowledgeSources)
@@ -39,11 +43,11 @@ export async function processDocument(sourceId: string, buffer: Buffer, contentT
 
     // Step 3: Generate embeddings for each chunk
     const totalTokens = Math.ceil(extracted.text.length / 4);
-    
+
     for (let i = 0; i < chunks.length; i++) {
       const chunk = chunks[i];
       const embedding = await generateEmbeddings(chunk.text);
-      
+
       // Store chunk with embedding (simplified - in production, store in separate table)
       await db
         .update(knowledgeSources)
@@ -65,11 +69,12 @@ export async function processDocument(sourceId: string, buffer: Buffer, contentT
       })
       .where(eq(knowledgeSources.id, sourceId));
 
-    console.log(`✓ Document ${sourceId} processed: ${chunks.length} chunks indexed`);
-    
+    console.log(
+      `✓ Document ${sourceId} processed: ${chunks.length} chunks indexed`,
+    );
   } catch (error) {
     console.error(`✗ Document ${sourceId} processing failed:`, error);
-    
+
     await db
       .update(knowledgeSources)
       .set({

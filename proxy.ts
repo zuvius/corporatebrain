@@ -4,19 +4,19 @@ import { type NextRequest, NextResponse } from "next/server";
 // Uses cookie-based session detection compatible with Auth.js
 export async function proxy(request: NextRequest) {
   // Check for any Auth.js session indicator
-  const sessionToken = 
+  const sessionToken =
     request.cookies.get("authjs.session-token")?.value ||
     request.cookies.get("__Secure-authjs.session-token")?.value ||
     request.cookies.get("__Host-authjs.session-token")?.value ||
     request.cookies.get("next-auth.session-token")?.value ||
     request.cookies.get("__Secure-next-auth.session-token")?.value ||
     request.cookies.get("__Host-next-auth.session-token")?.value;
-  
+
   const hasSession = !!sessionToken;
 
   // Protected routes require authentication
-  const isProtectedRoute = 
-    request.nextUrl.pathname.startsWith("/app") || 
+  const isProtectedRoute =
+    request.nextUrl.pathname.startsWith("/app") ||
     request.nextUrl.pathname.startsWith("/dashboard") ||
     request.nextUrl.pathname.startsWith("/admin") ||
     request.nextUrl.pathname === "/onboarding" ||
@@ -34,9 +34,9 @@ export async function proxy(request: NextRequest) {
       // Try to decode role from session token (JWT)
       // Note: Full verification happens in the page, this is just a quick redirect
       try {
-        const payload = JSON.parse(atob(sessionToken.split('.')[1]));
+        const payload = JSON.parse(atob(sessionToken.split(".")[1]));
         const role = payload?.role;
-        
+
         if (role !== "admin") {
           // Non-admin trying to access admin area -> redirect to /app
           return NextResponse.redirect(new URL("/app", request.url));

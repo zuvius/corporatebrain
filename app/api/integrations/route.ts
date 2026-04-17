@@ -3,8 +3,14 @@ import { auth } from "@/lib/auth/auth";
 import { db } from "@/lib/db/client";
 import { integrations } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
-import { revokeIntegration, IntegrationProvider } from "@/lib/integrations/oauth-framework";
-import { syncAllIntegrations, syncIntegration } from "@/lib/integrations/sync-engine";
+import {
+  revokeIntegration,
+  IntegrationProvider,
+} from "@/lib/integrations/oauth-framework";
+import {
+  syncAllIntegrations,
+  syncIntegration,
+} from "@/lib/integrations/sync-engine";
 
 // GET /api/integrations - List all integrations for tenant
 export async function GET(_req: NextRequest) {
@@ -33,7 +39,7 @@ export async function GET(_req: NextRequest) {
     console.error("List integrations error:", error);
     return NextResponse.json(
       { error: "Failed to list integrations" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -52,7 +58,10 @@ export async function POST(req: NextRequest) {
 
     if (integrationId && provider) {
       // Sync specific integration
-      const result = await syncIntegration(integrationId, provider as IntegrationProvider);
+      const result = await syncIntegration(
+        integrationId,
+        provider as IntegrationProvider,
+      );
       return NextResponse.json({ result });
     } else {
       // Sync all integrations
@@ -63,7 +72,7 @@ export async function POST(req: NextRequest) {
     console.error("Sync integrations error:", error);
     return NextResponse.json(
       { error: "Failed to sync integrations" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -81,10 +90,7 @@ export async function DELETE(req: NextRequest) {
     const provider = searchParams.get("provider") as IntegrationProvider;
 
     if (!provider) {
-      return NextResponse.json(
-        { error: "Provider required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Provider required" }, { status: 400 });
     }
 
     await revokeIntegration(tenantId, provider);
@@ -97,7 +103,7 @@ export async function DELETE(req: NextRequest) {
     console.error("Revoke integration error:", error);
     return NextResponse.json(
       { error: "Failed to revoke integration" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

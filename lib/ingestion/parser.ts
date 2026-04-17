@@ -2,8 +2,10 @@ import { generateEmbeddings } from "@/lib/ai";
 
 export async function processDocument(
   content: string,
-  metadata: Record<string, any>
-): Promise<Array<{ content: string; embedding: number[]; metadata: Record<string, any> }>> {
+  metadata: Record<string, any>,
+): Promise<
+  Array<{ content: string; embedding: number[]; metadata: Record<string, any> }>
+> {
   // Chunk the content
   const chunks = chunkText(content);
 
@@ -21,7 +23,7 @@ export async function processDocument(
           totalChunks: chunks.length,
         },
       };
-    })
+    }),
   );
 
   return processedChunks;

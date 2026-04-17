@@ -88,7 +88,15 @@ export interface KnowledgeSource {
 export interface Integration {
   id: string;
   tenantId: string;
-  provider: "slack" | "google-drive" | "notion" | "teams" | "zoom" | "gmail" | "github" | "salesforce";
+  provider:
+    | "slack"
+    | "google-drive"
+    | "notion"
+    | "teams"
+    | "zoom"
+    | "gmail"
+    | "github"
+    | "salesforce";
   status: "connected" | "disconnected" | "error";
   settings: Record<string, any>;
   lastSyncedAt?: Date;

@@ -8,7 +8,7 @@ import bcrypt from "bcryptjs";
 export async function POST(req: NextRequest) {
   try {
     const session = await auth();
-    
+
     if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -20,14 +20,14 @@ export async function POST(req: NextRequest) {
     if (!currentPassword || !newPassword) {
       return NextResponse.json(
         { error: "Current password and new password are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (newPassword.length < 8) {
       return NextResponse.json(
         { error: "New password must be at least 8 characters" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
     if (!user?.password) {
       return NextResponse.json(
         { error: "Cannot change password for this account type" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
     if (!isValid) {
       return NextResponse.json(
         { error: "Current password is incorrect" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
     console.error("Error changing password:", error);
     return NextResponse.json(
       { error: "Failed to change password" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

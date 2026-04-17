@@ -25,8 +25,8 @@ export async function GET(_req: NextRequest) {
       .where(
         and(
           eq(knowledgeSources.tenantId, tenantId),
-          eq(knowledgeSources.status, "indexed")
-        )
+          eq(knowledgeSources.status, "indexed"),
+        ),
       );
 
     // Get citation relationships
@@ -36,10 +36,7 @@ export async function GET(_req: NextRequest) {
         messageId: citations.messageId,
       })
       .from(citations)
-      .innerJoin(
-        knowledgeSources,
-        eq(citations.sourceId, knowledgeSources.id)
-      )
+      .innerJoin(knowledgeSources, eq(citations.sourceId, knowledgeSources.id))
       .where(eq(knowledgeSources.tenantId, tenantId));
 
     // Build nodes
@@ -59,13 +56,16 @@ export async function GET(_req: NextRequest) {
     }> = [];
 
     // Group citations by message to find co-citations
-    const citationsByMessage = citationData.reduce((acc, citation) => {
-      if (!acc[citation.messageId]) {
-        acc[citation.messageId] = [];
-      }
-      acc[citation.messageId].push(citation.sourceId);
-      return acc;
-    }, {} as Record<string, string[]>);
+    const citationsByMessage = citationData.reduce(
+      (acc, citation) => {
+        if (!acc[citation.messageId]) {
+          acc[citation.messageId] = [];
+        }
+        acc[citation.messageId].push(citation.sourceId);
+        return acc;
+      },
+      {} as Record<string, string[]>,
+    );
 
     // Create connections from co-citations
     Object.values(citationsByMessage).forEach((sourceIds) => {
@@ -73,12 +73,12 @@ export async function GET(_req: NextRequest) {
         for (let j = i + 1; j < sourceIds.length; j++) {
           const source1 = sourceIds[i];
           const source2 = sourceIds[j];
-          
+
           // Check if connection already exists
           const existing = connections.find(
             (c) =>
               (c.source === source1 && c.target === source2) ||
-              (c.source === source2 && c.target === source1)
+              (c.source === source2 && c.target === source1),
           );
 
           if (existing) {
@@ -109,14 +109,14 @@ export async function GET(_req: NextRequest) {
     console.error("Knowledge graph error:", error);
     return NextResponse.json(
       { error: "Failed to generate knowledge graph" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 function getSourceType(
   type: string,
-  source: string
+  source: string,
 ): "file" | "url" | "slack" | "notion" | "drive" {
   if (type === "integration") {
     if (source.includes("slack")) return "slack";

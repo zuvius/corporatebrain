@@ -20,12 +20,17 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const isAdmin = (session.user as any).role === "admin" || (session.user as any).role === "owner";
+    const isAdmin =
+      session.user.role === "admin" ||
+      session.user.role === "owner";
     if (!isAdmin) {
-      return NextResponse.json({ error: "Admin access required" }, { status: 403 });
+      return NextResponse.json(
+        { error: "Admin access required" },
+        { status: 403 },
+      );
     }
 
-    const tenantId = (session.user as any).tenantId;
+    const tenantId = session.user.tenantId;
     const { searchParams } = new URL(req.url);
     const days = parseInt(searchParams.get("days") || "30");
     const startDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
@@ -40,8 +45,8 @@ export async function GET(req: NextRequest) {
       .where(
         and(
           eq(usageLogs.tenantId, tenantId),
-          gte(usageLogs.createdAt, startDate)
-        )
+          gte(usageLogs.createdAt, startDate),
+        ),
       );
 
     // Calculate ROI metrics
@@ -54,7 +59,7 @@ export async function GET(req: NextRequest) {
     // - Corporate Brain query time: 1 minute
     const TIME_SAVED_PER_QUERY_MINUTES = 14; // 15 - 1
     const HOURLY_RATE = 50;
-    
+
     const hoursSaved = (queries * TIME_SAVED_PER_QUERY_MINUTES) / 60;
     const costSaved = hoursSaved * HOURLY_RATE;
     const estimatedValue = costSaved;
@@ -70,8 +75,10 @@ export async function GET(req: NextRequest) {
     };
 
     // Calculate trends (compare to previous period)
-    const previousStartDate = new Date(startDate.getTime() - days * 24 * 60 * 60 * 1000);
-    
+    const previousStartDate = new Date(
+      startDate.getTime() - days * 24 * 60 * 60 * 1000,
+    );
+
     const [previousStats] = await db
       .select({
         totalQueries: sql<number>`COUNT(*)`,
@@ -81,15 +88,16 @@ export async function GET(req: NextRequest) {
         and(
           eq(usageLogs.tenantId, tenantId),
           gte(usageLogs.createdAt, previousStartDate),
-          sql`${usageLogs.createdAt} < ${startDate}`
-        )
+          sql`${usageLogs.createdAt} < ${startDate}`,
+        ),
       );
 
     const currentQueries = usageStats?.totalQueries || 0;
     const previousQueries = previousStats?.totalQueries || 0;
-    const growthRate = previousQueries > 0 
-      ? ((currentQueries - previousQueries) / previousQueries) * 100 
-      : 0;
+    const growthRate =
+      previousQueries > 0
+        ? ((currentQueries - previousQueries) / previousQueries) * 100
+        : 0;
 
     // Knowledge base growth
     const dailyGrowth = await db
@@ -101,8 +109,8 @@ export async function GET(req: NextRequest) {
       .where(
         and(
           eq(knowledgeSources.tenantId, tenantId),
-          gte(knowledgeSources.createdAt, startDate)
-        )
+          gte(knowledgeSources.createdAt, startDate),
+        ),
       )
       .groupBy(sql`DATE(${knowledgeSources.createdAt})`)
       .orderBy(sql`DATE(${knowledgeSources.createdAt})`);
@@ -129,7 +137,7 @@ export async function GET(req: NextRequest) {
     console.error("ROI calculation error:", error);
     return NextResponse.json(
       { error: "Failed to calculate ROI" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

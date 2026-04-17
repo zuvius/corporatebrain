@@ -16,16 +16,14 @@ const VALID_PROVIDERS: IntegrationProvider[] = [
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: Promise<{ provider: string }> }
+  { params }: { params: Promise<{ provider: string }> },
 ) {
   try {
     const { provider: providerParam } = await params;
     const provider = providerParam as IntegrationProvider;
-    
+
     if (!VALID_PROVIDERS.includes(provider)) {
-      return NextResponse.redirect(
-        `/app/integrations?error=invalid_provider`
-      );
+      return NextResponse.redirect(`/app/integrations?error=invalid_provider`);
     }
 
     const { searchParams } = new URL(req.url);
@@ -37,7 +35,7 @@ export async function GET(
     if (error) {
       console.error(`OAuth error from ${provider}:`, error);
       return NextResponse.redirect(
-        `/app/integrations?error=${encodeURIComponent(error)}`
+        `/app/integrations?error=${encodeURIComponent(error)}`,
       );
     }
 
@@ -47,21 +45,15 @@ export async function GET(
     const tenantId = cookieStore.get("oauth_tenant")?.value;
 
     if (!storedState || storedState !== state) {
-      return NextResponse.redirect(
-        `/app/integrations?error=invalid_state`
-      );
+      return NextResponse.redirect(`/app/integrations?error=invalid_state`);
     }
 
     if (!tenantId) {
-      return NextResponse.redirect(
-        `/app/integrations?error=session_expired`
-      );
+      return NextResponse.redirect(`/app/integrations?error=session_expired`);
     }
 
     if (!code) {
-      return NextResponse.redirect(
-        `/app/integrations?error=no_code`
-      );
+      return NextResponse.redirect(`/app/integrations?error=no_code`);
     }
 
     // Exchange code for tokens
@@ -83,14 +75,14 @@ export async function GET(
 
     // Redirect to integrations page with success
     return NextResponse.redirect(
-      `/app/integrations?success=${provider}_connected`
+      `/app/integrations?success=${provider}_connected`,
     );
   } catch (error) {
     console.error("OAuth callback error:", error);
     return NextResponse.redirect(
       `/app/integrations?error=${encodeURIComponent(
-        error instanceof Error ? error.message : "Unknown error"
-      )}`
+        error instanceof Error ? error.message : "Unknown error",
+      )}`,
     );
   }
 }

@@ -47,15 +47,15 @@ export function NeuralNetworkHero() {
   const initNodes = useCallback((width: number, height: number) => {
     const nodes: Node[] = [];
     const baseCount = Math.floor((width * height) / 35000);
-    
+
     // Create nodes in layers
     for (let layer = 0; layer < 3; layer++) {
       const layerCount = Math.floor(baseCount * (layer === 1 ? 0.5 : 0.25));
-      
+
       for (let i = 0; i < layerCount; i++) {
         const types: NodeType[] = ["input", "processing", "output"];
         const type = types[Math.floor(Math.random() * types.length)];
-        
+
         nodes.push({
           x: Math.random() * width,
           y: Math.random() * height,
@@ -74,11 +74,12 @@ export function NeuralNetworkHero() {
   }, []);
 
   const getNodeColor = (node: Node, time: number) => {
-    const pulse = Math.sin(time * node.pulseSpeed + node.pulsePhase) * 0.5 + 0.5;
+    const pulse =
+      Math.sin(time * node.pulseSpeed + node.pulsePhase) * 0.5 + 0.5;
     const baseColors = {
-      input: { r: 99, g: 102, b: 241 },    // Indigo
+      input: { r: 99, g: 102, b: 241 }, // Indigo
       processing: { r: 139, g: 92, b: 246 }, // Purple
-      output: { r: 236, g: 72, b: 153 },    // Pink
+      output: { r: 236, g: 72, b: 153 }, // Pink
     };
     const color = baseColors[node.type];
     const intensity = 0.4 + pulse * 0.6;
@@ -122,7 +123,7 @@ export function NeuralNetworkHero() {
     color: string,
     width: number,
     time: number,
-    energyFlow: number
+    energyFlow: number,
   ) => {
     const midX = (x1 + x2) / 2;
     const midY = (y1 + y2) / 2;
@@ -141,9 +142,11 @@ export function NeuralNetworkHero() {
     if (energyFlow > 0) {
       const particlePos = (time * 0.002) % 1;
       const t = particlePos;
-      const px = (1 - t) * (1 - t) * x1 + 2 * (1 - t) * t * controlX + t * t * x2;
-      const py = (1 - t) * (1 - t) * y1 + 2 * (1 - t) * t * controlY + t * t * y2;
-      
+      const px =
+        (1 - t) * (1 - t) * x1 + 2 * (1 - t) * t * controlX + t * t * x2;
+      const py =
+        (1 - t) * (1 - t) * y1 + 2 * (1 - t) * t * controlY + t * t * y2;
+
       ctx.beginPath();
       ctx.arc(px, py, 2, 0, Math.PI * 2);
       ctx.fillStyle = color.replace(/[\d.]+\)$/, "1)");
@@ -177,7 +180,7 @@ export function NeuralNetworkHero() {
       const dx = mouseRef.current.x - mouseRef.current.prevX;
       const dy = mouseRef.current.y - mouseRef.current.prevY;
       const speed = Math.sqrt(dx * dx + dy * dy);
-      
+
       if (speed > 20 && Math.random() > 0.7) {
         ripplesRef.current.push(createRipple(e.clientX, e.clientY));
       }
@@ -185,14 +188,16 @@ export function NeuralNetworkHero() {
 
     const handleClick = (e: MouseEvent) => {
       ripplesRef.current.push(createRipple(e.clientX, e.clientY));
-      
+
       // Create burst of particles
       for (let i = 0; i < 8; i++) {
-        particlesRef.current.push(createParticle(
-          e.clientX,
-          e.clientY,
-          `hsl(${280 + Math.random() * 60}, 80%, 60%)`
-        ));
+        particlesRef.current.push(
+          createParticle(
+            e.clientX,
+            e.clientY,
+            `hsl(${280 + Math.random() * 60}, 80%, 60%)`,
+          ),
+        );
       }
     };
 
@@ -205,7 +210,12 @@ export function NeuralNetworkHero() {
       const time = timeRef.current;
 
       // Clear with gradient background
-      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      const gradient = ctx.createLinearGradient(
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+      );
       gradient.addColorStop(0, "#0f172a");
       gradient.addColorStop(0.5, "#1e1b4b");
       gradient.addColorStop(1, "#312e81");
@@ -241,7 +251,11 @@ export function NeuralNetworkHero() {
       });
 
       // Draw connections between nodes in same and adjacent layers
-      const drawLayerConnections = (layerNodes: Node[], maxDist: number, baseOpacity: number) => {
+      const drawLayerConnections = (
+        layerNodes: Node[],
+        maxDist: number,
+        baseOpacity: number,
+      ) => {
         for (let i = 0; i < layerNodes.length; i++) {
           for (let j = i + 1; j < layerNodes.length; j++) {
             const dx = layerNodes[i].x - layerNodes[j].x;
@@ -251,7 +265,7 @@ export function NeuralNetworkHero() {
             if (dist < maxDist) {
               const opacity = (1 - dist / maxDist) * baseOpacity;
               const color = getGlowColor(layerNodes[i]);
-              
+
               drawBezierCurve(
                 ctx,
                 layerNodes[i].x,
@@ -261,7 +275,7 @@ export function NeuralNetworkHero() {
                 `${color} ${opacity})`,
                 0.5 + layerNodes[i].layer * 0.3,
                 time,
-                layerNodes[i].energy
+                layerNodes[i].energy,
               );
             }
           }
@@ -292,7 +306,7 @@ export function NeuralNetworkHero() {
                 `rgba(139, 92, 246, ${opacity})`,
                 0.3,
                 time,
-                0
+                0,
               );
             }
           });
@@ -316,16 +330,14 @@ export function NeuralNetworkHero() {
             `rgba(236, 72, 153, ${opacity})`,
             1.5,
             time,
-            1
+            1,
           );
 
           // Chance to spawn particle
           if (Math.random() > 0.98) {
-            particlesRef.current.push(createParticle(
-              node.x,
-              node.y,
-              getGlowColor(node) + " 1)"
-            ));
+            particlesRef.current.push(
+              createParticle(node.x, node.y, getGlowColor(node) + " 1)"),
+            );
           }
         }
       });
@@ -343,18 +355,30 @@ export function NeuralNetworkHero() {
 
         if (particle.life < particle.maxLife) {
           ctx.beginPath();
-          ctx.arc(particle.x, particle.y, 2 * (1 - lifeRatio * 0.5), 0, Math.PI * 2);
+          ctx.arc(
+            particle.x,
+            particle.y,
+            2 * (1 - lifeRatio * 0.5),
+            0,
+            Math.PI * 2,
+          );
           ctx.fillStyle = particle.color.replace(/[\d.]+\)$/, `${opacity})`);
           ctx.fill();
-          
+
           // Draw trail
           ctx.beginPath();
-          ctx.moveTo(particle.x - particle.vx * 3, particle.y - particle.vy * 3);
+          ctx.moveTo(
+            particle.x - particle.vx * 3,
+            particle.y - particle.vy * 3,
+          );
           ctx.lineTo(particle.x, particle.y);
-          ctx.strokeStyle = particle.color.replace(/[\d.]+\)$/, `${opacity * 0.5})`);
+          ctx.strokeStyle = particle.color.replace(
+            /[\d.]+\)$/,
+            `${opacity * 0.5})`,
+          );
           ctx.lineWidth = 1;
           ctx.stroke();
-          
+
           return true;
         }
         return false;
@@ -366,9 +390,9 @@ export function NeuralNetworkHero() {
         const dx = mouse.x - node.x;
         const dy = mouse.y - node.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        
+
         if (dist < 200 && dist > 0) {
-          const force = (200 - dist) / 200 * 0.015;
+          const force = ((200 - dist) / 200) * 0.015;
           node.vx += (dx / dist) * force;
           node.vy += (dy / dist) * force;
         }
@@ -379,8 +403,10 @@ export function NeuralNetworkHero() {
 
         // Bounce off edges with padding
         const padding = 50;
-        if (node.x < padding || node.x > canvas.width - padding) node.vx *= -0.8;
-        if (node.y < padding || node.y > canvas.height - padding) node.vy *= -0.8;
+        if (node.x < padding || node.x > canvas.width - padding)
+          node.vx *= -0.8;
+        if (node.y < padding || node.y > canvas.height - padding)
+          node.vy *= -0.8;
 
         // Keep in bounds
         node.x = Math.max(padding, Math.min(canvas.width - padding, node.x));
@@ -397,15 +423,19 @@ export function NeuralNetworkHero() {
         const pulse = Math.sin(node.pulsePhase) * 0.5 + 0.5;
         const glowRadius = node.radius * (2 + pulse);
         const glowAlpha = 0.3 * pulse * (node.layer === 2 ? 1 : 0.5);
-        
+
         const gradient = ctx.createRadialGradient(
-          node.x, node.y, 0,
-          node.x, node.y, glowRadius * 3
+          node.x,
+          node.y,
+          0,
+          node.x,
+          node.y,
+          glowRadius * 3,
         );
         gradient.addColorStop(0, getGlowColor(node) + ` ${glowAlpha})`);
         gradient.addColorStop(0.5, getGlowColor(node) + ` ${glowAlpha * 0.3})`);
         gradient.addColorStop(1, getGlowColor(node) + " 0)");
-        
+
         ctx.beginPath();
         ctx.arc(node.x, node.y, glowRadius * 3, 0, Math.PI * 2);
         ctx.fillStyle = gradient;
@@ -413,7 +443,13 @@ export function NeuralNetworkHero() {
 
         // Draw core node
         ctx.beginPath();
-        ctx.arc(node.x, node.y, node.radius * (0.8 + pulse * 0.4), 0, Math.PI * 2);
+        ctx.arc(
+          node.x,
+          node.y,
+          node.radius * (0.8 + pulse * 0.4),
+          0,
+          Math.PI * 2,
+        );
         ctx.fillStyle = getNodeColor(node, time);
         ctx.fill();
 
@@ -443,8 +479,9 @@ export function NeuralNetworkHero() {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full cursor-crosshair"
-      style={{ 
-        background: "linear-gradient(135deg, #0a0f1e 0%, #151030 50%, #1e1b4b 100%)",
+      style={{
+        background:
+          "linear-gradient(135deg, #0a0f1e 0%, #151030 50%, #1e1b4b 100%)",
       }}
     />
   );

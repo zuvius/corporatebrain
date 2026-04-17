@@ -4,7 +4,10 @@ import { db } from "@/lib/db/client";
 import { knowledgeSources } from "@/lib/db/schema";
 import { eq, and } from "drizzle-orm";
 import { v4 as uuidv4 } from "uuid";
-import { processUrlForIngestion, isFirecrawlConfigured } from "@/lib/ingestion/firecrawl";
+import {
+  processUrlForIngestion,
+  isFirecrawlConfigured,
+} from "@/lib/ingestion/firecrawl";
 import { processDocument } from "@/lib/ingestion/processor";
 
 /**
@@ -29,7 +32,7 @@ export async function POST(req: NextRequest) {
     if (!isFirecrawlConfigured()) {
       return NextResponse.json(
         { error: "Firecrawl is not configured. Please set FIRECRAWL_API_KEY." },
-        { status: 503 }
+        { status: 503 },
       );
     }
 
@@ -50,7 +53,7 @@ export async function POST(req: NextRequest) {
     } catch {
       return NextResponse.json(
         { error: "Invalid URL format. Must be a valid http or https URL." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -75,7 +78,9 @@ export async function POST(req: NextRequest) {
     });
 
     // Start async processing
-    processUrlAsync(sourceId, validatedUrl.toString(), options).catch(console.error);
+    processUrlAsync(sourceId, validatedUrl.toString(), options).catch(
+      console.error,
+    );
 
     return NextResponse.json({
       success: true,
@@ -86,8 +91,10 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("URL ingestion error:", error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Failed to ingest URL" },
-      { status: 500 }
+      {
+        error: error instanceof Error ? error.message : "Failed to ingest URL",
+      },
+      { status: 500 },
     );
   }
 }
@@ -119,7 +126,12 @@ export async function GET(req: NextRequest) {
           metadata: knowledgeSources.metadata,
         })
         .from(knowledgeSources)
-        .where(and(eq(knowledgeSources.tenantId, tenantId), eq(knowledgeSources.type, "url")));
+        .where(
+          and(
+            eq(knowledgeSources.tenantId, tenantId),
+            eq(knowledgeSources.type, "url"),
+          ),
+        );
 
       return NextResponse.json({ sources });
     }
@@ -141,21 +153,27 @@ export async function GET(req: NextRequest) {
         and(
           eq(knowledgeSources.tenantId, tenantId),
           eq(knowledgeSources.type, "url"),
-          eq(knowledgeSources.source, url)
-        )
+          eq(knowledgeSources.source, url),
+        ),
       )
       .limit(1);
 
     if (!source) {
-      return NextResponse.json({ error: "URL source not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "URL source not found" },
+        { status: 404 },
+      );
     }
 
     return NextResponse.json({ source });
   } catch (error) {
     console.error("Get URL status error:", error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Failed to get URL status" },
-      { status: 500 }
+      {
+        error:
+          error instanceof Error ? error.message : "Failed to get URL status",
+      },
+      { status: 500 },
     );
   }
 }
@@ -166,7 +184,7 @@ export async function GET(req: NextRequest) {
 async function processUrlAsync(
   sourceId: string,
   url: string,
-  options?: Record<string, any>
+  options?: Record<string, any>,
 ) {
   try {
     // Scrape URL using Firecrawl
@@ -195,7 +213,8 @@ async function processUrlAsync(
       .update(knowledgeSources)
       .set({
         status: "error",
-        errorMessage: error instanceof Error ? error.message : "Processing failed",
+        errorMessage:
+          error instanceof Error ? error.message : "Processing failed",
         updatedAt: new Date(),
       })
       .where(eq(knowledgeSources.id, sourceId));

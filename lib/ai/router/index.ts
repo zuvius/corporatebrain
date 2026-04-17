@@ -2,7 +2,12 @@ import { generateChatCompletion } from "@/lib/ai/client";
 import { trackUsage } from "@/lib/ai/cost-tracker";
 
 export type ModelTier = "fast" | "balanced" | "deep" | "creative";
-export type TaskType = "chat" | "ingestion" | "analysis" | "coding" | "creative";
+export type TaskType =
+  | "chat"
+  | "ingestion"
+  | "analysis"
+  | "coding"
+  | "creative";
 
 interface RouteConfig {
   tier: ModelTier;
@@ -84,7 +89,7 @@ export function selectModel(config: RouteConfig): ModelConfig {
 
   // Filter by tier and context window
   const candidates = MODELS.filter(
-    (m) => m.tier === tier && m.contextWindow >= contextWindow
+    (m) => m.tier === tier && m.contextWindow >= contextWindow,
   );
 
   // Sort by task strength match
@@ -125,7 +130,7 @@ interface Citation {
 export async function routeAndGenerate(
   messages: ChatMessage[],
   config: RouteConfig,
-  tenantId: string
+  tenantId: string,
 ): Promise<RouteResult> {
   const model = selectModel(config);
 

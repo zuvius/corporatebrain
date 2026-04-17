@@ -10,7 +10,7 @@ export function SignInForm() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  
+
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/app";
 
@@ -55,7 +55,10 @@ export function SignInForm() {
 
       {/* Email Field */}
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-white/70 mb-2">
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium text-white/70 mb-2"
+        >
           Email
         </label>
         <div className="relative">
@@ -74,7 +77,10 @@ export function SignInForm() {
 
       {/* Password Field */}
       <div>
-        <label htmlFor="password" className="block text-sm font-medium text-white/70 mb-2">
+        <label
+          htmlFor="password"
+          className="block text-sm font-medium text-white/70 mb-2"
+        >
           Password
         </label>
         <div className="relative">
@@ -113,7 +119,9 @@ export function SignInForm() {
           <div className="w-full border-t border-white/10"></div>
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="px-2 bg-[#0a0a0f] text-white/40">Or continue with</span>
+          <span className="px-2 bg-[#0a0a0f] text-white/40">
+            Or continue with
+          </span>
         </div>
       </div>
 

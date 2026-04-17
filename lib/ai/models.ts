@@ -51,11 +51,18 @@ export function analyzeComplexity(query: string): number {
 
   // Question type indicators
   const complexIndicators = [
-    "analyze", "compare", "evaluate", "synthesize", "explain in detail",
-    "what are the implications", "how does this affect", "why does",
-    "pros and cons", "advantages and disadvantages",
+    "analyze",
+    "compare",
+    "evaluate",
+    "synthesize",
+    "explain in detail",
+    "what are the implications",
+    "how does this affect",
+    "why does",
+    "pros and cons",
+    "advantages and disadvantages",
   ];
-  
+
   for (const indicator of complexIndicators) {
     if (query.toLowerCase().includes(indicator)) {
       score += 0.15;
@@ -65,10 +72,16 @@ export function analyzeComplexity(query: string): number {
 
   // Technical depth indicators
   const technicalIndicators = [
-    "architecture", "implementation", "technical", "code", "algorithm",
-    "system design", "infrastructure", "optimization",
+    "architecture",
+    "implementation",
+    "technical",
+    "code",
+    "algorithm",
+    "system design",
+    "infrastructure",
+    "optimization",
   ];
-  
+
   for (const indicator of technicalIndicators) {
     if (query.toLowerCase().includes(indicator)) {
       score += 0.1;
@@ -105,7 +118,7 @@ export function selectModel(query: string, context: string): AIModelConfig {
 export function calculateCost(
   model: AIModelConfig,
   inputTokens: number,
-  outputTokens: number
+  outputTokens: number,
 ): number {
   const inputCost = inputTokens * model.costPerInputToken;
   const outputCost = outputTokens * model.costPerOutputToken;

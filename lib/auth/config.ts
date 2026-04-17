@@ -32,12 +32,12 @@ export const authConfig: NextAuthConfig = {
         if (!parsed.success) return null;
 
         const { email, password, tenantSlug } = parsed.data;
-        
+
         // Look up tenant by slug to get tenant ID
         const effectiveTenantSlug = tenantSlug || "acme";
         const tenant = await getTenantBySlug(effectiveTenantSlug);
         if (!tenant) return null;
-        
+
         // Query user with tenant ID (UUID)
         const user = await getUserByEmail(email, tenant.id);
         if (!user || !user.password) return null;

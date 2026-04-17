@@ -29,29 +29,38 @@ export async function POST(req: NextRequest) {
     if (file.size > maxSize) {
       return NextResponse.json(
         { error: "File too large. Max 100MB." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     // Calculate content hash for duplicate detection
     const buffer = Buffer.from(await file.arrayBuffer());
-    const contentHash = crypto.createHash('sha256').update(buffer).digest('hex');
-    
+    const contentHash = crypto
+      .createHash("sha256")
+      .update(buffer)
+      .digest("hex");
+
     // Check for existing document with same hash
     const existingSource = await db.query.knowledgeSources.findFirst({
       where: and(
-        eq(knowledgeSources.tenantId, tenantId || (session.user as any).tenantId),
-        eq(knowledgeSources.contentHash, contentHash)
+        eq(
+          knowledgeSources.tenantId,
+          tenantId || (session.user as any).tenantId,
+        ),
+        eq(knowledgeSources.contentHash, contentHash),
       ),
     });
-    
+
     if (existingSource) {
-      return NextResponse.json({
-        error: "Duplicate content",
-        message: `This file has already been uploaded as "${existingSource.title}"`,
-        existingSourceId: existingSource.id,
-        existingSourceName: existingSource.title,
-      }, { status: 409 });
+      return NextResponse.json(
+        {
+          error: "Duplicate content",
+          message: `This file has already been uploaded as "${existingSource.title}"`,
+          existingSourceId: existingSource.id,
+          existingSourceName: existingSource.title,
+        },
+        { status: 409 },
+      );
     }
 
     // Validate file type
@@ -81,11 +90,11 @@ export async function POST(req: NextRequest) {
       "application/xml",
       "text/xml",
     ];
-    
+
     if (!allowedTypes.includes(file.type)) {
       return NextResponse.json(
         { error: "Unsupported file type" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -101,9 +110,8 @@ export async function POST(req: NextRequest) {
     });
 
     // Truncate storage path to fit DB limit (100 chars)
-    const truncatedSource = storagePath.length > 95 
-      ? "..." + storagePath.slice(-92)
-      : storagePath;
+    const truncatedSource =
+      storagePath.length > 95 ? "..." + storagePath.slice(-92) : storagePath;
 
     // Create knowledge source record with content hash
     await db.insert(knowledgeSources).values({
@@ -134,10 +142,7 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error("Upload failed:", error);
-    return NextResponse.json(
-      { error: "Upload failed" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Upload failed" }, { status: 500 });
   }
 }
 
@@ -152,10 +157,7 @@ export async function GET(req: NextRequest) {
     const sourceId = searchParams.get("sourceId");
 
     if (!sourceId) {
-      return NextResponse.json(
-        { error: "sourceId required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "sourceId required" }, { status: 400 });
     }
 
     // Get processing status
@@ -171,10 +173,7 @@ export async function GET(req: NextRequest) {
       .limit(1);
 
     if (!source) {
-      return NextResponse.json(
-        { error: "Source not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Source not found" }, { status: 404 });
     }
 
     return NextResponse.json({
@@ -185,9 +184,6 @@ export async function GET(req: NextRequest) {
     });
   } catch (error) {
     console.error("Status check failed:", error);
-    return NextResponse.json(
-      { error: "Status check failed" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Status check failed" }, { status: 500 });
   }
 }

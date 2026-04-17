@@ -100,7 +100,9 @@ export function ChatInterface() {
       {/* Context Sidebar */}
       <div className="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
         <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-          <h2 className="font-semibold text-gray-900 dark:text-white">Context</h2>
+          <h2 className="font-semibold text-gray-900 dark:text-white">
+            Context
+          </h2>
         </div>
         <div className="flex-1 overflow-y-auto p-4 space-y-2">
           <div className="text-sm text-gray-600 dark:text-gray-400">
@@ -165,7 +167,9 @@ export function ChatInterface() {
           {messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full text-gray-500 dark:text-gray-400">
               <p className="text-lg mb-2">Welcome to Corporate Brain</p>
-              <p className="text-sm">Ask anything about your company knowledge</p>
+              <p className="text-sm">
+                Ask anything about your company knowledge
+              </p>
             </div>
           ) : (
             messages.map((message) => (
@@ -206,7 +210,9 @@ export function ChatInterface() {
               />
               <button
                 onClick={() => {
-                  const input = document.querySelector('input[type="text"]') as HTMLInputElement;
+                  const input = document.querySelector(
+                    'input[type="text"]',
+                  ) as HTMLInputElement;
                   if (input) {
                     handleSendMessage(input.value);
                     input.value = "";

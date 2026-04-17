@@ -5,6 +5,7 @@
 ### New Files Created
 
 #### Documentation
+
 - `c:\Users\seoho\Documents\Corporate Brain\docs\TESTING.md` - Comprehensive testing guide (300+ lines)
   - Quick start commands
   - Test file structure
@@ -16,12 +17,12 @@
   - Troubleshooting guide
 
 #### Configuration Files
+
 - `c:\Users\seoho\Documents\Corporate Brain\vitest.config.ts` - Vitest configuration
   - Environment: jsdom
   - Coverage thresholds: 70% statements/functions, 65% branches
   - Path aliases for @/ imports
   - Include patterns for test files
-  
 - `c:\Users\seoho\Documents\Corporate Brain\vitest.setup.ts` - Vitest setup
   - Next.js router mock
   - NextAuth session mock
@@ -36,6 +37,7 @@
   - Screenshot/video on failure
 
 #### Unit Tests
+
 - `c:\Users\seoho\Documents\Corporate Brain\lib\utils.test.ts` - Utility function tests
   - cn() - Tailwind class merging
   - formatDate() - Date formatting
@@ -49,6 +51,7 @@
   - getTenantUsageStats() - Usage aggregation
 
 #### Component Tests
+
 - `c:\Users\seoho\Documents\Corporate Brain\components\chat\chat-message.test.tsx`
   - User message rendering
   - AI message rendering
@@ -63,6 +66,7 @@
   - Child component mocks
 
 #### E2E Tests
+
 - `c:\Users\seoho\Documents\Corporate Brain\tests\e2e\auth.spec.ts`
   - Sign in form validation
   - Email validation
@@ -87,6 +91,7 @@
 ### Modified Files
 
 #### Source Code
+
 - `c:\Users\seoho\Documents\Corporate Brain\lib\utils.ts` - Added utility functions
   - formatDate(): Format dates to readable strings
   - truncateText(): Truncate text with ellipsis
@@ -99,10 +104,11 @@
   - Returns cost in dollars
 
 #### Documentation
+
 - `c:\Users\seoho\Documents\Corporate Brain\AGENTS.md` - Added Testing Requirements section
-  - Unit test requirements (lib/**/*.test.ts)
-  - Component test requirements (components/**/*.test.tsx)
-  - E2E test requirements (tests/e2e/*.spec.ts)
+  - Unit test requirements (lib/\*_/_.test.ts)
+  - Component test requirements (components/\*_/_.test.tsx)
+  - E2E test requirements (tests/e2e/\*.spec.ts)
   - Coverage thresholds (70%/65%)
   - Reference to TESTING.md
 
@@ -112,16 +118,19 @@
   - Updated completed tasks
 
 ### Dependencies Added
+
 - `@vitejs/plugin-react@^4.0.0` - Vite React plugin for Vitest
 - `jsdom` - DOM environment for testing
 - `@vitest/coverage-v8@^1.6.0` - Code coverage tool
 
 ### Test Fixes Applied
+
 - Fixed `lib/ai/cost-tracker.test.ts`: Updated expected cost from $0.045 to $0.06 (gpt-4: 1000 prompt + 500 completion)
 - Fixed `lib/utils.test.ts`: Updated truncateText expectations to match actual truncation logic
 - Fixed `lib/utils.ts`: Updated formatDate to handle null/undefined input properly
 
 ### Test Results
+
 ```
 ✓ lib/utils.test.ts (22 tests)
   - cn: 5 tests (class merging, conditionals, arrays)
@@ -140,11 +149,13 @@ Duration: ~2.2s
 ```
 
 ### Known Issues
+
 - Component tests (chat-message.test.tsx, chat-interface.test.tsx) have lodash dependency issues
 - vitest.setup.ts temporarily disabled pending dependency resolution
 - E2E tests require dev server running on localhost:3004
 
 ### Commands Available
+
 ```bash
 # Run tests in watch mode
 npm run test
@@ -163,12 +174,14 @@ npx vitest run lib/ --reporter=verbose
 ```
 
 ### Coverage Thresholds
+
 - Statements: 70%
 - Branches: 65%
 - Functions: 70%
 - Lines: 70%
 
 ### Notes
+
 - All test files follow naming convention: `*.test.ts` (unit) / `*.test.tsx` (component) / `*.spec.ts` (E2E)
 
 ---
@@ -176,6 +189,7 @@ npx vitest run lib/ --reporter=verbose
 ## NPM Scripts Documentation
 
 ### New File Created
+
 - `c:\Users\seoho\Documents\Corporate Brain\docs\NPM_SCRIPTS.md` - Complete npm scripts reference guide
   - Development commands (`dev`, `setup`)
   - Database commands (`db:seed`, `db:setup`, `db:reset`)
@@ -186,6 +200,7 @@ npx vitest run lib/ --reporter=verbose
   - Test user credentials reference
 
 ### Security Updates
+
 - **Production Safety**: Added `NODE_ENV` check to seed script - prevents accidental production seeding
 - **Added**: `db:seed:prod` script that explicitly blocks production seeding with error message
 - **Reason**: Seed script creates hardcoded test credentials (`admin@acme.com`/`password123`) that must never exist in production
@@ -193,16 +208,17 @@ npx vitest run lib/ --reporter=verbose
 ## First Admin Setup Solution
 
 ### Problem Solved
+
 - **Issue**: Seeding blocked in production = no way to create first admin user
 - **Solution**: Created multiple options for bootstrapping initial admin
 
 ### New Files Created
+
 - `c:\Users\seoho\Documents\Corporate Brain\app\setup\page.tsx` - First-run setup wizard
   - Web form for creating first admin + tenant
   - Only accessible when zero users exist
   - Auto-redirects to home after first admin created
   - Secure: checks user count server-side
-  
 - `c:\Users\seoho\Documents\Corporate Brain\docs\FIRST_ADMIN_SETUP.md` - Complete setup guide
   - 3 methods: Setup Wizard, Drizzle Studio, Environment Variables
   - Security best practices
@@ -210,6 +226,7 @@ npx vitest run lib/ --reporter=verbose
   - Troubleshooting guide
 
 ### Usage
+
 ```bash
 # Development
 npm run db:seed        # Creates test admin
@@ -223,11 +240,14 @@ npm run db:seed        # Creates test admin
 ## Drizzle Kit Command Updates
 
 ### Fixed Deprecation Warnings
+
 Updated Drizzle Kit commands to use new syntax (v0.21.0+):
+
 - `drizzle-kit generate:pg` → `drizzle-kit generate`
 - `drizzle-kit push:pg` → `drizzle-kit push`
 
 **Files modified:**
+
 - `package.json` scripts: `db:generate`, `db:migrate`, `postinstall`
 - `drizzle.config.ts` - Updated config format for v0.21.0+:
   - `import type { Config }` → `import { defineConfig }`
@@ -240,16 +260,19 @@ Updated Drizzle Kit commands to use new syntax (v0.21.0+):
 **Root Cause Identified**: Port conflict on 5432 (another PostgreSQL instance already using the port)
 
 **Solution Implemented**:
+
 1. **docker-compose.yml**: Changed host port mapping `5432:5432` → `5433:5432`
 2. **.env**: Updated `DATABASE_URL` to use `localhost:5433`
 3. Added `POSTGRES_HOST_AUTH_METHOD: trust` for simplified authentication
 4. Updated healthcheck with database name
 
 **Files Modified**:
+
 - `c:\Users\seoho\Documents\Corporate Brain\docker-compose.yml` - Port 5433 mapping
 - `c:\Users\seoho\Documents\Corporate Brain\.env` - DATABASE_URL with port 5433
 
 **Result**: ✅ Migration successful - `[✓] Changes applied`
+
 - All tables created with proper schema
 - Foreign keys and indexes applied
 - Database ready for seeding
@@ -259,6 +282,7 @@ Updated Drizzle Kit commands to use new syntax (v0.21.0+):
 **Status**: Database seeding completed successfully after port fix
 
 **Results**:
+
 - ✅ Created tenant: Acme Corporation
 - ✅ Created admin user: admin@acme.com
 - ✅ Created member user: member@acme.com
@@ -267,6 +291,7 @@ Updated Drizzle Kit commands to use new syntax (v0.21.0+):
 - ✅ Created integrations (Slack, Google Drive, Notion)
 
 **Sample Credentials**:
+
 ```
 Admin: admin@acme.com / password123
 Member: member@acme.com / password123
@@ -281,11 +306,13 @@ Tenant: acme
 **Root Cause**: Route was creating new handler instead of re-exporting from existing auth.ts
 
 **Fix**: Simplified route.ts to re-export from lib/auth/auth.ts:
+
 ```typescript
 export { GET, POST } from "@/lib/auth/auth";
 ```
 
 **Files modified**:
+
 - `c:\Users\seoho\Documents\Corporate Brain\app\api\auth\[...nextauth]\route.ts` - Now properly re-exports handlers
 
 ### Auth Config Fix - Tenant Lookup
@@ -296,10 +323,12 @@ export { GET, POST } from "@/lib/auth/auth";
 **Root Cause**: Auth config passed tenant slug ("acme") to `getUserByEmail()` which expects tenant ID (UUID)
 
 **Fix**: Updated authorize function to:
+
 1. Look up tenant by slug using `getTenantBySlug()`
 2. Use the returned tenant's UUID for user lookup
 
 **Code change in `lib/auth/config.ts`**:
+
 ```typescript
 // Before: Passing slug where ID expected
 const user = await getUserByEmail(email, effectiveTenantSlug);
@@ -311,6 +340,7 @@ const user = await getUserByEmail(email, tenant.id);
 ```
 
 **Files modified**:
+
 - `c:\Users\seoho\Documents\Corporate Brain\lib\auth\config.ts` - Fixed tenant lookup in authorize function
 
 ### Middleware Fix - Redirect Loop
@@ -321,15 +351,18 @@ const user = await getUserByEmail(email, tenant.id);
 **Root Cause**: Middleware was checking for incorrect cookie names; JWT session cookies weren't being detected properly
 
 **Fix**: Simplified cookie detection to check for standard Auth.js session token names:
+
 - `next-auth.session-token` (development)
 - `__Secure-next-auth.session-token` (production HTTPS)
 - `__Host-next-auth.session-token` (production with strict path)
 
 **File modified**:
+
 - `c:\Users\seoho\Documents\Corporate Brain\middleware.ts` - Simplified cookie detection, removed auth route matcher
 - `c:\Users\seoho\Documents\Corporate Brain\app\(marketing)\auth\signin\page.tsx` - Removed automatic redirect to /app
 
 **Solution**: Removed the `redirect("/app")` from signin page that was causing the loop. Now:
+
 - Signin page displays without redirect checks
 - Middleware only protects `/app` and `/dashboard` routes
 - After login, user stays on signin page or goes to callbackUrl
@@ -342,17 +375,19 @@ const user = await getUserByEmail(email, tenant.id);
 **Root Cause**: SignIn form wasn't passing `tenantSlug` in credentials, causing auth validation to fail silently
 
 **Fix**: Added `tenantSlug: "acme"` to the signIn credentials:
+
 ```typescript
 const result = await signIn("credentials", {
   email,
   password,
-  tenantSlug: "acme",  // Added
+  tenantSlug: "acme", // Added
   redirect: false,
   callbackUrl,
 });
 ```
 
 **File modified**:
+
 - `c:\Users\seoho\Documents\Corporate Brain\components\auth\signin-form.tsx`
 
 ### AUTH_URL Port Mismatch Fix
@@ -364,6 +399,7 @@ const result = await signIn("credentials", {
 This causes cookie domain/path mismatch, preventing session persistence.
 
 **Fix**: Updated `AUTH_URL` to match the actual dev server port:
+
 ```bash
 # Before
 AUTH_URL=http://localhost:3005
@@ -373,12 +409,14 @@ AUTH_URL=http://localhost:3004
 ```
 
 **Files modified**:
+
 - `c:\Users\seoho\Documents\Corporate Brain\.env`
 - `c:\Users\seoho\Documents\Corporate Brain\docs\DEPLOYMENT.md`
 
 ## Documentation Updates
 
 ### DEPLOYMENT.md Enhancement
+
 - Added docker-compose healthcheck configuration details
 - Documented port conflict troubleshooting (28P01 error)
 - Updated DATABASE_URL examples to use port 5433
@@ -386,12 +424,14 @@ AUTH_URL=http://localhost:3004
 - Added explanation for why port 5433 is used instead of 5432
 
 **Files modified:**
+
 - `c:\Users\seoho\Documents\Corporate Brain\docs\DEPLOYMENT.md`
 - `c:\Users\seoho\Documents\Corporate Brain\package.json` - Updated `db:seed` script to use port 5433
 
 ## SCOPE_OF_WORK.md Update
 
 ### Changes Made
+
 - Updated `docs/SCOPE_OF_WORK.md` to reflect implementation status
 - Added completion tracking to all implementation phases (1-5)
 - Updated document status from "Draft for Development" to "✅ IMPLEMENTED"

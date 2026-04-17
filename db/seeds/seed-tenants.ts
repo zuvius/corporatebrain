@@ -42,12 +42,15 @@ export async function seedTenants() {
     }
 
     // Create new tenant
-    const [tenant] = await db.insert(tenants).values({
-      name: tenantData.name,
-      slug: tenantData.slug,
-      plan: tenantData.plan,
-      settings: JSON.stringify(tenantData.settings),
-    }).returning();
+    const [tenant] = await db
+      .insert(tenants)
+      .values({
+        name: tenantData.name,
+        slug: tenantData.slug,
+        plan: tenantData.plan,
+        settings: JSON.stringify(tenantData.settings),
+      })
+      .returning();
 
     console.log(`  ✅ Created tenant: ${tenant.name} (${tenant.id})`);
     console.log(`🌱 [seed-tenants] Completed: new tenant created`);

@@ -6,25 +6,61 @@ import { eq } from "drizzle-orm";
 import { TEASER_LIMITS, FULL_ACCESS_LIMITS } from "@/lib/auth/verification";
 
 const ALL_PROVIDERS = [
-  { id: "slack", name: "Slack", icon: "slack", description: "Connect team conversations", category: "communication" },
-  { id: "gdrive", name: "Google Drive", icon: "gdrive", description: "Access documents and files", category: "storage" },
-  { id: "notion", name: "Notion", icon: "notion", description: "Sync workspace pages", category: "knowledge" },
-  { id: "confluence", name: "Confluence", icon: "confluence", description: "Team documentation", category: "knowledge" },
-  { id: "github", name: "GitHub", icon: "github", description: "Code repositories", category: "development" },
-  { id: "teams", name: "Microsoft Teams", icon: "teams", description: "Microsoft 365 integration", category: "communication" },
+  {
+    id: "slack",
+    name: "Slack",
+    icon: "slack",
+    description: "Connect team conversations",
+    category: "communication",
+  },
+  {
+    id: "gdrive",
+    name: "Google Drive",
+    icon: "gdrive",
+    description: "Access documents and files",
+    category: "storage",
+  },
+  {
+    id: "notion",
+    name: "Notion",
+    icon: "notion",
+    description: "Sync workspace pages",
+    category: "knowledge",
+  },
+  {
+    id: "confluence",
+    name: "Confluence",
+    icon: "confluence",
+    description: "Team documentation",
+    category: "knowledge",
+  },
+  {
+    id: "github",
+    name: "GitHub",
+    icon: "github",
+    description: "Code repositories",
+    category: "development",
+  },
+  {
+    id: "teams",
+    name: "Microsoft Teams",
+    icon: "teams",
+    description: "Microsoft 365 integration",
+    category: "communication",
+  },
 ];
 
 export async function GET() {
   try {
     const session = await auth();
-    
+
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const user = session.user as { 
-      id: string; 
-      tenantId: string; 
+    const user = session.user as {
+      id: string;
+      tenantId: string;
       emailVerified: string | null;
     };
     const isVerified = !!user.emailVerified;
@@ -35,7 +71,7 @@ export async function GET() {
       where: eq(integrations.tenantId, tenantId),
     });
 
-    const connectedMap = new Map(connected.map(i => [i.provider, i]));
+    const connectedMap = new Map(connected.map((i) => [i.provider, i]));
     const connectedCount = connected.length;
 
     // Determine limits based on verification status
@@ -43,13 +79,13 @@ export async function GET() {
     const remainingSlots = Math.max(0, limits.maxIntegrations - connectedCount);
 
     // Build providers list with availability status
-    const providers = ALL_PROVIDERS.map(provider => {
+    const providers = ALL_PROVIDERS.map((provider) => {
       const existing = connectedMap.get(provider.id);
       const isConnected = existing?.status === "connected";
-      
+
       // Check if this provider is allowed in teaser mode
       const isAllowedInTeaser = limits.allowedProviders.includes(provider.id);
-      
+
       // Determine if this provider can be connected
       let canConnect = true;
       let unavailableReason = null;
@@ -66,7 +102,7 @@ export async function GET() {
 
       return {
         ...provider,
-        status: isConnected ? "connected" : (existing?.status || "disconnected"),
+        status: isConnected ? "connected" : existing?.status || "disconnected",
         isConnected,
         canConnect,
         unavailableReason,
@@ -88,7 +124,7 @@ export async function GET() {
     console.error("[Integrations List] Error:", error);
     return NextResponse.json(
       { error: "Failed to fetch integrations" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

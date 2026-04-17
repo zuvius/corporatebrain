@@ -64,12 +64,12 @@ Updates `active-context.md` with current session information.
 
 ### Automation Scripts
 
-| Script | Command | Purpose |
-|--------|---------|---------|
-| memory-tracker.js | `node .windsurf/scripts/memory-tracker.js` | Core tracking logic |
-| verify-context.js | `node .windsurf/scripts/verify-context.js` | Integrity verification |
-| install-hooks.js | `node .windsurf/scripts/install-hooks.js` | Git hook installation |
-| db-reset.ts | `npm run db:reset` | Database reset with seeds |
+| Script            | Command                                    | Purpose                   |
+| ----------------- | ------------------------------------------ | ------------------------- |
+| memory-tracker.js | `node .windsurf/scripts/memory-tracker.js` | Core tracking logic       |
+| verify-context.js | `node .windsurf/scripts/verify-context.js` | Integrity verification    |
+| install-hooks.js  | `node .windsurf/scripts/install-hooks.js`  | Git hook installation     |
+| db-reset.ts       | `npm run db:reset`                         | Database reset with seeds |
 
 ### NPM Scripts
 
@@ -125,6 +125,7 @@ On every interaction:
 ### post-commit
 
 Automatically runs after every commit:
+
 - Updates changelog with commit hash
 - Updates active-context.md
 - Logs changed files with stats
@@ -132,6 +133,7 @@ Automatically runs after every commit:
 ### prepare-commit-msg
 
 Provides commit message template:
+
 ```
 [type]: [brief description]
 
@@ -153,6 +155,7 @@ Impact: [UI/API/Performance/Security] - [effect]
 **Format**: `@c:\Users\seoho\Documents\Corporate Brain\path\to\file.ts:start-end`
 
 **Examples**:
+
 ```
 @c:\Users\seoho\Documents\Corporate Brain\app\page.tsx:10-25
 @c:\Users\seoho\Documents\Corporate Brain\lib\utils.ts:1-50
@@ -172,6 +175,7 @@ All code changes must pass:
 ## Regressions: ZERO TOLERANCE
 
 ### Prohibited
+
 - Breaking changes without documentation
 - Console errors
 - Visual regressions
@@ -181,6 +185,7 @@ All code changes must pass:
 - Bandage patches
 
 ### Required
+
 - Root cause fixes
 - Full test coverage
 - Type safety
@@ -192,6 +197,7 @@ All code changes must pass:
 ### Changelog (`changelog-YYYY-MM-DD.md`)
 
 Updated automatically with:
+
 - All files edited (full paths, line numbers)
 - All files touched (read/analysis)
 - Commits (hash, message, stats)
@@ -201,6 +207,7 @@ Updated automatically with:
 ### Implementation Log (`implementation-YYYY-MM-DD.md`)
 
 Document manually:
+
 - Technical decisions
 - Blockers encountered
 - Optimizations applied
@@ -282,22 +289,22 @@ This system is designed for **Windsurf IDE**:
 
 ### Core Documents
 
-| Document | Purpose | Update Frequency |
-|----------|---------|------------------|
-| `rules.md` | Global rules | Rarely |
-| `active-context.md` | Current session | Every interaction |
-| `progress.md` | Milestones | When milestones complete |
-| `decision-log.md` | ADRs | When decisions made |
-| `tech-spec.md` | Technical details | When architecture changes |
-| `system-patterns.md` | Design patterns | When patterns added |
+| Document             | Purpose           | Update Frequency          |
+| -------------------- | ----------------- | ------------------------- |
+| `rules.md`           | Global rules      | Rarely                    |
+| `active-context.md`  | Current session   | Every interaction         |
+| `progress.md`        | Milestones        | When milestones complete  |
+| `decision-log.md`    | ADRs              | When decisions made       |
+| `tech-spec.md`       | Technical details | When architecture changes |
+| `system-patterns.md` | Design patterns   | When patterns added       |
 
 ### Daily Documents
 
-| Document | Purpose | Created |
-|----------|---------|---------|
-| `changelog/changelog-YYYY-MM-DD.md` | Daily changes | Auto on first edit |
-| `implementation/implementation-YYYY-MM-DD.md` | Technical details | Manual |
-| `analysis/YYYY-MM-DD-HHMM-*.md` | Analysis sessions | Manual |
+| Document                                      | Purpose           | Created            |
+| --------------------------------------------- | ----------------- | ------------------ |
+| `changelog/changelog-YYYY-MM-DD.md`           | Daily changes     | Auto on first edit |
+| `implementation/implementation-YYYY-MM-DD.md` | Technical details | Manual             |
+| `analysis/YYYY-MM-DD-HHMM-*.md`               | Analysis sessions | Manual             |
 
 ## Best Practices
 
@@ -334,6 +341,7 @@ npm run test                # Tests
 ## Support
 
 For issues or questions:
+
 1. Check this documentation
 2. Run `npm run memory:verify`
 3. Review `.windsurf/workflows/` for specific guidance

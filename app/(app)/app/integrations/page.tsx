@@ -49,7 +49,10 @@ const INTEGRATION_CONFIGS: Record<
 export default function IntegrationsPage() {
   const [integrations, setIntegrations] = useState<Integration[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [message, setMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
   useEffect(() => {
@@ -83,7 +86,10 @@ export default function IntegrationsPage() {
         method: "DELETE",
       });
       if (response.ok) {
-        setMessage({ type: "success", text: `${provider} disconnected successfully` });
+        setMessage({
+          type: "success",
+          text: `${provider} disconnected successfully`,
+        });
         fetchIntegrations();
       } else {
         throw new Error("Failed to disconnect");
@@ -121,7 +127,11 @@ export default function IntegrationsPage() {
             : undefined,
           id: integration.id,
         }
-      : { status: "disconnected" as const, lastSyncedAt: undefined, id: undefined };
+      : {
+          status: "disconnected" as const,
+          lastSyncedAt: undefined,
+          id: undefined,
+        };
   };
 
   if (isLoading) {
@@ -193,7 +203,10 @@ export default function IntegrationsPage() {
           onClose={() => setIsUploadModalOpen(false)}
           onUploadComplete={() => {
             setIsUploadModalOpen(false);
-            setMessage({ type: "success", text: "Files uploaded successfully!" });
+            setMessage({
+              type: "success",
+              text: "Files uploaded successfully!",
+            });
           }}
           tenantId=""
         />
@@ -211,7 +224,10 @@ export default function IntegrationsPage() {
               "All data processed and indexed for search",
               "Disconnect anytime to stop syncing",
             ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-blue-700 dark:text-blue-300">
+              <div
+                key={i}
+                className="flex items-start gap-2 text-sm text-blue-700 dark:text-blue-300"
+              >
                 <span className="w-5 h-5 rounded-full bg-blue-200 dark:bg-blue-800 flex items-center justify-center text-xs font-medium shrink-0">
                   {i + 1}
                 </span>

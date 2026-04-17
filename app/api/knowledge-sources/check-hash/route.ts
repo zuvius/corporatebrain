@@ -19,7 +19,10 @@ export async function GET(req: NextRequest) {
     const hash = searchParams.get("hash");
 
     if (!hash) {
-      return NextResponse.json({ error: "Hash parameter required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Hash parameter required" },
+        { status: 400 },
+      );
     }
 
     const tenantId = (session.user as any).tenantId;
@@ -28,7 +31,7 @@ export async function GET(req: NextRequest) {
     const existing = await db.query.knowledgeSources.findFirst({
       where: and(
         eq(knowledgeSources.tenantId, tenantId),
-        eq(knowledgeSources.metadata, { contentHash: hash })
+        eq(knowledgeSources.metadata, { contentHash: hash }),
       ),
     });
 
@@ -41,7 +44,7 @@ export async function GET(req: NextRequest) {
     console.error("Error checking document hash:", error);
     return NextResponse.json(
       { error: "Failed to check document" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

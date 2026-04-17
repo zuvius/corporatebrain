@@ -58,7 +58,7 @@ const AVAILABLE_INTEGRATIONS = [
 export async function GET() {
   try {
     const session = await auth();
-    
+
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -75,14 +75,16 @@ export async function GET() {
     });
 
     const connectedMap = new Map(
-      connectedIntegrations.map((i) => [i.provider, i.status])
+      connectedIntegrations.map((i) => [i.provider, i.status]),
     );
 
     // Merge available with connection status
-    const integrationsWithStatus = AVAILABLE_INTEGRATIONS.map((integration) => ({
-      ...integration,
-      status: connectedMap.get(integration.id) || "disconnected",
-    }));
+    const integrationsWithStatus = AVAILABLE_INTEGRATIONS.map(
+      (integration) => ({
+        ...integration,
+        status: connectedMap.get(integration.id) || "disconnected",
+      }),
+    );
 
     return NextResponse.json({
       integrations: integrationsWithStatus,
@@ -91,7 +93,7 @@ export async function GET() {
     console.error("[Integrations Available] Error:", error);
     return NextResponse.json(
       { error: "Failed to get available integrations" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
