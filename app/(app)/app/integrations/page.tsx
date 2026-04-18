@@ -94,7 +94,7 @@ export default function IntegrationsPage() {
       } else {
         throw new Error("Failed to disconnect");
       }
-    } catch (error) {
+    } catch (_error) {
       setMessage({ type: "error", text: `Failed to disconnect ${provider}` });
     }
   };
@@ -112,7 +112,7 @@ export default function IntegrationsPage() {
       } else {
         throw new Error("Failed to sync");
       }
-    } catch (error) {
+    } catch (_error) {
       setMessage({ type: "error", text: `Failed to sync ${provider}` });
     }
   };

@@ -180,21 +180,6 @@ None - All 5 phases complete
 - [x] Removed deprecated `images.domains` from next.config.js
 - [x] Build successful: 43 pages, 0 errors, 0 deprecation warnings
 
-## CI/CD Fixes (2026-04-16)
-
-- [x] Fixed component tests in GitHub Actions
-  - Re-enabled vitest.setup.ts with `deps.inline` for jest-dom
-  - Added `scrollIntoView` mock to fix ChatInterface tests
-  - Fixed locale-dependent timestamp assertion
-  - Installed `lodash-es` for ESM compatibility
-  - All 45 tests now passing in CI
-- [x] Fixed ESLint/lint command in GitHub Actions
-  - Replaced broken `next lint` with direct ESLint command
-  - Created `eslint.config.mjs` with flat config format for ESLint v9
-  - Added typescript-eslint, react, hooks, and jsx-a11y plugins
-  - Fixed lint error in `lib/utils.test.ts`
-  - Lint now passes: 0 errors, 99 warnings (exit code 0)
-
 ## Technical Debt
 
 None recorded yet.
@@ -217,6 +202,7 @@ None recorded yet.
 | Issue                                             | Severity     | Workaround                             | Planned Fix                                        |
 | ------------------------------------------------- | ------------ | -------------------------------------- | -------------------------------------------------- |
 | 10 npm audit vulnerabilities (9 moderate, 1 high) | Medium       | Accept for dev                         | Fix before production                              |
+| CI test job exceeds 6h timeout                     | ✅ **FIXED** | Changed `test` → `test:run`            | CI now completes in ~2 min                         |
 | UI shows generic unstyled landing page            | ✅ **FIXED** | Phase 5 Complete                       | Marketing site with neural network hero            |
 | Memory bank requires manual `/memory-update`      | Low          | Use workflow trigger                   | Configure auto-hooks                               |
 | Drizzle-kit using deprecated generate:pg command  | Low          | Warning only                           | Update to 'generate'                               |
