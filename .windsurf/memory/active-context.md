@@ -19,8 +19,10 @@
   - **Fixed**: `.github/workflows/ci.yml:57-58` - Changed `npm run test` to `npm run test:run`
   - **Root Cause**: `vitest` runs in watch mode by default, causing 6h timeout in CI
   - **Fixed**: `app/api/admin/costs/route.ts`, `dashboard/route.ts`, `roi/route.ts` - Prettier formatting
-  - **Fixed**: `app/(app)/app/integrations/page.tsx:97,115` - Unused 'error' variables → '_error'
-  - **Result**: `format:check` passes (0 issues), `lint` passes (0 errors, 57 warnings), tests complete in ~3s
+  - **Fixed**: `app/(app)/app/integrations/page.tsx:97,115` - Unused 'error' variables → '\_error'
+  - **Fixed**: `.windsurf/memory/active-context.md`, `progress.md` - Prettier formatting
+  - **Updated**: CI workflow now has dedicated `format-check` job that blocks all other jobs
+  - **Result**: 100% formatting enforcement - `format:check` must pass before lint/tests/build
 
 - ✅ **FIXED**: GitHub Actions CI Failures
   - **Created**: `uploads/.gitkeep` - Placeholder to track empty uploads folder

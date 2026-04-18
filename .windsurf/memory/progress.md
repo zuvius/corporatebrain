@@ -197,21 +197,8 @@ None recorded yet.
 | 2026-04-06 | Use Windows absolute paths               | Match user OS environment          | ✅ Active           |
 | 2026-04-06 | Zero regression policy                   | Maintain stability                 | ✅ Active           |
 
-## Known Issues
-
-| Issue                                             | Severity     | Workaround                             | Planned Fix                                        |
-| ------------------------------------------------- | ------------ | -------------------------------------- | -------------------------------------------------- |
-| 10 npm audit vulnerabilities (9 moderate, 1 high) | Medium       | Accept for dev                         | Fix before production                              |
-| CI test job exceeds 6h timeout                     | ✅ **FIXED** | Changed `test` → `test:run`            | CI now completes in ~2 min                         |
-| UI shows generic unstyled landing page            | ✅ **FIXED** | Phase 5 Complete                       | Marketing site with neural network hero            |
-| Memory bank requires manual `/memory-update`      | Low          | Use workflow trigger                   | Configure auto-hooks                               |
-| Drizzle-kit using deprecated generate:pg command  | Low          | Warning only                           | Update to 'generate'                               |
-| JSX type errors in marketing pages                | ✅ **FIXED** | All TypeScript errors resolved         | 0 errors in build                                  |
-| TypeScript errors (75 total)                      | ✅ **FIXED** | Fixed imports, types, configs          | 0 errors                                           |
-| Tailwind CSS v4 compatibility                     | ✅ **FIXED** | Added @tailwindcss/postcss             | Build passes                                       |
-| Next.js 16 deprecation warnings                   | ✅ **FIXED** | middleware→proxy, images.domains       | 0 warnings                                         |
-| Route group conflict (app)/(marketing)            | ✅ **FIXED** | Deleted `app/(app)/page.tsx`           | Marketing at `/`, app at `/admin`, `/integrations` |
-| Providers import error                            | ✅ **FIXED** | Changed to `import React from "react"` | Server running `GET / 200`                         |
+| Route group conflict (app)/(marketing) | ✅ **FIXED** | Deleted `app/(app)/page.tsx` | Marketing at `/`, app at `/admin`, `/integrations` |
+| Providers import error | ✅ **FIXED** | Changed to `import React from "react"` | Server running `GET / 200` |
 
 ## Next Milestones (Post-Phase 5)
 
